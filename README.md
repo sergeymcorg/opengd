@@ -1,1 +1,1 @@
-# opengd
+# OpenGD
