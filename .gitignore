@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# Geometry Dash Resources
+Resources
+
+# CMake Files
+build
