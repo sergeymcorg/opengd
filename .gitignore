@@ -36,3 +36,6 @@ Resources
 
 # CMake Files
 build
+
+.vscode
+Classes/backups
