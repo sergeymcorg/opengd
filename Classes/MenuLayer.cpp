@@ -14,7 +14,7 @@
 
 //     auto bg = Sprite::create("game_bg_01_001.png");
 //     bg->setPosition(winSize / 2);
-//     bg->setScale(1.185); // like a original gd
+//     bg->setScale(1.185); // like the original gd
 //     this->addChild(bg);
 
 //     bg->runAction(
