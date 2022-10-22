@@ -20,6 +20,11 @@
 *.mod
 *.smod
 
+# Personal Scripts
+c.bat
+r.bat
+b.bat
+
 # Compiled Static libraries
 *.lai
 *.la
