@@ -342,9 +342,6 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     }
 
     glfwMakeContextCurrent(_mainWindow);
-    
-    // vsync
-    glfwSwapInterval( 0 );
 
     glfwSetMouseButtonCallback(_mainWindow, GLFWEventHandler::onGLFWMouseCallBack);
     glfwSetCursorPosCallback(_mainWindow, GLFWEventHandler::onGLFWMouseMoveCallBack);

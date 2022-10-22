@@ -119,18 +119,8 @@ FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, cons
     return nullptr;
 }
 
-FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& _fontFileName, const Rect& imageRect, bool imageRotated)
+FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, const Rect& imageRect, bool imageRotated)
 {
-    std::string fontFileName = _fontFileName;
-
-    if (Application::getInstance()->getTextureQuality() == MEDIUM && _fontFileName.find("-hd") == std::string::npos) {
-        fontFileName = _fontFileName.substr(0, _fontFileName.find_last_of(".")) +
-                            (Application::getInstance()->getTextureQuality() == MEDIUM ? "-hd" : "") +
-                            _fontFileName.substr(_fontFileName.find_last_of("."));
-    }
-
-    // printf("AFTN: %s -> %s", _fontFileName.c_str(), fontFileName.c_str());
-
     const auto realFontFilename = FileUtils::getInstance()->getNewFilename(fontFileName);  // resolves real file path, to prevent storing multiple atlases for the same file.
     char keyPrefix[ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE];
     snprintf(keyPrefix, ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE, "%.2f %.2f ", imageRect.origin.x, imageRect.origin.y);

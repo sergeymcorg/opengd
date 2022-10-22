@@ -759,14 +759,6 @@ void FileUtils::writeValueVectorToFile(ValueVector vecData, const std::string& f
 std::string FileUtils::getNewFilename(const std::string &filename) const
 {
     std::string newFileName;
-
-    // std::string filename = _filename;
-
-    // if (Application::getInstance()->getTextureQuality() == MEDIUM && _filename.find("-hd") == std::string::npos) {
-    //     filename = _filename.substr(0, _filename.find_last_of(".")) +
-    //                         (Application::getInstance()->getTextureQuality() == MEDIUM ? "-hd" : "") +
-    //                         _filename.substr(_filename.find_last_of("."));
-    // }   
     
     DECLARE_GUARD;
 
@@ -781,9 +773,6 @@ std::string FileUtils::getNewFilename(const std::string &filename) const
     {
         newFileName = iter->second.asString();
     }
-
-    // printf("{NEW} 1:%s;2:%s\n", filename.c_str(), newFileName.c_str());
-
     return newFileName;
 }
 
@@ -813,30 +802,20 @@ std::string FileUtils::getPathForDirectory(const std::string &dir, const std::st
     return searchPath + resolutionDiretory + dir;
 }
 
-std::string FileUtils::fullPathForFilename(const std::string &_filename) const
+std::string FileUtils::fullPathForFilename(const std::string &filename) const
 {
     
-    DECLARE_GUARD;    
+    DECLARE_GUARD;
 
-    if (_filename.empty())
+    if (filename.empty())
     {
         return "";
     }
 
-    if (isAbsolutePath(_filename))
+    if (isAbsolutePath(filename))
     {
-        return _filename;
+        return filename;
     }
-
-    std::string filename = _filename;
-
-    // if (Application::getInstance()->getTextureQuality() == MEDIUM && _filename.find("-hd") == std::string::npos) {
-    //     filename = _filename.substr(0, _filename.find_last_of(".")) +
-    //                         (Application::getInstance()->getTextureQuality() == MEDIUM ? "-hd" : "") +
-    //                         _filename.substr(_filename.find_last_of("."));
-    // }    
-
-    // printf("Old: %s; New: %s\n", _filename.c_str(), filename.c_str());
 
     // Already Cached ?
     auto cacheIter = _fullPathCache.find(filename);
@@ -867,8 +846,7 @@ std::string FileUtils::fullPathForFilename(const std::string &_filename) const
     }
 
     if(isPopupNotify()){
-        // CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
-        printf("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.\n", filename.c_str());
+        CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
     }
 
     // The file wasn't found, return empty string.

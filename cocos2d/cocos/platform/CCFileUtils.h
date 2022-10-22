@@ -324,8 +324,7 @@ public:
 
      @since v2.1
      */
-    // virtual std::string fullPathForFilename(const std::string &filename) const;
-    virtual std::string fullPathForFilename(const std::string &_filename) const;
+    virtual std::string fullPathForFilename(const std::string &filename) const;
 
 
     /**

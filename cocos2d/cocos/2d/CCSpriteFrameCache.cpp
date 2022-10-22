@@ -349,19 +349,9 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
     addSpriteFramesWithDictionary(dict, textureFileName, plist);
 }
 
-void SpriteFrameCache::addSpriteFramesWithFile(const std::string& _plist)
+void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 {
     CCASSERT(!plist.empty(), "plist filename should not be nullptr");
-
-    std::string plist = _plist;
-
-    if (Application::getInstance()->getTextureQuality() == MEDIUM && _plist.find("-hd") == std::string::npos) {
-        plist = _plist.substr(0, _plist.find_last_of(".")) +
-                            (Application::getInstance()->getTextureQuality() == MEDIUM ? "-hd" : "") +
-                            _plist.substr(_plist.find_last_of("."));
-    }    
-
-    // printf("Plist added: %s -> %s\n", _plist.c_str(), plist.c_str());
     
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
     if (fullPath.empty())

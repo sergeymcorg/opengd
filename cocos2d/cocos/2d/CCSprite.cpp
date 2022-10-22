@@ -166,23 +166,13 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
     return initWithTexture(texture, rect, false);
 }
 
-bool Sprite::initWithFile(const std::string& _filename)
+bool Sprite::initWithFile(const std::string& filename)
 {
-    if (_filename.empty())
+    if (filename.empty())
     {
         CCLOG("Call Sprite::initWithFile with blank resource filename.");
         return false;
     }
-
-    std::string filename = _filename;
-
-    if (Application::getInstance()->getTextureQuality() == MEDIUM && _filename.find("-hd") == std::string::npos) {
-        filename = _filename.substr(0, _filename.find_last_of(".")) +
-                            (Application::getInstance()->getTextureQuality() == MEDIUM ? "-hd" : "") +
-                            _filename.substr(_filename.find_last_of("."));
-    }    
-
-    // printf("Sprite created: %s -> %s\n", _filename.c_str(), filename.c_str());
 
     _fileName = filename;
 
