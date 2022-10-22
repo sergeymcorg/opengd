@@ -31,5 +31,6 @@ private:
 
 #define log Logger()
 
-// Most used classes
+// Most used things
+#include "utils.h"
 #include "MenuItemSpriteExtra.h"
