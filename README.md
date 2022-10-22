@@ -8,7 +8,7 @@ For now it is under development.
 
 ## Project members:
 * [Jaan](https://github.com/JaanDev)#2897
-* [dogotrigger](https://github.com/sergeymcorg)#0355
+* [dogotrigger](https://github.com/SergeyMC9730)#0355
 * [Kolyah35](https://github.com/Kolyah35)#0107
 
 ## TODO list for 1.0
