@@ -378,8 +378,16 @@ void TextureCache::addImageAsyncCallBack(float /*dt*/)
     }
 }
 
-Texture2D * TextureCache::addImage(const std::string &path)
+Texture2D * TextureCache::addImage(const std::string &_path)
 {
+    std::string path = _path;
+
+    if (Application::getInstance()->getTextureQuality() == MEDIUM && _path.find("-hd") == std::string::npos) {
+        path = _path.substr(0, _path.find_last_of('.')) + "-hd" + _path.substr(_path.find_last_of('.'));
+    }
+
+    printf("font: %s -> %s\n", _path.c_str(), path.c_str());
+
     Texture2D * texture = nullptr;
     Image* image = nullptr;
     // Split up directory and filename

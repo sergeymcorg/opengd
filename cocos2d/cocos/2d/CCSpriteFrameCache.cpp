@@ -349,8 +349,16 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
     addSpriteFramesWithDictionary(dict, textureFileName, plist);
 }
 
-void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
+void SpriteFrameCache::addSpriteFramesWithFile(const std::string& _plist)
 {
+    std::string plist = _plist;
+
+    if (Application::getInstance()->getTextureQuality() == MEDIUM && _plist.find("-hd") == std::string::npos) {
+        plist = _plist.substr(0, _plist.find_last_of('.')) + "-hd" + _plist.substr(_plist.find_last_of('.'));
+    }
+
+    printf("font: %s -> %s\n", _plist.c_str(), plist.c_str());
+
     CCASSERT(!plist.empty(), "plist filename should not be nullptr");
     
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);

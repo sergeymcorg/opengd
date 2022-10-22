@@ -32,6 +32,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+enum TextureQuality {
+    LOW = 0,
+    MEDIUM,
+    HIGH
+};
+
 class CC_DLL Application : public ApplicationProtocol
 {
 public:
@@ -107,6 +113,8 @@ protected:
     std::string         _startupScriptFilename;
 
     static Application * sm_pSharedApplication;
+
+    CC_SYNTHESIZE(TextureQuality, m_eTextureQuality, TextureQuality)
 };
 
 NS_CC_END

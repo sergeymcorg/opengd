@@ -824,8 +824,16 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     return setTTFConfigInternal(ttfConfig);
 }
 
-bool Label::setBMFontFilePath(const std::string& bmfontFilePath, float fontSize)
+bool Label::setBMFontFilePath(const std::string& _bmfontFilePath, float fontSize)
 {
+    std::string bmfontFilePath = _bmfontFilePath;
+
+    if (Application::getInstance()->getTextureQuality() == MEDIUM && _bmfontFilePath.find("-hd") == std::string::npos) {
+        bmfontFilePath = _bmfontFilePath.substr(0, _bmfontFilePath.find_last_of('.')) + "-hd" + _bmfontFilePath.substr(_bmfontFilePath.find_last_of('.'));
+    }
+
+    printf("font: %s -> %s\n", _bmfontFilePath.c_str(), bmfontFilePath.c_str());
+
     FontAtlas* newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath);
 
     if (!newAtlas)
