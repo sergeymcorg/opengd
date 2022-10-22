@@ -386,7 +386,7 @@ Texture2D * TextureCache::addImage(const std::string &_path)
         path = _path.substr(0, _path.find_last_of('.')) + "-hd" + _path.substr(_path.find_last_of('.'));
     }
 
-    printf("font: %s -> %s\n", _path.c_str(), path.c_str());
+    printf("Add image to cache: %s -> %s\n", _path.c_str(), path.c_str());
 
     Texture2D * texture = nullptr;
     Image* image = nullptr;

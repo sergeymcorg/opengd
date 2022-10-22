@@ -357,7 +357,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& _plist)
         plist = _plist.substr(0, _plist.find_last_of('.')) + "-hd" + _plist.substr(_plist.find_last_of('.'));
     }
 
-    printf("font: %s -> %s\n", _plist.c_str(), plist.c_str());
+    printf("Add plist: %s -> %s\n", _plist.c_str(), plist.c_str());
 
     CCASSERT(!plist.empty(), "plist filename should not be nullptr");
     

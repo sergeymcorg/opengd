@@ -98,7 +98,6 @@ void LoadingLayer::loadAssets() {
         frameCache->addSpriteFramesWithFile(std::filesystem::path(path).filename().string());
         this->assetLoaded(nullptr);
     });
-    log << frameCache->isSpriteFramesWithFileLoaded("GJ_GameSheet.plist");
 }
 
 void LoadingLayer::assetLoaded(cocos2d::Ref *sender){

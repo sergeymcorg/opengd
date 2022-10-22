@@ -832,7 +832,7 @@ bool Label::setBMFontFilePath(const std::string& _bmfontFilePath, float fontSize
         bmfontFilePath = _bmfontFilePath.substr(0, _bmfontFilePath.find_last_of('.')) + "-hd" + _bmfontFilePath.substr(_bmfontFilePath.find_last_of('.'));
     }
 
-    printf("font: %s -> %s\n", _bmfontFilePath.c_str(), bmfontFilePath.c_str());
+    printf("Creating font: %s -> %s\n", _bmfontFilePath.c_str(), bmfontFilePath.c_str());
 
     FontAtlas* newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath);
 
