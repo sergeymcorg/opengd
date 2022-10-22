@@ -94,12 +94,17 @@ void LoadingLayer::loadAssets() {
         if (Application::getInstance()->getTextureQuality() == LOW && path.find("-hd") != string::npos) return;
         else if (Application::getInstance()->getTextureQuality() == MEDIUM && path.find("-hd") == string::npos) return;
 
-        frameCache->addSpriteFramesWithFile(path);
+        // SpriteFrameCache doesnt like absolute filenames
+        frameCache->addSpriteFramesWithFile(std::filesystem::path(path).filename().string());
         this->assetLoaded(nullptr);
-    });    
+    });
+    log << frameCache->isSpriteFramesWithFileLoaded("GJ_GameSheet.plist");
 }
 
 void LoadingLayer::assetLoaded(cocos2d::Ref *sender){
     this->m_nAssetsLoaded++;
     m_pBarSprite->setTextureRect({0, 0, m_fTotalBarWidth * (this->m_nAssetsLoaded / this->m_nTotalAssets), m_pBarSprite->getContentSize().height});
+
+    if (m_nAssetsLoaded == m_nTotalAssets)
+        Director::getInstance()->replaceScene(MenuLayer::scene());
 }

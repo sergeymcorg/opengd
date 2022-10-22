@@ -1,7 +1,6 @@
 #pragma once
 #include "includes.h"
 
-// WIP
 class MenuLayer : public Layer {
 public:
     static Scene* scene();

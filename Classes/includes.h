@@ -30,3 +30,6 @@ private:
 };
 
 #define log Logger()
+
+// Most used classes
+#include "MenuItemSpriteExtra.h"
