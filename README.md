@@ -10,6 +10,7 @@ For now it is under development.
 * [Jaan](https://github.com/JaanDev)#2897
 * [dogotrigger](https://github.com/SergeyMC9730)#0355
 * [Kolyah35](https://github.com/Kolyah35)#0107
+* Catto_#1370
 
 ## TODO list for 1.0
 - [x] LoadingLayer implementation
