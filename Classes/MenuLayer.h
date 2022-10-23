@@ -1,5 +1,6 @@
 #pragma once
 #include "includes.h"
+#include "GarageLayer.h"
 
 class MenuLayer : public Layer {
 public:

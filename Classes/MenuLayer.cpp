@@ -1,4 +1,6 @@
 #include "MenuLayer.h"
+#include "GarageLayer.h"
+#include "DropDownLayer.h"
 
 Scene* MenuLayer::scene() {
     auto scene = Scene::create();
@@ -23,7 +25,7 @@ bool MenuLayer::init(){
     });
     
     auto garageBtn = MenuItemSpriteExtra::create("GJ_garageBtn_001.png", [&](Node* btn) {
-        log << "garage!";
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, GarageLayer::scene()));
     });    
     
     auto creatorBtn = MenuItemSpriteExtra::create("GJ_creatorBtn_001.png", [&](Node* btn) {
@@ -65,12 +67,17 @@ bool MenuLayer::init(){
     auto robBtn = MenuItemSpriteExtra::create("robtoplogo_small.png", [&](Node* btn) {
         Application::getInstance()->openURL("http://www.robtopgames.com");
     });
+
     menu->addChild(robBtn);
     robBtn->setPosition(menu->convertToNodeSpace({120, 60}));
     
     auto moreGamesBtn = MenuItemSpriteExtra::create("GJ_moreGamesBtn_001.png", [&](Node* btn) {
         log << "more games!";
+        auto a = DropDownLayer::create("test");
+        this->addChild(a);
+        a->showLayer(false);
     });
+
     menu->addChild(moreGamesBtn);
     moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 86, 90}));
     
