@@ -7,6 +7,8 @@ Scene* GarageLayer::scene() {
 }
 
 bool GarageLayer::init() {
+    if(!Layer::init()) return false;
+
     auto background = Sprite::create("GJ_gradientBG.png");
     auto winSize = Director::getInstance()->getWinSize();
     auto size = background->getContentSize();

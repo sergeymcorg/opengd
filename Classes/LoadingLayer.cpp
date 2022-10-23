@@ -33,30 +33,30 @@ bool LoadingLayer::init() {
     auto winSize = Director::getInstance()->getWinSize();
 
     auto bgSpr = Sprite::create("game_bg_01_001.png");
-    this->addChild(bgSpr);
     bgSpr->setPosition(winSize / 2);
     bgSpr->setScale(winSize.width / bgSpr->getContentSize().width);
     bgSpr->setColor({ 0, 102, 255 });
+    this->addChild(bgSpr);
 
     auto logoSpr = Sprite::createWithSpriteFrameName("GJ_logo_001.png");
-    this->addChild(logoSpr);
     logoSpr->setPosition(winSize / 2);
     logoSpr->setScale(1.05f);
+    this->addChild(logoSpr);
 
     auto robLogoSpr = Sprite::createWithSpriteFrameName("RobTopLogoBig_001.png");
-    this->addChild(robLogoSpr);
     robLogoSpr->setPosition({ winSize.width / 2, winSize.height / 2 + 190 });
+    this->addChild(robLogoSpr);
 
     auto splash = this->getSplash();
     auto splashText = Label::createWithBMFont("goldFont.fnt", splash);
-    this->addChild(splashText);
     splashText->setPosition({ winSize.width / 2, winSize.height / 2 - 200});
     splashText->setScale(0.7f);
 
+    this->addChild(splashText);
     m_pGrooveSprite = Sprite::create("slidergroove.png");
-    this->addChild(m_pGrooveSprite);
     m_pGrooveSprite->setPosition({ winSize.width / 2, splashText->getPositionY() + 70 });
     this->m_fTotalBarWidth = m_pGrooveSprite->getContentSize().width - 8;
+    this->addChild(m_pGrooveSprite);
 
     m_pBarSprite = Sprite::create("sliderBar.png");
     m_pBarSprite->getTexture()->setTexParameters({ backend::SamplerFilter::NEAREST, backend::SamplerFilter::NEAREST, backend::SamplerAddressMode::REPEAT, backend::SamplerAddressMode::REPEAT });

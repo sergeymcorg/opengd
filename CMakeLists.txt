@@ -62,6 +62,8 @@ endif()
 file (GLOB files "Classes/*.cpp")
 file (GLOB files2 "Classes/*.h")
 
+add_subdirectory("imgui")
+
 list(APPEND GAME_SOURCE
      ${files}
      )
@@ -136,7 +138,7 @@ endif()
 
 target_link_options(${APP_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FORCE:MULTIPLE>)
 
-target_link_libraries(${APP_NAME} cocos2d)
+target_link_libraries(${APP_NAME} cocos2d cc_imgui)
 target_include_directories(${APP_NAME}
         PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
