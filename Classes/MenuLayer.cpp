@@ -1,7 +1,8 @@
 #include "MenuLayer.h"
 #include "GarageLayer.h"
 #include "DropDownLayer.h"
-#include "DebugLayer.h"
+
+#include "PlayLayer.h"
 
 Scene* MenuLayer::scene() {
     auto scene = Scene::create();
@@ -11,9 +12,6 @@ Scene* MenuLayer::scene() {
 
 bool MenuLayer::init(){
     if (!Layer::init()) return false;
-    
-    DebugLayer *dl = DebugLayer::create();
-    if(!dl->init()) return false;
 
     auto background = Sprite::create("GJ_gradientBG.png");
     auto winSize = Director::getInstance()->getWinSize();
@@ -33,11 +31,12 @@ bool MenuLayer::init(){
     this->addChild(menu);
 
     auto playBtn = MenuItemSpriteExtra::create("GJ_playBtn_001.png", [&](Node* btn) {
-        log << "play!";
+        //log << "play!";
+        auto scene = PlayLayer::scene();
+        Director::getInstance()->pushScene(scene);
     });
     
     auto garageBtn = MenuItemSpriteExtra::create("GJ_garageBtn_001.png", [&](Node* btn) {
-        dl->removeSelf();
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, GarageLayer::scene()));
     });    
     

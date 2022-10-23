@@ -1,7 +1,7 @@
 #include "MenuItemSpriteExtra.h"
 
-MenuItemSpriteExtra::MenuItemSpriteExtra(const char* sprite, Node* sprNode, std::function<void(Node*)> callback) {
-    this->m_pSprite = sprite != "" ? Sprite::createWithSpriteFrameName(sprite) : sprNode;
+MenuItemSpriteExtra::MenuItemSpriteExtra(const char* sprite, std::function<void(Node*)> callback) {
+    this->m_pSprite = Sprite::createWithSpriteFrameName(sprite);
     this->m_fNewScale = 1.26f;
     this->m_fAnimDuration = 0.3f;
     this->m_fCallback = callback;
@@ -9,11 +9,13 @@ MenuItemSpriteExtra::MenuItemSpriteExtra(const char* sprite, Node* sprNode, std:
 
 void MenuItemSpriteExtra::selected() {
     this->m_pSprite->runAction(EaseBounceOut::create(ScaleTo::create(m_fAnimDuration, m_fNewScale)));
+    MenuItemSprite::selected();
 }
 
 void MenuItemSpriteExtra::unselected() {
     this->m_pSprite->stopAllActions();
-    this->m_pSprite->runAction(EaseBounceOut::create(ScaleTo::create(m_fAnimDuration, 1.0f)));
+    this->m_pSprite->runAction(EaseBounceOut::create(ScaleTo::create(0.4f, 1.0f)));
+    MenuItemSprite::unselected();
 }
 
 void MenuItemSpriteExtra::activate() {
@@ -32,27 +34,13 @@ bool MenuItemSpriteExtra::init() {
 }
 
 MenuItemSpriteExtra* MenuItemSpriteExtra::create(const char* sprite, std::function<void(Node*)> callback) {
-    MenuItemSpriteExtra* pRet = new(std::nothrow) MenuItemSpriteExtra(sprite, nullptr, callback);
+    MenuItemSpriteExtra* pRet = new(std::nothrow) MenuItemSpriteExtra(sprite, callback);
 
     if (pRet && pRet->init()) {
         pRet->autorelease();
         return pRet;
     } else {
-        delete pRet;
-        pRet = nullptr;
-        return nullptr;
-    }
-}
-
-MenuItemSpriteExtra* MenuItemSpriteExtra::createWithNode(Node* sprite, std::function<void(Node*)> callback) {
-    MenuItemSpriteExtra* pRet = new(std::nothrow) MenuItemSpriteExtra("", sprite, callback);
-
-    if (pRet && pRet->init()) {
-        pRet->autorelease();
-        return pRet;
-    } else {
-        delete pRet;
-        pRet = nullptr;
+        CC_SAFE_DELETE(pRet);
         return nullptr;
     }
 }
