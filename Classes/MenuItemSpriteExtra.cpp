@@ -1,7 +1,7 @@
 #include "MenuItemSpriteExtra.h"
 
-MenuItemSpriteExtra::MenuItemSpriteExtra(const char* sprite, std::function<void(Node*)> callback) {
-    this->m_pSprite = Sprite::createWithSpriteFrameName(sprite);
+MenuItemSpriteExtra::MenuItemSpriteExtra(const char* sprite, Node* sprNode, std::function<void(Node*)> callback) {
+    this->m_pSprite = sprite != "" ? Sprite::createWithSpriteFrameName(sprite) : sprNode;
     this->m_fNewScale = 1.26f;
     this->m_fAnimDuration = 0.3f;
     this->m_fCallback = callback;
@@ -32,7 +32,20 @@ bool MenuItemSpriteExtra::init() {
 }
 
 MenuItemSpriteExtra* MenuItemSpriteExtra::create(const char* sprite, std::function<void(Node*)> callback) {
-    MenuItemSpriteExtra* pRet = new(std::nothrow) MenuItemSpriteExtra(sprite, callback);
+    MenuItemSpriteExtra* pRet = new(std::nothrow) MenuItemSpriteExtra(sprite, nullptr, callback);
+
+    if (pRet && pRet->init()) {
+        pRet->autorelease();
+        return pRet;
+    } else {
+        delete pRet;
+        pRet = nullptr;
+        return nullptr;
+    }
+}
+
+MenuItemSpriteExtra* MenuItemSpriteExtra::createWithNode(Node* sprite, std::function<void(Node*)> callback) {
+    MenuItemSpriteExtra* pRet = new(std::nothrow) MenuItemSpriteExtra("", sprite, callback);
 
     if (pRet && pRet->init()) {
         pRet->autorelease();
