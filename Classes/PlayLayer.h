@@ -4,6 +4,9 @@
 #include "PlayerObject.h"
 
 class PlayLayer : public Layer {
+protected:
+    void addExitButton();
+
 public:
     Point startPos;
     float timer;

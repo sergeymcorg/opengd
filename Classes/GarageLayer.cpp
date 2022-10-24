@@ -19,13 +19,8 @@ bool GarageLayer::init() {
     background->setColor({175, 175, 175});
     addChild(background);
 
-
-    // Sprite 
-    // ща сек я скомпилирую ok
-
-
     auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_01_001.png", [&](Node* btn) {
-        this->keyBackClicked();
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
     });
     auto menu = Menu::create();
     menu->addChild(backbtn);
@@ -36,5 +31,5 @@ bool GarageLayer::init() {
 }
 
 void GarageLayer::keyBackClicked() {
-    Director::getInstance()->replaceScene(MenuLayer::scene());
+    
 }

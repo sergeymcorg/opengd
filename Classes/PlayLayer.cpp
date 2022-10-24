@@ -1,9 +1,21 @@
 #include "PlayLayer.h"
+#include "MenuLayer.h"
 
 Scene* PlayLayer::scene() {
     auto scene = Scene::create();
     scene->addChild(PlayLayer::create());
     return scene;
+}
+
+void PlayLayer::addExitButton() {
+    auto winSize = Director::getInstance()->getWinSize();
+    auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_01_001.png", [&](Node* btn) {
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
+    });
+    auto menu = Menu::create();
+    menu->addChild(backbtn);
+    menu->setPosition({50, winSize.height - 50});
+    addChild(menu, 99999);
 }
 
 bool PlayLayer::init(){
@@ -81,6 +93,8 @@ bool PlayLayer::init(){
     this->groundMenu->alignItemsHorizontallyWithPadding(0);
     this->groundStartPosition = groundMenu->getPositionX();
     this->addChild(this->groundMenu, 2);
+
+    addExitButton();
     
     scheduleUpdate();
     

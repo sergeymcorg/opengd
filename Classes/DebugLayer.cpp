@@ -7,6 +7,8 @@
 //     return scene;
 // }
 
+int frames = 0;
+
 void DebugLayer::beginImGui(ImGuiLayer *layer) {
     // enable docking
     auto& io = ImGui::GetIO();
@@ -14,6 +16,9 @@ void DebugLayer::beginImGui(ImGuiLayer *layer) {
     // add ui callbacks
     CCIMGUI::getInstance()->addCallback([=](){
         ImGui::Text("Hello, world!");
+        ImGui::NewLine();
+        ImGui::Text("Frames: %d", frames);
+        frames++;
         // create button with Sprite, auto pushID / popID with texture id
     }, "hello");
     // remove ui callbacks to stop rendering
@@ -21,23 +26,20 @@ void DebugLayer::beginImGui(ImGuiLayer *layer) {
 }
 
 std::string DebugLayer::getRandomName() {
-    return sid;
+    return " ";
 }
 
 ImGuiLayer *__DebugLayer_currentGui;
+bool debugmade = false;
 
 void DebugLayer::removeSelf() {
     Logger() << "Removing ImGui window";
-    ImGuiLayer *layer = dynamic_cast<ImGuiLayer*>(Director::getInstance()->getRunningScene()->getChildByName(getRandomName()));
-    Logger() << "1";
+    ImGuiLayer *layer = dynamic_cast<ImGuiLayer*>(Director::getInstance()->getRunningScene()->getChildByName("ImGui"));
+    if(debugmade) CCIMGUI::getInstance()->removeCallback("hello");
     if(layer) {
-        Logger() << "2";
         layer->retain();
-        Logger() << "3";
         layer->removeFromParent();
-        Logger() << "4";
-        detached = true;
-        Logger() << "5";
+        __DebugLayer_currentGui = nullptr;
     } else {
         Logger() << "Window not found";
     }
@@ -52,14 +54,13 @@ bool DebugLayer::init() {
     auto layer = ImGuiLayer::create();
     if(!layer) return false;
     __DebugLayer_currentGui = layer;
-    Director::getInstance()->getRunningScene()->addChild(layer, order, layerName);
+    Director::getInstance()->getRunningScene()->addChild(layer, order, "ImGui");
 
     auto e = Director::getInstance()->getEventDispatcher();
-    sid.clear();
-    sid.append("First ImGui");
     e->addCustomEventListener(Director::EVENT_BEFORE_SET_NEXT_SCENE, [&](EventCustom*){
-        layer = dynamic_cast<ImGuiLayer*>(Director::getInstance()->getRunningScene()->getChildByName(getRandomName()));
+        layer = dynamic_cast<ImGuiLayer*>(Director::getInstance()->getRunningScene()->getChildByName("ImGui"));
         if (layer) {
+            debugmade = false;
             layer->retain();
             layer->removeFromParent();
             detached = true;
@@ -68,12 +69,11 @@ bool DebugLayer::init() {
     e->addCustomEventListener(Director::EVENT_AFTER_SET_NEXT_SCENE, [&](EventCustom*){
         if (__DebugLayer_currentGui && detached) {
             if(__DebugLayer_currentGui->getParent() == nullptr) {
-                id = rand();
-                sid.clear();
-                sid.append(std::to_string(id));
-                Director::getInstance()->getRunningScene()->addChild(__DebugLayer_currentGui, order, sid);
+                Director::getInstance()->getRunningScene()->addChild(__DebugLayer_currentGui, order, "ImGui");
                 //__DebugLayer_currentGui->release();
+                debugmade = true;
                 detached = false;
+                DebugLayer::create();
             }
         }
     });
