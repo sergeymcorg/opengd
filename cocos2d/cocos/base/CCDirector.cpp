@@ -65,6 +65,8 @@ THE SOFTWARE.
 #include "base/CCScriptSupport.h"
 #endif
 
+#include "../../../Classes/GameManager.h"
+
 /**
  Position of the FPS
  
@@ -932,6 +934,8 @@ void Director::popToSceneStackLevel(int level)
 
 void Director::end()
 {
+    printf("CCDirector::end");
+    GameManager::getInstance()->save();
     _purgeDirectorInNextLoop = true;
 }
 

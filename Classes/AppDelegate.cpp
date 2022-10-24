@@ -106,6 +106,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     srand(time(0));
 
+    GameManager::getInstance()->loadFromSave();
+
     auto fileUtils = FileUtils::getInstance();
     auto resourcesPath = fileUtils->getDefaultResourceRootPath();
     fileUtils->addSearchPath(resourcesPath + "audio");

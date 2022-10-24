@@ -11,9 +11,6 @@ Scene* MenuLayer::scene() {
 
 bool MenuLayer::init(){
     if (!Layer::init()) return false;
-    
-    DebugLayer *dl = DebugLayer::create();
-    if(!dl->init()) return false;
 
     auto background = Sprite::create("GJ_gradientBG.png");
     auto winSize = Director::getInstance()->getWinSize();
@@ -25,24 +22,23 @@ bool MenuLayer::init(){
     background->setColor({0, 0, 175});
     addChild(background);
     
-    auto logoSpr = Sprite::createWithSpriteFrameName("GJ_logo_001.png");
-    logoSpr->setPosition({ winSize.width / 2, winSize.height - 100 });
-    this->addChild(logoSpr);
+    auto log_oSpr = Sprite::createWithSpriteFrameName("GJ_logo_001.png");
+    log_oSpr->setPosition({ winSize.width / 2, winSize.height - 100 });
+    this->addChild(log_oSpr);
     
     auto menu = Menu::create();
     this->addChild(menu);
 
     auto playBtn = MenuItemSpriteExtra::create("GJ_playBtn_001.png", [&](Node* btn) {
-        log << "play!";
+        log_ << "play!";
     });
     
     auto garageBtn = MenuItemSpriteExtra::create("GJ_garageBtn_001.png", [&](Node* btn) {
-        dl->removeSelf();
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, GarageLayer::scene()));
     });    
     
     auto creatorBtn = MenuItemSpriteExtra::create("GJ_creatorBtn_001.png", [&](Node* btn) {
-        log << "creator!";
+        log_ << "creator!";
     });
 
     playBtn->setPosition({0, 20});
@@ -61,15 +57,15 @@ bool MenuLayer::init(){
     // levelEditor->setPosition(creatorBtn->getPosition() + ccp(100, -100));
     
     auto achievementsBtn = MenuItemSpriteExtra::create("GJ_achBtn_001.png", [&](Node* btn) {
-        log << "ach!";
+        log_ << "ach!";
     });
     
     auto optionsBtn = MenuItemSpriteExtra::create("GJ_optionsBtn_001.png", [&](Node* btn) {
-        log << "options!";
+        log_ << "options!";
     });
     
     auto statsBtn = MenuItemSpriteExtra::create("GJ_statsBtn_001.png", [&](Node* btn) {
-        log << "stats!";
+        log_ << "stats!";
     });
 
     auto bottomMenu = Menu::create(achievementsBtn, optionsBtn, statsBtn, nullptr);    
@@ -85,7 +81,7 @@ bool MenuLayer::init(){
     robBtn->setPosition(menu->convertToNodeSpace({120, 60}));
     
     auto moreGamesBtn = MenuItemSpriteExtra::create("GJ_moreGamesBtn_001.png", [&](Node* btn) {
-        log << "more games!";
+        log_ << "more games!";
         auto a = DropDownLayer::create("test");
         this->addChild(a);
         a->showLayer(false);

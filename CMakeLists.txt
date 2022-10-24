@@ -59,7 +59,7 @@ if(APPLE OR WINDOWS)
 endif()
 
 # add cross-platforms source files and header files 
-file (GLOB files "Classes/*.cpp")
+file (GLOB files "Classes/*.[c,h]pp")
 file (GLOB files2 "Classes/*.h")
 
 add_subdirectory("imgui")
@@ -142,7 +142,10 @@ target_link_libraries(${APP_NAME} cocos2d cc_imgui)
 target_include_directories(${APP_NAME}
         PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
+        PRIVATE libs
 )
+
+add_compile_definitions(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)
 
 # mark app resources
 setup_cocos_app_config(${APP_NAME})

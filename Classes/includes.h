@@ -1,12 +1,12 @@
 #pragma once
 
 #include "cocos2d.h"
+#include <cocos-ext.h>
 #include <Windows.h>
 #include <iostream>
 #include <iomanip>
 
 USING_NS_CC;
-
 using std::string, std::vector;
 
 // logger
@@ -29,9 +29,10 @@ private:
     }
 };
 
-#define log Logger()
+#define log_ Logger()
 
 // Most used things
 #include "utils.h"
 #include "MenuItemSpriteExtra.h"
 #include "DropDownLayer.h"
+#include "GameManager.h"
