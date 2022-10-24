@@ -11,6 +11,8 @@ public:
     Point startPos;
     float timer;
 
+    bool m_demo;
+
     int jumps;
     int attempts;
     Sprite* bgSpr;
@@ -26,9 +28,11 @@ public:
     void update(float delta);
     void updateVisibility(float delta);
     void updateGround(float delta);
-    
 
     static Scene* scene();
+    bool init(bool demo);
     bool init();
-    CREATE_FUNC(PlayLayer);
+    //CREATE_FUNC(PlayLayer);
+    static PlayLayer* create() { PlayLayer *pRet = new(std::nothrow) PlayLayer(); if (pRet && pRet->init()) { pRet->autorelease(); return pRet; } else { delete pRet; pRet = nullptr; return nullptr; } }
+    static PlayLayer* create(bool demo) { PlayLayer *pRet = new(std::nothrow) PlayLayer(); if (pRet && pRet->init(demo)) { pRet->autorelease(); return pRet; } else { delete pRet; pRet = nullptr; return nullptr; } }
 };

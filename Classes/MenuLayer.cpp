@@ -3,6 +3,7 @@
 #include "DropDownLayer.h"
 #include "DebugLayer.h"
 #include "PlayLayer.h"
+#include "GitHubLayer.h"
 
 Scene* MenuLayer::scene() {
     auto scene = Scene::create();
@@ -12,18 +13,22 @@ Scene* MenuLayer::scene() {
 
 bool MenuLayer::init(){
     if (!Layer::init()) return false;
+    
 
     //auto dl = DebugLayer::create();
 
-    auto background = Sprite::create("GJ_gradientBG.png");
+    // auto background = Sprite::create("GJ_gradientBG.png");
     auto winSize = Director::getInstance()->getWinSize();
-    auto size = background->getContentSize();
+    // auto size = background->getContentSize();
 
-    background->setScaleX(winSize.width / size.width);
-    background->setScaleY(winSize.height / size.height);
-    background->setAnchorPoint({0, 0});
-    background->setColor({0, 0, 175});
-    addChild(background);
+    // background->setScaleX(winSize.width / size.width);
+    // background->setScaleY(winSize.height / size.height);
+    // background->setAnchorPoint({0, 0});
+    // background->setColor({0, 0, 175});
+    // addChild(background);
+
+    PlayLayer *demo = PlayLayer::create(true);
+    addChild(demo);
     
     auto logoSpr = Sprite::createWithSpriteFrameName("GJ_logo_001.png");
     logoSpr->setPosition({ winSize.width / 2, winSize.height - 100 });
@@ -52,6 +57,7 @@ bool MenuLayer::init(){
     menu->addChild(playBtn);
     menu->addChild(garageBtn);
     menu->addChild(creatorBtn);
+    menu->addChild(GitHubLayer::create());
     // auto selectCharacter = Sprite::createWithSpriteFrameName("GJ_chrSel_001.png");
     // menu->addChild(selectCharacter);
     // selectCharacter->setPosition(garageBtn->getPosition() - ccp(100, 100));

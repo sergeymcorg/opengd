@@ -18,8 +18,10 @@ void PlayLayer::addExitButton() {
     addChild(menu, 99999);
 }
 
-bool PlayLayer::init(){
+bool PlayLayer::init(bool demo){
     if (!Layer::init()) return false;
+
+    m_demo = demo;
 
     startPos = Point(0, 105);
 
@@ -46,7 +48,7 @@ bool PlayLayer::init(){
     this->addChild(this->bgSpr, 1);
 
     // bg scale
-    this->bgSpr->setScale(1.185); // epic hardcore (please fix lmao)
+    this->bgSpr->setScale(1.185f); // epic hardcore (please fix lmao)
     
     /*bg->runAction(
         RepeatForever::create(
@@ -89,16 +91,27 @@ bool PlayLayer::init(){
         this->gsizeX = gr->getContentSize().width;
     }
     
-    this->groundMenu->setPositionY(winSize.height / 2 - 250);
+    this->groundMenu->setPositionY(winSize.height / 2 - 287);
     this->groundMenu->alignItemsHorizontallyWithPadding(0);
     this->groundStartPosition = groundMenu->getPositionX();
     this->addChild(this->groundMenu, 2);
 
-    addExitButton();
+    if(!demo) addExitButton();
+    else {
+        auto col = this->groundMenu->getColor();
+        col.r = 52;
+        col.g = 128;
+        col.b = 235;
+        bgSpr->setColor(col);
+        groundMenu->setColor(col);
+    }
     
     scheduleUpdate();
     
     return true;
+}
+bool PlayLayer::init() {
+    return init(false);
 }
 
 void PlayLayer::update(float delta) {
@@ -108,9 +121,8 @@ void PlayLayer::update(float delta) {
 
 void PlayLayer::updateGround(float delta) {
     
-    auto groundMenu = this->groundMenu;
     if(this->groundStartPosition - groundMenu->getPositionX() < this->gsizeX)
-        groundMenu->setPositionX(groundMenu->getPositionX() - 10);
+        groundMenu->setPositionX(groundMenu->getPositionX() - 5.f);
     else
         groundMenu->setPositionX(groundMenu->getPositionX() + this->gsizeX);
 }
