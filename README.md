@@ -10,7 +10,6 @@ For now it is under development.
 * **[Jaan](https://github.com/JaanDev)#2897**
 * **[dogotrigger](https://github.com/SergeyMC9730)#0355**
 * **[Kolyah35](https://github.com/Kolyah35)#0107**
-* **[Catto_](https://github.com/CattoDev)#1370**
 * **[iAndy_HD3](https://github.com/iAndyHD3)#3579**
 
 ## **TODO list for 1.0**
