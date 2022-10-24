@@ -4,21 +4,14 @@
 #include "PlayerObject.h"
 #include "GJGroundLayer.h"
 
-class PlayLayer : public Layer {
+class MenuGameLayer : public Layer {
 protected:
 
 public:
     Point startPos;
-    float timer;
-
-    bool m_demo;
-
-    int jumps;
-    int attempts;
-    Sprite* bgSpr;
-    
     PlayerObject* player;
     GJGroundLayer* groundLayer;
+    Sprite* bgSpr;
 
 public:
    // void update(float delta);
@@ -26,5 +19,5 @@ public:
 
     static Scene* scene();
     bool init();
-    CREATE_FUNC(PlayLayer);
+    CREATE_FUNC(MenuGameLayer);
 };

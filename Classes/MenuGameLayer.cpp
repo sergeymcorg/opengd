@@ -1,38 +1,24 @@
-#include "PlayLayer.h"
+#include "MenuGameLayer.h"
 #include "MenuLayer.h"
 #include "GJGroundLayer.h"
+#include "GameToolbox.h"
 
-Scene* PlayLayer::scene() {
+Scene* MenuGameLayer::scene() {
     auto scene = Scene::create();
-    scene->addChild(PlayLayer::create());
+    scene->addChild(MenuGameLayer::create());
     return scene;
 }
 
-bool PlayLayer::init(){
+bool MenuGameLayer::init(){
     if (!Layer::init()) return false;
 
 
     startPos = Point(0, 105);
 
-    timer = 0;
-    attempts = 0;
-    jumps = 0;
-
     auto dir = Director::getInstance();
     auto winSize = dir->getWinSize();
     
-    auto grl = GJGroundLayer::create(0, false);
-    this->addChild(grl, 9999);
-    this->groundLayer = grl;
-    
-    //temp back button
-    auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_01_001.png", [&](Node* btn) {
-        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
-    });
-    auto menu = Menu::create();
-    menu->addChild(backbtn);
-    menu->setPosition({50, winSize.height - 50});
-    addChild(menu, 99999);
+    addChild(GJGroundLayer::create(1, true));
     
     
     auto bg = Sprite::create("game_bg_01_001.png");
@@ -48,12 +34,15 @@ bool PlayLayer::init(){
     this->bgSpr->setTextureRect(Rect(0, 0, 2048, 1024));
     this->bgSpr->setPosition(winSize / 2);
 
-    this->addChild(this->bgSpr, 1);
+    //this is not how it works lol
+    //this->bgSpr->setColor(GameToolbox::randomColor3B());
+
+    this->addChild(this->bgSpr, -1);
 
     // bg scale
     this->bgSpr->setScale(1.185f); // epic hardcore (please fix lmao)
     
-    /*bg->runAction(
+    bg->runAction(
         RepeatForever::create(
             Sequence::create(
                 TintTo::create(4.0f, {255, 0, 0}),
@@ -66,7 +55,7 @@ bool PlayLayer::init(){
                 nullptr
             )
         )
-    );*/
+    );
 
 
     

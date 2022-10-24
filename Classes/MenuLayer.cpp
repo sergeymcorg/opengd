@@ -2,8 +2,10 @@
 #include "GarageLayer.h"
 #include "DropDownLayer.h"
 #include "DebugLayer.h"
-#include "PlayLayer.h"
+#include "GJGroundLayer.h"
 #include "GitHubLayer.h"
+#include "PlayLayer.h"
+#include "MenuGameLayer.h"
 
 Scene* MenuLayer::scene() {
     auto scene = Scene::create();
@@ -15,20 +17,10 @@ bool MenuLayer::init(){
     if (!Layer::init()) return false;
     
 
-    //auto dl = DebugLayer::create();
-
-    // auto background = Sprite::create("GJ_gradientBG.png");
+    
     auto winSize = Director::getInstance()->getWinSize();
-    // auto size = background->getContentSize();
-
-    // background->setScaleX(winSize.width / size.width);
-    // background->setScaleY(winSize.height / size.height);
-    // background->setAnchorPoint({0, 0});
-    // background->setColor({0, 0, 175});
-    // addChild(background);
-
-    PlayLayer *demo = PlayLayer::create(true);
-    addChild(demo);
+    
+    addChild(MenuGameLayer::create(), -1);
     
     auto logoSpr = Sprite::createWithSpriteFrameName("GJ_logo_001.png");
     logoSpr->setPosition({ winSize.width / 2, winSize.height - 100 });
