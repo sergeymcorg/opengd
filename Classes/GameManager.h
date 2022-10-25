@@ -28,6 +28,7 @@ public:
 
     void save();
     void loadFromSave();
+    bool test();
 
 private:
     json m_values;
