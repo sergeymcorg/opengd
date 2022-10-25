@@ -4,6 +4,3 @@
 [submodule "cocos2d-x-imgui"]
 	path = cocos2d-x-imgui
 	url = https://github.com/Xrysnow/cocos2d-x-imgui.git
-[submodule "libs/zstd"]
-	path = libs/zstd
-	url = git@github.com:luckymarmot/ZstdKit.git

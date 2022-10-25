@@ -17,7 +17,6 @@ bool GarageLayer::init() {
     background->setColor({175, 175, 175});
     this->addChild(background);
 
-
     auto leftcorner = Sprite::createWithSpriteFrameName("GJ_sideArt_001.png");
     leftcorner->setPosition({0, winSize.height});
     leftcorner->setAnchorPoint({0, 0});
@@ -66,9 +65,8 @@ bool GarageLayer::init() {
     iconsmenu->alignItemsHorizontallyWithPadding(10);
     this->addChild(iconsmenu);
     
-
-    auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
-        this->keyBackClicked();
+    auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_01_001.png", [&](Node* btn) {
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
     });
 
     auto menu = Menu::create();
@@ -77,8 +75,4 @@ bool GarageLayer::init() {
     addChild(menu);
 
     return true;
-}
-
-void GarageLayer::keyBackClicked() {
-    Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
 }

@@ -1,4 +1,6 @@
 #include "PlayLayer.h"
+#include "MenuLayer.h"
+#include "GJGroundLayer.h"
 
 Scene* PlayLayer::scene() {
     auto scene = Scene::create();
@@ -9,16 +11,49 @@ Scene* PlayLayer::scene() {
 bool PlayLayer::init(){
     if (!Layer::init()) return false;
 
+
+    startPos = Point(0, 105);
+
+    timer = 0;
+    attempts = 0;
+    jumps = 0;
+
     auto dir = Director::getInstance();
     auto winSize = dir->getWinSize();
     
-    auto bg = Sprite::create("game_bg_01_001.png");
-    this->bgSpr = bg;
-    this->bgSpr->setPosition(winSize / 2);
-    this->bgSpr->setScale(1.185);
-    this->addChild(this->bgSpr);
+    auto grl = GJGroundLayer::create(0, false);
+    this->addChild(grl, 9999);
+    this->groundLayer = grl;
     
-    bg->runAction(
+    //temp back button
+    auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_01_001.png", [&](Node* btn) {
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
+    });
+    auto menu = Menu::create();
+    menu->addChild(backbtn);
+    menu->setPosition({50, winSize.height - 50});
+    addChild(menu, 99999);
+    
+    
+    auto bg = Sprite::create("game_bg_01_001.png");
+    const Texture2D::TexParams texParams = {
+        backend::SamplerFilter::LINEAR, 
+        backend::SamplerFilter::LINEAR, 
+        backend::SamplerAddressMode::REPEAT, 
+        backend::SamplerAddressMode::REPEAT
+    };
+
+    this->bgSpr = bg;
+    this->bgSpr->getTexture()->setTexParameters(texParams);
+    this->bgSpr->setTextureRect(Rect(0, 0, 2048, 1024));
+    this->bgSpr->setPosition(winSize / 2);
+
+    this->addChild(this->bgSpr, 1);
+
+    // bg scale
+    this->bgSpr->setScale(1.185f); // epic hardcore (please fix lmao)
+    
+    /*bg->runAction(
         RepeatForever::create(
             Sequence::create(
                 TintTo::create(4.0f, {255, 0, 0}),
@@ -31,59 +66,17 @@ bool PlayLayer::init(){
                 nullptr
             )
         )
-    );
+    );*/
 
 
-    this->groundMenu = Menu::create();
     
-    for(int i = 0; i < 7; i++) {
-    
-        auto gr = Sprite::create("groundSquare_01_001.png");
-        
-
-        gr->runAction(
-            RepeatForever::create(
-                Sequence::create(
-                    TintTo::create(4.0f, {255, 0, 0}),
-                    TintTo::create(4.0f, {255, 255, 0}),
-                    TintTo::create(4.0f, {0, 255, 0}),
-                    TintTo::create(4.0f, {0, 255, 255}),
-                    TintTo::create(4.0f, {0, 0, 255}),
-                    TintTo::create(4.0f, {255, 0, 255}),
-                    TintTo::create(4.0f, {255, 0, 0}),
-                    nullptr
-                )
-            )
-        );
-        
-        this->groundMenu->addChild(gr);
-        this->gsizeX = gr->getContentSize().width;
-    
-    }
-    
-    this->groundMenu->setPositionY(winSize.height / 2 - 250);
-    this->groundMenu->alignItemsHorizontallyWithPadding(0);
-    this->groundStartPosition = groundMenu->getPositionX();
-    this->addChild(this->groundMenu);
-    
-    dir->getScheduler()->scheduleUpdate(this, 0, false);
-    
-    
-
+   // scheduleUpdate();
     
     return true;
 }
-
+/*
 void PlayLayer::update(float delta) {
     
-    this->updateGround(delta);
+  //  this->updateGround(delta);
 }
-
-void PlayLayer::updateGround(float delta) {
-    
-    auto groundMenu = this->groundMenu;
-    if(this->groundStartPosition - groundMenu->getPositionX() < this->gsizeX)
-        groundMenu->setPositionX(groundMenu->getPositionX() - 10);
-    else
-        groundMenu->setPositionX(groundMenu->getPositionX() + this->gsizeX);
-}
+*/

@@ -32,6 +32,12 @@ THE SOFTWARE.
 NS_CC_BEGIN
 class Rect;
 
+enum TextureQuality {
+    LOW = 0,
+    MEDIUM,
+    HIGH
+};
+
 class Application : public ApplicationProtocol
 {
 public:
@@ -108,6 +114,8 @@ protected:
     std::string _resourceRootPath;
     
     static Application * sm_pSharedApplication;
+
+    CC_SYNTHESIZE(TextureQuality, m_eTextureQuality, TextureQuality)
 };
 
 NS_CC_END

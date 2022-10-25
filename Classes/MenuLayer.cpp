@@ -2,6 +2,10 @@
 #include "GarageLayer.h"
 #include "DropDownLayer.h"
 #include "DebugLayer.h"
+#include "GJGroundLayer.h"
+#include "GitHubLayer.h"
+#include "PlayLayer.h"
+#include "MenuGameLayer.h"
 
 Scene* MenuLayer::scene() {
     auto scene = Scene::create();
@@ -11,16 +15,10 @@ Scene* MenuLayer::scene() {
 
 bool MenuLayer::init(){
     if (!Layer::init()) return false;
-
-    auto background = Sprite::create("GJ_gradientBG.png");
+    
     auto winSize = Director::getInstance()->getWinSize();
-    auto size = background->getContentSize();
-
-    background->setScaleX(winSize.width / size.width);
-    background->setScaleY(winSize.height / size.height);
-    background->setAnchorPoint({0, 0});
-    background->setColor({0, 0, 175});
-    addChild(background);
+    
+    addChild(MenuGameLayer::create(), -1);
     
     auto log_oSpr = Sprite::createWithSpriteFrameName("GJ_logo_001.png");
     log_oSpr->setPosition({ winSize.width / 2, winSize.height - 100 });
@@ -30,7 +28,8 @@ bool MenuLayer::init(){
     this->addChild(menu);
 
     auto playBtn = MenuItemSpriteExtra::create("GJ_playBtn_001.png", [&](Node* btn) {
-        log_ << "play!";
+        auto scene = PlayLayer::scene();
+        Director::getInstance()->pushScene(TransitionFade::create(0.5f, scene));
     });
     
     auto garageBtn = MenuItemSpriteExtra::create("GJ_garageBtn_001.png", [&](Node* btn) {
@@ -48,6 +47,7 @@ bool MenuLayer::init(){
     menu->addChild(playBtn);
     menu->addChild(garageBtn);
     menu->addChild(creatorBtn);
+    menu->addChild(GitHubLayer::create());
     // auto selectCharacter = Sprite::createWithSpriteFrameName("GJ_chrSel_001.png");
     // menu->addChild(selectCharacter);
     // selectCharacter->setPosition(garageBtn->getPosition() - ccp(100, 100));

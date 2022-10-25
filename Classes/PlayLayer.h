@@ -1,22 +1,28 @@
 #pragma once
 #include "includes.h"
 
+#include "PlayerObject.h"
+#include "GJGroundLayer.h"
+
 class PlayLayer : public Layer {
+protected:
+
 public:
-    
+    Point startPos;
+    float timer;
+
+    bool m_demo;
+
     int jumps;
     int attempts;
     Sprite* bgSpr;
-    Sprite* groundSpr;
     
-    Menu* groundMenu;
-    float groundStartPosition;
-    float gsizeX;
-    
-    void update(float delta);
+    PlayerObject* player;
+    GJGroundLayer* groundLayer;
+
+public:
+   // void update(float delta);
     void updateVisibility(float delta);
-    void updateGround(float delta);
-    
 
     static Scene* scene();
     bool init();

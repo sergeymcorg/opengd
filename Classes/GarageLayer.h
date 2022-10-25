@@ -8,7 +8,6 @@ public:
 
     static Scene* scene();
     bool init();
-    void keyBackClicked();
     bool cubeClicked();
     CREATE_FUNC(GarageLayer);
 };
