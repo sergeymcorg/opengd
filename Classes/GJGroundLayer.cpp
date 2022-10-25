@@ -42,7 +42,7 @@ bool GJGroundLayer::init(int t_groundID, bool t_menugamelayer){
     this->groundStartPosition = groundMenu->getPositionX();
     this->addChild(this->groundMenu, 2);
     
-    this->sep = this->menuGameLayer ? 10.f : 5.f;
+    this->sep = 5.f;
 
     scheduleUpdate();
     

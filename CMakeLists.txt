@@ -58,10 +58,20 @@ if(APPLE OR WINDOWS)
 endif()
 
 # add cross-platforms source files and header files 
+if(WIN32)
+execute_process(
+  COMMAND cmd /c ${CMAKE_CURRENT_SOURCE_DIR}/setdate.bat
+)
 file (GLOB files "Classes/*.[c,h]pp")
 file (GLOB files2 "Classes/*.h")
 
-add_subdirectory("imgui")
+# add_custom_target(invalidate_files ALL_BUILD
+#     COMMAND ${CMAKE_COMMAND} -E touch Classes/CompileLayer.cpp
+#     DEPENDS ${SOURCE_FILES} Classes/CompileLayer.cpp
+# )
+
+endif()
+# add_subdirectory("imgui")
 
 list(APPEND GAME_SOURCE
      ${files}
@@ -128,16 +138,16 @@ set(all_code_files
     ${GAME_SOURCE}
     )
 if(NOT ANDROID)
-    add_executable(${APP_NAME} ${all_code_files})
+    add_executable(${APP_NAME} ${all_code_files} Classes/CompileLayer.cpp)
 else()
-    add_library(${APP_NAME} SHARED ${all_code_files})
+    add_library(${APP_NAME} SHARED ${all_code_files} Classes/CompileLayer.cpp)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/platform)
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
 endif()
 
 target_link_options(${APP_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FORCE:MULTIPLE>)
 
-target_link_libraries(${APP_NAME} cocos2d cc_imgui)
+target_link_libraries(${APP_NAME} cocos2d)
 target_include_directories(${APP_NAME}
         PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
