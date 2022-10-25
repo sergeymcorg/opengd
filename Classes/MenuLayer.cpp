@@ -1,9 +1,8 @@
 #include "MenuLayer.h"
 #include "GarageLayer.h"
 #include "DropDownLayer.h"
-#include "DebugLayer.h"
 #include "GJGroundLayer.h"
-#include "GitHubLayer.h"
+#include "CompileLayer.h"
 #include "PlayLayer.h"
 #include "MenuGameLayer.h"
 
@@ -15,9 +14,7 @@ Scene* MenuLayer::scene() {
 
 bool MenuLayer::init(){
     if (!Layer::init()) return false;
-    
 
-    
     auto winSize = Director::getInstance()->getWinSize();
     
     addChild(MenuGameLayer::create(), -1);
@@ -25,6 +22,7 @@ bool MenuLayer::init(){
     auto logoSpr = Sprite::createWithSpriteFrameName("GJ_logo_001.png");
     logoSpr->setPosition({ winSize.width / 2, winSize.height - 100 });
     this->addChild(logoSpr);
+    
     
     auto menu = Menu::create();
     this->addChild(menu);
@@ -49,14 +47,14 @@ bool MenuLayer::init(){
     menu->addChild(playBtn);
     menu->addChild(garageBtn);
     menu->addChild(creatorBtn);
-    menu->addChild(GitHubLayer::create());
-    // auto selectCharacter = Sprite::createWithSpriteFrameName("GJ_chrSel_001.png");
-    // menu->addChild(selectCharacter);
-    // selectCharacter->setPosition(garageBtn->getPosition() - ccp(100, 100));
+    menu->addChild(CompileLayer::create());
+    auto selectCharacter = Sprite::createWithSpriteFrameName("GJ_chrSel_001.png");
+    menu->addChild(selectCharacter);
+    selectCharacter->setPosition(garageBtn->getPosition() - ccp(100, 100));
 
-    // auto levelEditor = Sprite::createWithSpriteFrameName("GJ_lvlEdit_001.png");
-    // menu->addChild(levelEditor);
-    // levelEditor->setPosition(creatorBtn->getPosition() + ccp(100, -100));
+    auto levelEditor = Sprite::createWithSpriteFrameName("GJ_lvlEdit_001.png");
+    menu->addChild(levelEditor);
+    levelEditor->setPosition(creatorBtn->getPosition() + ccp(100, -100));
     
     auto achievementsBtn = MenuItemSpriteExtra::create("GJ_achBtn_001.png", [&](Node* btn) {
         log << "ach!";
