@@ -1,7 +1,6 @@
 #pragma once
 
 #include "cocos2d.h"
-#include <Windows.h>
 #include <iostream>
 #include <iomanip>
 
