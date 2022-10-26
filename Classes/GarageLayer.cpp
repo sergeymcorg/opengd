@@ -1,4 +1,6 @@
 #include "GarageLayer.h"
+#include "ui/CocosGUI.h"
+#include "PlayerObject.h"
 
 Scene* GarageLayer::scene() {
     auto scene = Scene::create();
@@ -18,28 +20,48 @@ bool GarageLayer::init() {
     this->addChild(background);
 
     auto leftcorner = Sprite::createWithSpriteFrameName("GJ_sideArt_001.png");
-    leftcorner->setPosition({0, winSize.height});
-    leftcorner->setAnchorPoint({0, 0});
+    leftcorner->setPosition({leftcorner->getContentSize().width, winSize.height});
+    leftcorner->setAnchorPoint({1, 1});
     leftcorner->setFlippedY(true);
     this->addChild(leftcorner);
 
     auto rightcorner = Sprite::createWithSpriteFrameName("GJ_sideArt_001.png");
-    rightcorner->setPosition({winSize.width, winSize.height});
+    rightcorner->setPosition({winSize.width - rightcorner->getContentSize().width, winSize.height});
     rightcorner->setAnchorPoint({0, 1});
     rightcorner->setFlippedY(true);
     rightcorner->setFlippedX(true);
     this->addChild(rightcorner); 
 
+    auto usernamefield = ui::TextField::create("Player", "bigFont.fnt", 48);
+    usernamefield->setMaxLength(20);
+    usernamefield->setPlaceHolderColor({120, 170, 240});
+    //usernamefield->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
+    //    //std::cout << usernamefield->getString() << std::endl;
+    //});
+    usernamefield->setPosition({winSize.width / 2, winSize.height - (float)(winSize.height / 8)});
+    this->addChild(usernamefield);
+
     auto floor = Sprite::create("floor.png");
     floor->setPosition({winSize.width / 2, (winSize.height / 2) + 10});
     this->addChild(floor);
 
+    auto playerobj = PlayerObject::create(currentcube, this);
+    playerobj->setPosition({winSize.width / 2, floor->getPosition().y + floor->getContentSize().height});
+    playerobj->setAnchorPoint({0.5, -1});
+    playerobj->mainSprite->setColor(colors[this->currentFirstColor]);
+    playerobj->secondarySprite->setColor(colors[this->currentSecondColor]);
+    this->addChild(playerobj);
+
     auto square = ui::Scale9Sprite::create("square02_001.png");
     square->setAnchorPoint({0.5, 1});
     square->setPosition({winSize.width / 2, (winSize.height / 2) - 10});
-    square->setContentSize({winSize.width - (winSize.width / 6), 100});
+    square->setContentSize({winSize.width - (float)(winSize.width / 3.7), 100});
     square->setOpacity(75);
     this->addChild(square);
+
+    auto hint = Sprite::createWithSpriteFrameName("GJ_unlockTxt_001.png");
+    hint->setPosition({square->getPosition().x + (float)(square->getContentSize().width / 3), square->getPosition().y});
+    this->addChild(hint);
 
     auto iconsmenu = Menu::create();
     for(int i = 0; i < this->cubescount; i++){
@@ -60,10 +82,57 @@ bool GarageLayer::init() {
     }
     iconsmenu->setAnchorPoint({0.5, 1});
     iconsmenu->setPosition({winSize.width / 2 - 40, (winSize.height / 2) - 60});
-    iconsmenu->alignItemsHorizontallyWithPadding(80);
+    iconsmenu->alignItemsHorizontallyWithPadding(75);
     this->addChild(iconsmenu);
     
-    auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_01_001.png", [&](Node* btn) {
+    auto colormenuShape = Sprite::create("edit_barBG_001-hd.png");
+    colormenuShape->setPosition({-1, -1});
+    colormenuShape->setAnchorPoint({0, 0});
+    colormenuShape->setContentSize({winSize.width, colormenuShape->getContentSize().height});
+    this->addChild(colormenuShape);
+
+    auto colormenu = Menu::create();
+    log_ << "Menu created";
+    for(int i = 0; i <= colors.size(); i++){
+        log_ << i;
+        auto colorbtn = Sprite::create("square.png");
+        // auto colorbtn = MenuItemSpriteExtra::create("square.png", [&](Node* btn) {
+        //     this->currentFirstColor = i;
+        // });
+        log_ << "sprite created";
+        if(colorbtn){
+            colorbtn->setColor(colors[i]);
+            log_ << "color";
+            colormenu->addChild(colorbtn);
+            log_ << "sprite now is child";
+        }
+    }
+
+    for(int i = 0; i <= colors.size(); i++){
+        log_ << i;
+        auto colorbtn = Sprite::create("square.png");
+        // auto colorbtn = MenuItemSpriteExtra::create("square.png", [&](Node* btn) {
+        //     this->currentFirstColor = i;
+        // });
+        log_ << "sprite created";
+        if(colorbtn){
+            colorbtn->setColor(colors[i]);
+            log_ << "color";
+            colormenu->addChild(colorbtn);
+            log_ << "sprite now is child";
+        }
+    }
+
+    colormenu->alignItemsInColumnsWithArray({Value(13), Value(2)}, 10);
+
+    colormenu->setPosition({winSize.width / 2, colormenuShape->getPosition().y + (colormenuShape->getContentSize().height / 2)});
+    this->addChild(colormenu);
+
+    //auto colSelector = Sprite::createWithSpriteFrameName("GJ_select_001.png");
+    //auto colSelector2 = Sprite::createWithSpriteFrameName("GJ_select_001.png");
+    //colSelector->setPosition();
+
+    auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
     });
 
