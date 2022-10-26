@@ -369,9 +369,9 @@ void Menu::alignItemsInColumns(int columns, va_list args)
     alignItemsInColumnsWithArray(rows);
 }
 
-void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
+void Menu::alignItemsInColumnsWithArray(const ValueVector& rows, float padding)
 {
-    int height = -5;
+    int height = -padding / 2;
     size_t row = 0;
     int rowHeight = 0;
     int columnsOccupied = 0;
@@ -390,7 +390,7 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
         ++columnsOccupied;
         if (columnsOccupied >= rowColumns)
         {
-            height += rowHeight + 5;
+            height += rowHeight + padding / 2;
             
             columnsOccupied = 0;
             rowHeight = 0;
@@ -410,11 +410,15 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
     float x = 0.0;
     float y = (float)(height / 2);
 
+    int a = 0;
+
     for(const auto &child : _children) {
+        a++;
         if (rowColumns == 0)
         {
             rowColumns = rows[row].asInt();
-            w = winSize.width / (1 + rowColumns);
+            // w = winSize.width / (1 + rowColumns);
+            w = padding * a + child->getContentSize().width;
             x = w;
         }
 
@@ -422,6 +426,7 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
         rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
 
         child->setPosition(x - winSize.width / 2,
+        // child->setPosition(x - winSize.width / 2,
                                y - child->getContentSize().height / 2);
 
         x += w;
@@ -429,12 +434,13 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
 
         if (columnsOccupied >= rowColumns)
         {
-            y -= rowHeight + 5;
+            y -= rowHeight + padding / 2;
 
             columnsOccupied = 0;
             rowColumns = 0;
             rowHeight = 0;
             ++row;
+            a = 0;
         }
     }
 }
@@ -460,13 +466,13 @@ void Menu::alignItemsInRows(int rows, va_list args)
     alignItemsInRowsWithArray(array);
 }
 
-void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
+void Menu::alignItemsInRowsWithArray(const ValueVector& columns, float padding)
 {
     vector<int> columnWidths;
     vector<int> columnHeights;
 
-    int width = -10;
-    int columnHeight = -5;
+    int width = -padding;
+    int columnHeight = -padding;
     size_t column = 0;
     int columnWidth = 0;
     int rowsOccupied = 0;
@@ -484,18 +490,18 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
         float tmp = child->getContentSize().width;
         columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
-        columnHeight += (int)(child->getContentSize().height + 5);
+        columnHeight += (int)(child->getContentSize().height + (padding/2));
         ++rowsOccupied;
 
         if (rowsOccupied >= columnRows)
         {
             columnWidths.push_back(columnWidth);
             columnHeights.push_back(columnHeight);
-            width += columnWidth + 10;
+            width += columnWidth + padding;
 
             rowsOccupied = 0;
             columnWidth = 0;
-            columnHeight = -5;
+            columnHeight = -padding;
             ++column;
         }
     }
@@ -525,12 +531,12 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
         child->setPosition(x + columnWidths[column] / 2,
                                y - winSize.height / 2);
 
-        y -= child->getContentSize().height + 10;
+        y -= child->getContentSize().height + padding;
         ++rowsOccupied;
 
         if (rowsOccupied >= columnRows)
         {
-            x += columnWidth + 5;
+            x += columnWidth + padding;
             rowsOccupied = 0;
             columnRows = 0;
             columnWidth = 0;

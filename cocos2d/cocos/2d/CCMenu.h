@@ -111,7 +111,7 @@ public:
     /** Align items in array of columns.
      * @js NA
      */
-    void alignItemsInColumnsWithArray(const ValueVector& rows);
+    void alignItemsInColumnsWithArray(const ValueVector& rows, float padding = 10);
 
     /** Align items in columns of rows. */
     void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
@@ -122,7 +122,7 @@ public:
     /** Align items in array of rows.
      * @js NA
      */
-    void alignItemsInRowsWithArray(const ValueVector& columns);
+    void alignItemsInRowsWithArray(const ValueVector& columns, float padding = 10);
 
     /**
      * Determines if the menu is enabled.

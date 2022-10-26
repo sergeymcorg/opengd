@@ -5,7 +5,7 @@
 USING_NS_CC;
 using namespace std::filesystem;
 
-#define ccp(x,y) Vec2(x,y)
+#define ccp(x,y) Point(x,y)
 
 vector<string> splitString(string str, char separator) {
     string temp = "";

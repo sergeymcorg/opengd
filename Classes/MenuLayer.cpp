@@ -1,10 +1,10 @@
 #include "MenuLayer.h"
 #include "GarageLayer.h"
-#include "DropDownLayer.h"
 #include "GroundLayer.h"
 #include "CompileLayer.h"
 #include "PlayLayer.h"
 #include "MenuGameLayer.h"
+#include "CreatorLayer.h"
 
 Scene* MenuLayer::scene() {
     auto scene = Scene::create();
@@ -37,7 +37,7 @@ bool MenuLayer::init(){
     });    
     
     auto creatorBtn = MenuItemSpriteExtra::create("GJ_creatorBtn_001.png", [&](Node* btn) {
-        log_ << "creator!";
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, CreatorLayer::scene()));
     });
 
     playBtn->setPosition({0, 20});
