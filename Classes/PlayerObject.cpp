@@ -100,7 +100,13 @@ bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
 
     motionStreak->setStartingPositionInitialized(false);
 
+    scheduleUpdate();
+
     return true;
+}
+
+void PlayerObject::update(float delta) {
+    this->setPositionX(getPositionX() + 5.f);
 }
 
 PlayerObject* PlayerObject::create(int playerFrame, Layer* gameLayer) {

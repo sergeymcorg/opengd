@@ -12,9 +12,15 @@ public:
     PlayerObject* player;
     GroundLayer* groundLayer;
     Sprite* bgSpr;
+    Menu *bgSprites;
+    float bgStartPos;
+    float sep;
+    float bsizeX;
 
 public:
-   // void update(float delta);
+    void processPlayerMovement(float delta);
+    void processBackground(float delta);
+    void update(float delta);
     void updateVisibility(float delta);
 
     static Scene* scene();

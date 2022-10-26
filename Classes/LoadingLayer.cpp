@@ -25,7 +25,7 @@ Scene* LoadingLayer::scene() {
 }
 
 bool LoadingLayer::init() {
-    if (!Layer::init()) return false;
+    if (!Layer::init() || !GameManager::getInstance()->test()) return false;
 
     Director::getInstance()->getTextureCache()->addImage("GJ_LaunchSheet.png");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("GJ_LaunchSheet.plist");

@@ -27,3 +27,13 @@ void GameManager::loadFromSave() {
         log_ << "Failed to load GameManager!";
     file.close();
 }
+
+bool GameManager::test() {
+    setVariable("gj_saveTest", 128);
+    save();
+    loadFromSave();
+    int t = getVariable<int>("gj_saveTest");
+    if(t == 128) return true;
+
+    return false;
+}
