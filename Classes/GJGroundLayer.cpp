@@ -20,20 +20,25 @@ bool GJGroundLayer::init(int t_groundID, bool t_menugamelayer){
         this->gsizeX = gr->getContentSize().width;
         
         if(this->menuGameLayer) {
-            gr->runAction(
-                RepeatForever::create(
-                    Sequence::create(
-                        TintTo::create(4.0f, {255, 0, 0}),
-                        TintTo::create(4.0f, {255, 255, 0}),
-                        TintTo::create(4.0f, {0, 255, 0}),
-                        TintTo::create(4.0f, {0, 255, 255}),
-                        TintTo::create(4.0f, {0, 0, 255}),
-                        TintTo::create(4.0f, {255, 0, 255}),
-                        TintTo::create(4.0f, {255, 0, 0}),
-                        nullptr
-                    )
-                )
-            );
+        //     gr->runAction(
+        //         RepeatForever::create(
+        //             Sequence::create(
+        //                 TintTo::create(4.0f, {255, 0, 0}),
+        //                 TintTo::create(4.0f, {255, 255, 0}),
+        //                 TintTo::create(4.0f, {0, 255, 0}),
+        //                 TintTo::create(4.0f, {0, 255, 255}),
+        //                 TintTo::create(4.0f, {0, 0, 255}),
+        //                 TintTo::create(4.0f, {255, 0, 255}),
+        //                 TintTo::create(4.0f, {255, 0, 0}),
+        //                 nullptr
+        //             )
+        //         )
+        //     );
+            auto col = gr->getColor();
+            col.r = 0;
+            col.g = 102;
+            col.b = 255;
+            gr->setColor(col);
         }
     }
     
@@ -43,6 +48,10 @@ bool GJGroundLayer::init(int t_groundID, bool t_menugamelayer){
     this->addChild(this->groundMenu, 2);
     
     this->sep = 5.f;
+
+    auto floor = Sprite::create("floor.png");
+    floor->setPosition({winSize.width / 2, 200});
+    this->addChild(floor, 128);
 
     scheduleUpdate();
     

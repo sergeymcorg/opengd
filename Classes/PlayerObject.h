@@ -21,6 +21,9 @@ public:
 
 public:
     bool init(int, Layer*);
+    void jump();
+
+    void update(float delta);
 
     static PlayerObject* create(int, Layer*);
 };

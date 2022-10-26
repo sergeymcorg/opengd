@@ -49,8 +49,10 @@ bool GarageLayer::init() {
         log_ << "Sprites created";
         auto node = Node::create();
         log_ << "Node created";
-        node->addChild(sprite1);
-        node->addChild(sprite2);
+        if(sprite1 && sprite2) {
+            node->addChild(sprite1);
+            node->addChild(sprite2);
+        }
         log_ << "Now sprites are childs";
         auto menuitem = MenuItemSpriteExtra::createWithNode(node,  [&](Node* btn) {
             log_ << "cube clicked";
@@ -62,7 +64,7 @@ bool GarageLayer::init() {
     log_ << "loop ended";
     iconsmenu->setAnchorPoint({0.5, 1});
     iconsmenu->setPosition({winSize.width / 2, (winSize.height / 2) - 10});
-    iconsmenu->alignItemsHorizontallyWithPadding(10);
+    iconsmenu->alignItemsHorizontallyWithPadding(60);
     this->addChild(iconsmenu);
     
     auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_01_001.png", [&](Node* btn) {
