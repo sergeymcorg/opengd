@@ -46,25 +46,21 @@ bool GarageLayer::init() {
         log_ << i;
         auto sprite1 = Sprite::createWithSpriteFrameName(string("player_").append(std::to_string(i / 10)).append(std::to_string(i % 10)).append("_001.png").c_str());
         auto sprite2 = Sprite::createWithSpriteFrameName(string("player_").append(std::to_string(i / 10)).append(std::to_string(i % 10)).append("_2_001.png").c_str());
-        log_ << "Sprites created";
         auto node = Node::create();
-        log_ << "Node created";
         if(sprite1 && sprite2) {
             node->addChild(sprite1);
+            sprite2->setColor({255, 255, 255});
+            sprite1->setColor({158, 158, 158});
             node->addChild(sprite2);
         }
-        log_ << "Now sprites are childs";
         auto menuitem = MenuItemSpriteExtra::createWithNode(node,  [&](Node* btn) {
             log_ << "cube clicked";
         });
-        log_ << "Menu item created";
         iconsmenu->addChild(menuitem);
-        log_ << "menu item now child";
     }
-    log_ << "loop ended";
     iconsmenu->setAnchorPoint({0.5, 1});
-    iconsmenu->setPosition({winSize.width / 2, (winSize.height / 2) - 10});
-    iconsmenu->alignItemsHorizontallyWithPadding(60);
+    iconsmenu->setPosition({winSize.width / 2 - 40, (winSize.height / 2) - 60});
+    iconsmenu->alignItemsHorizontallyWithPadding(80);
     this->addChild(iconsmenu);
     
     auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_01_001.png", [&](Node* btn) {
