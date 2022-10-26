@@ -1,57 +1,33 @@
 #include "GroundLayer.h"
 
-bool GroundLayer::init(int t_groundID, bool t_menugamelayer){
+bool GroundLayer::init(int groundID) {
     if (!Layer::init()) return false;
 
-    this->menuGameLayer = t_menugamelayer;
-    
     auto winSize = Director::getInstance()->getWinSize();
-    this->groundMenu = Menu::create();
-    log_ << "calling" << '\n;';
     
-    //string format later
-    const std::string groundTextureStr = "groundSquare_001.png";
-    
-    for(int i = 0; i < 7; i++) {
-        log_ << "loop " << i << '\n;';
-        
-        auto gr = Sprite::create(groundTextureStr);
-        this->groundMenu->addChild(gr);
-        this->gsizeX = gr->getContentSize().width;
-        
-        if(this->menuGameLayer) {
-        //     gr->runAction(
-        //         RepeatForever::create(
-        //             Sequence::create(
-        //                 TintTo::create(4.0f, {255, 0, 0}),
-        //                 TintTo::create(4.0f, {255, 255, 0}),
-        //                 TintTo::create(4.0f, {0, 255, 0}),
-        //                 TintTo::create(4.0f, {0, 255, 255}),
-        //                 TintTo::create(4.0f, {0, 0, 255}),
-        //                 TintTo::create(4.0f, {255, 0, 255}),
-        //                 TintTo::create(4.0f, {255, 0, 0}),
-        //                 nullptr
-        //             )
-        //         )
-        //     );
-            auto col = gr->getColor();
-            col.r = 0;
-            col.g = 102;
-            col.b = 255;
-            gr->setColor(col);
-        }
-    }
-    
-    this->groundMenu->setPositionY(winSize.height / 2 - 287);
-    this->groundMenu->alignItemsHorizontallyWithPadding(0);
-    this->groundStartPosition = groundMenu->getPositionX();
-    this->addChild(this->groundMenu, 2);
-    
-    this->sep = 5.f;
+    auto name = StringUtils::format("groundSquare_%03d.png", groundID);
+    this->m_pSprite = Sprite::create(name);
+    this->m_fOneGroundSize = this->m_pSprite->getTextureRect().size.width;
+    this->m_pSprite->getTexture()->setTexParameters({ backend::SamplerFilter::NEAREST, backend::SamplerFilter::NEAREST, backend::SamplerAddressMode::REPEAT, backend::SamplerAddressMode::REPEAT });
+    this->m_pSprite->setTextureRect({0, 0, winSize.width + this->m_fOneGroundSize, this->m_pSprite->getTextureRect().size.height });
+    this->m_pSprite->setAnchorPoint({0, 0});
+    this->m_pSprite->setPosition({0, -50});
+    this->m_pSprite->setColor({0, 102, 255});
+    this->addChild(this->m_pSprite);
 
-    auto floor = Sprite::create("floor.png");
-    floor->setPosition({winSize.width / 2, 200});
-    this->addChild(floor, 128);
+    auto line = Sprite::create("floor.png");
+    this->addChild(line);
+    line->setPosition({winSize.width / 2, this->m_pSprite->getContentSize().height + this->m_pSprite->getPositionY()});
+
+    auto gradient1 = Sprite::createWithSpriteFrameName("groundSquareShadow_001.png");
+    this->addChild(gradient1);
+    gradient1->setScale(1.6f);
+    
+    auto gradient2 = Sprite::createWithSpriteFrameName("groundSquareShadow_001.png");
+    this->addChild(gradient2);
+    gradient2->setScale(1.6f);
+    gradient2->setFlippedX(true);
+    gradient2->setPositionX(winSize.width);
 
     scheduleUpdate();
     
@@ -59,22 +35,17 @@ bool GroundLayer::init(int t_groundID, bool t_menugamelayer){
 }
 
 
-void GroundLayer::update(float delta) {
-    
-    if(this->groundStartPosition - groundMenu->getPositionX() < this->gsizeX) 
-    {
-        groundMenu->setPositionX(groundMenu->getPositionX() - this->sep);
-    }
-    else 
-    {
-        groundMenu->setPositionX(groundMenu->getPositionX() + this->gsizeX);
-    }
+void GroundLayer::update(float dt) {
+    this->m_pSprite->setPositionX(this->m_pSprite->getPositionX() - dt * this->m_fSpeed);
+
+    if (this->m_pSprite->getPositionX() <= -this->m_fOneGroundSize)
+        this->m_pSprite->setPositionX(this->m_pSprite->getPositionX() + this->m_fOneGroundSize);
 }
 
-GroundLayer* GroundLayer::create(int groundID, bool menugamelayer) {
+GroundLayer* GroundLayer::create(int groundID) {
     GroundLayer* pRet = new(std::nothrow) GroundLayer();
 
-    if (pRet && pRet->init(groundID, menugamelayer)) {
+    if (pRet && pRet->init(groundID)) {
         pRet->autorelease();
         return pRet;
     } else {

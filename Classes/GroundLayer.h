@@ -2,20 +2,14 @@
 #include "includes.h"
 
 class GroundLayer : public Layer {
-protected:
+private:
+    Sprite* m_pSprite;
+    float m_fOneGroundSize;
 
 public:
+    void update(float dt);
+    bool init(int groundID);
+    static GroundLayer* create(int groundID);
 
-    Menu* groundMenu;
-    float groundStartPosition;
-    float gsizeX;
-    bool menuGameLayer;
-    float sep;
-
-
-public:
-
-    void update(float delta);
-    bool init(int groundID, bool menuLayer);
-    static GroundLayer* create(int groundID, bool menuLayer);
+    float m_fSpeed = 400; // Points per second
 };

@@ -17,7 +17,7 @@ bool MenuGameLayer::init(){
     auto dir = Director::getInstance();
     auto winSize = dir->getWinSize();
     
-    addChild(GroundLayer::create(1, true), 2);
+    addChild(GroundLayer::create(1), 2);
 
     auto playerTest = PlayerObject::create(1, this);
     playerTest->mainSprite->setColor(GameToolbox::randomColor3B());

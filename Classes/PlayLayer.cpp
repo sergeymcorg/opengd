@@ -19,7 +19,7 @@ bool PlayLayer::init(){
     auto dir = Director::getInstance();
     auto winSize = dir->getWinSize();
     
-    auto grl = GroundLayer::create(0, false);
+    auto grl = GroundLayer::create(1);
     this->addChild(grl, 9999);
     this->groundLayer = grl;
     
