@@ -2,7 +2,8 @@
 #include "includes.h"
 
 #include "PlayerObject.h"
-#include "GJGroundLayer.h"
+#include "GroundLayer.h"
+#include "MenuLayer.h"
 
 class PlayLayer : public Layer {
 protected:
@@ -18,7 +19,7 @@ public:
     Sprite* bgSpr;
     
     PlayerObject* player;
-    GJGroundLayer* groundLayer;
+    GroundLayer* groundLayer;
 
 public:
    // void update(float delta);

@@ -1,6 +1,6 @@
-#include "GJGroundLayer.h"
+#include "GroundLayer.h"
 
-bool GJGroundLayer::init(int t_groundID, bool t_menugamelayer){
+bool GroundLayer::init(int t_groundID, bool t_menugamelayer){
     if (!Layer::init()) return false;
 
     this->menuGameLayer = t_menugamelayer;
@@ -50,7 +50,7 @@ bool GJGroundLayer::init(int t_groundID, bool t_menugamelayer){
 }
 
 
-void GJGroundLayer::update(float delta) {
+void GroundLayer::update(float delta) {
     
     if(this->groundStartPosition - groundMenu->getPositionX() < this->gsizeX) 
     {
@@ -62,8 +62,8 @@ void GJGroundLayer::update(float delta) {
     }
 }
 
-GJGroundLayer* GJGroundLayer::create(int groundID, bool menugamelayer) {
-    GJGroundLayer* pRet = new(std::nothrow) GJGroundLayer();
+GroundLayer* GroundLayer::create(int groundID, bool menugamelayer) {
+    GroundLayer* pRet = new(std::nothrow) GroundLayer();
 
     if (pRet && pRet->init(groundID, menugamelayer)) {
         pRet->autorelease();

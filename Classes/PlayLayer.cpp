@@ -1,6 +1,4 @@
 #include "PlayLayer.h"
-#include "MenuLayer.h"
-#include "GJGroundLayer.h"
 
 Scene* PlayLayer::scene() {
     auto scene = Scene::create();
@@ -21,7 +19,7 @@ bool PlayLayer::init(){
     auto dir = Director::getInstance();
     auto winSize = dir->getWinSize();
     
-    auto grl = GJGroundLayer::create(0, false);
+    auto grl = GroundLayer::create(0, false);
     this->addChild(grl, 9999);
     this->groundLayer = grl;
     

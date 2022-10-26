@@ -1,7 +1,7 @@
 #pragma once
 #include "includes.h"
 
-class GJGroundLayer : public Layer {
+class GroundLayer : public Layer {
 protected:
 
 public:
@@ -17,5 +17,5 @@ public:
 
     void update(float delta);
     bool init(int groundID, bool menuLayer);
-    static GJGroundLayer* create(int groundID, bool menuLayer);
+    static GroundLayer* create(int groundID, bool menuLayer);
 };

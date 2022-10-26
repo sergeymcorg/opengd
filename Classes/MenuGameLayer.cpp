@@ -1,6 +1,6 @@
 #include "MenuGameLayer.h"
 #include "MenuLayer.h"
-#include "GJGroundLayer.h"
+#include "GroundLayer.h"
 #include "GameToolbox.h"
 
 Scene* MenuGameLayer::scene() {
@@ -18,7 +18,7 @@ bool MenuGameLayer::init(){
     auto dir = Director::getInstance();
     auto winSize = dir->getWinSize();
     
-    addChild(GJGroundLayer::create(1, true));
+    addChild(GroundLayer::create(1, true));
     
     
     auto bg = Sprite::create("game_bg_01_001.png");

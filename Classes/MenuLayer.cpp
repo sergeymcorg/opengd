@@ -1,7 +1,7 @@
 #include "MenuLayer.h"
 #include "GarageLayer.h"
 #include "DropDownLayer.h"
-#include "GJGroundLayer.h"
+#include "GroundLayer.h"
 #include "CompileLayer.h"
 #include "PlayLayer.h"
 #include "MenuGameLayer.h"

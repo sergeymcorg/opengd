@@ -2,7 +2,7 @@
 #include "includes.h"
 
 #include "PlayerObject.h"
-#include "GJGroundLayer.h"
+#include "GroundLayer.h"
 
 class MenuGameLayer : public Layer {
 protected:
@@ -10,7 +10,7 @@ protected:
 public:
     Point startPos;
     PlayerObject* player;
-    GJGroundLayer* groundLayer;
+    GroundLayer* groundLayer;
     Sprite* bgSpr;
 
 public:
