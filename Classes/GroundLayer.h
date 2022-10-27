@@ -11,5 +11,5 @@ public:
     bool init(int groundID);
     static GroundLayer* create(int groundID);
 
-    float m_fSpeed = 400; // Points per second
+    float m_fSpeed = 700; // Points per second
 };

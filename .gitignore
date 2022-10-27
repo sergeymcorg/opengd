@@ -3,6 +3,7 @@ Resources
 
 # CMake Files
 build
+out
 
 .vscode
 .vs
