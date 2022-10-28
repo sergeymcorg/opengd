@@ -1,6 +1,6 @@
 #include "GJGameLevel.h"
 
-static GJGameLevel* GJGameLevel::create() {
+GJGameLevel* GJGameLevel::create() {
 	GJGameLevel* res = new GJGameLevel();
 	CCASSERT(res != nullptr, "OpenGD - Cannot create GameLevel!");
 	
