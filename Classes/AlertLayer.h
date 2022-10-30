@@ -1,27 +1,20 @@
 #pragma once
 
 #include "includes.h"
-#include "GarageLayer.h"
 #include "PopupLayer.h"
 #include "ui/CocosGUI.h"
 
-class AlertLayer : public Layer {
+class AlertLayer : public PopupLayer {
 private:
-    bool init(const char* title, float height);
 
-    // Inherit this function to add your custom code
-    virtual void setup() {};
-    
-    Layer* m_pMainLayer;
-    LayerColor* m_pBGLayer;
-    Menu* m_pButtonsMenu;
-    Point m_eEndPos;
-    Point m_eStartPos;
-    static inline bool popupOpen = false;
+   bool init(std::string title, std::string desc, std::string btn1str, std::string btn2str, float width, float height);
+
 public:
-    static AlertLayer* create(const char* title, float height = 220);
+    static AlertLayer* create(std::string title, std::string desc, std::string btn1str, std::string btn2str, float width, float height);
+	void onBtn1(Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void onBtn2(Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
-    virtual void hideLayer(bool instant, bool removeFromParent);
-    virtual void showLayer(bool instant);
-    void close(Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	
+	
+	
 };

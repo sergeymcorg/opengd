@@ -184,10 +184,6 @@ void ColoursPalette::addColorButton(Menu *father, float posX, float posY, int id
 
 void ColoursPalette::close(Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
 	
-    //this->garageLayer->updatePlayerColors();
-	int t = static_cast<int>(type);
-	log_ << "TouchEventType: " << t;
-		
 	switch (type) {
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
         {
