@@ -206,7 +206,7 @@ bool ColoursPalette::init(GarageLayer *t_garagelayer)
     auto win_size = dir->getWinSize();
 	auto winSize = win_size;
 	
-    auto background = ui::Scale9Sprite::create("GJ_square05.png");
+    auto background = ui::Scale9Sprite::create("GJ_square01.png");
 		
 	constexpr float multiplier = 2.1f;
     background->setContentSize(Size(450.0f * multiplier, 300.0f * multiplier));

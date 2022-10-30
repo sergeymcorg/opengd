@@ -108,6 +108,33 @@ bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
 void PlayerObject::update(float delta) {
     this->setPositionX(getPositionX() + 5.f);
 }
+void PlayerObject::jump() {
+    this->runAction(
+        Sequence::create(
+            Spawn::create(
+                Sequence::create(
+                    RotateBy::create(0.15, 80.f),
+                    RotateBy::create(0.025, 0.f),
+                    RotateBy::create(0.225, 80.f),
+                    RotateBy::create(0, -160),
+                    nullptr
+                ),
+                Sequence::create(
+                    //MoveBy::create(0.025, { 0, 80.f }),
+                    //MoveBy::create(0.15, { 0, 50.f }),
+                    //MoveBy::create(0.05, { 0.f, 0.f }),
+                    //MoveBy::create(0.15, { 0, -80.f }),
+                    //MoveBy::create(0.025, { 0, -50.f }),
+                    MoveBy::create(0.2, {0, 130.f}),
+                    MoveBy::create(0.2, { 0, -130.f }),
+                    nullptr
+                ),
+                nullptr
+            ),
+            nullptr
+        )
+    );
+}
 
 PlayerObject* PlayerObject::create(int playerFrame, Layer* gameLayer) {
     auto pRet = new (std::nothrow) PlayerObject();

@@ -88,6 +88,9 @@ bool MenuGameLayer::init(){
 }
 void MenuGameLayer::processPlayerMovement(float delta) {
     if(this->player) {
+        if (this->player->getPositionX() == 500.f) {
+            this->player->jump();
+        }
         if(this->player->getPositionX() >= 1300.f) {
             log_ << "TRIGGER";
             player->removeFromParentAndCleanup(true);
