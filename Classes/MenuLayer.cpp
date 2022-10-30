@@ -5,6 +5,8 @@
 #include "PlayLayer.h"
 #include "MenuGameLayer.h"
 #include "CreatorLayer.h"
+#include "AlertLayer.h"
+#include "ColoursPalette.h"
 
 Scene* MenuLayer::scene() {
     auto scene = Scene::create();
@@ -44,9 +46,9 @@ bool MenuLayer::init(){
     garageBtn->setPosition({-220, 20});
     creatorBtn->setPosition({220, 20});
 
-    menu->addChild(playBtn);
-    menu->addChild(garageBtn);
-    menu->addChild(creatorBtn);
+    // menu->addChild(playBtn);
+    // menu->addChild(garageBtn);
+    // menu->addChild(creatorBtn);
     menu->addChild(CompileLayer::create());
     auto selectCharacter = Sprite::createWithSpriteFrameName("GJ_chrSel_001.png");
     menu->addChild(selectCharacter);
@@ -57,7 +59,8 @@ bool MenuLayer::init(){
     levelEditor->setPosition(creatorBtn->getPosition() + ccp(100, -100));
     
     auto achievementsBtn = MenuItemSpriteExtra::create("GJ_achBtn_001.png", [&](Node* btn) {
-        log_ << "ach!";
+		AlertLayer::create("coming soon", "this feature has not been added yet!", "OK", "", 600, 250)->show();
+		//ColoursPalette::create(nullptr)->show();
     });
     
     auto optionsBtn = MenuItemSpriteExtra::create("GJ_optionsBtn_001.png", [&](Node* btn) {
@@ -65,7 +68,7 @@ bool MenuLayer::init(){
     });
     
     auto statsBtn = MenuItemSpriteExtra::create("GJ_statsBtn_001.png", [&](Node* btn) {
-        log_ << "stats!";
+		AlertLayer::create("Newgrounds", "Visit Newgrounds to find awesome music?", "Open", "Cancel", 600, 350)->show();
     });
 
     auto bottomMenu = Menu::create(achievementsBtn, optionsBtn, statsBtn, nullptr);    

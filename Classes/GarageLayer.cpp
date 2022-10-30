@@ -1,6 +1,8 @@
 #include "GarageLayer.h"
 #include "ui/CocosGUI.h"
 #include "PlayerObject.h"
+#include "ColoursPalette.h"
+#include "PopupLayer.h"
 
 Scene* GarageLayer::scene() {
     auto scene = Scene::create();
@@ -52,7 +54,7 @@ bool GarageLayer::init() {
     playerobj->m_pMainSprite->setColor(colors[this->currentFirstColor]);
     playerobj->m_pSecondarySprite->setColor(colors[this->currentSecondColor]);
     this->addChild(playerobj);
-
+	
     auto square = ui::Scale9Sprite::create("square02_001.png");
     square->setAnchorPoint({0.5, 1});
     square->setPosition({winSize.width / 2, (winSize.height / 2) - 10});
@@ -63,12 +65,18 @@ bool GarageLayer::init() {
     auto hint = Sprite::createWithSpriteFrameName("GJ_unlockTxt_001.png");
     hint->setPosition({square->getPosition().x + (float)(square->getContentSize().width / 3), square->getPosition().y});
     this->addChild(hint);
-
+    
     auto iconsmenu = Menu::create();
+    
     for(int i = 0; i < this->cubescount; i++){
         log_ << i;
-        auto sprite1 = Sprite::createWithSpriteFrameName(string("player_").append(std::to_string(i / 10)).append(std::to_string(i % 10)).append("_001.png").c_str());
-        auto sprite2 = Sprite::createWithSpriteFrameName(string("player_").append(std::to_string(i / 10)).append(std::to_string(i % 10)).append("_2_001.png").c_str());
+		
+		auto sprStr1 = StringUtils::format("player_%02d_001.png", i);
+		auto sprStr2 = StringUtils::format("player_%02d_2_001.png", i);
+		
+		auto sprite1 = Sprite::createWithSpriteFrameName(sprStr1);
+		auto sprite2 = Sprite::createWithSpriteFrameName(sprStr2);
+	
         auto node = Node::create();
         if(sprite1 && sprite2) {
             node->addChild(sprite1);
@@ -86,59 +94,19 @@ bool GarageLayer::init() {
     iconsmenu->alignItemsHorizontallyWithPadding(75);
     this->addChild(iconsmenu);
     
-    auto colormenuShape = Sprite::create("edit_barBG_001-hd.png");
-    colormenuShape->setPosition({-1, -1});
-    colormenuShape->setAnchorPoint({0, 0});
-    colormenuShape->setContentSize({winSize.width, colormenuShape->getContentSize().height});
-    this->addChild(colormenuShape);
-
-    auto colormenu = Menu::create();
-    log_ << "Menu created";
-    for(int i = 0; i <= colors.size(); i++){
-        log_ << i;
-        auto colorbtn = Sprite::create("square.png");
-        // auto colorbtn = MenuItemSpriteExtra::create("square.png", [&](Node* btn) {
-        //     this->currentFirstColor = i;
-        // });
-        log_ << "sprite created";
-        if(colorbtn){
-            colorbtn->setColor(colors[i]);
-            log_ << "color";
-            colormenu->addChild(colorbtn);
-            log_ << "sprite now is child";
-        }
-    }
-
-    for(int i = 0; i <= colors.size(); i++){
-        log_ << i;
-        auto colorbtn = Sprite::create("square.png");
-        // auto colorbtn = MenuItemSpriteExtra::create("square.png", [&](Node* btn) {
-        //     this->currentFirstColor = i;
-        // });
-        log_ << "sprite created";
-        if(colorbtn){
-            colorbtn->setColor(colors[i]);
-            log_ << "color";
-            colormenu->addChild(colorbtn);
-            log_ << "sprite now is child";
-        }
-    }
-
-    colormenu->alignItemsInColumnsWithArray({Value(13), Value(2)}, 10);
-
-    colormenu->setPosition({winSize.width / 2, colormenuShape->getPosition().y + (colormenuShape->getContentSize().height / 2)});
-    this->addChild(colormenu);
-
-    //auto colSelector = Sprite::createWithSpriteFrameName("GJ_select_001.png");
-    //auto colSelector2 = Sprite::createWithSpriteFrameName("GJ_select_001.png");
-    //colSelector->setPosition();
+  
 
     auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
     });
+	
+	auto paletteBtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
+        ColoursPalette::create(this)->show();
+    });
+	paletteBtn->setPositionY(paletteBtn->getPositionY() - 150);
 
-    auto menu = Menu::create();
-    menu->addChild(backbtn);
+
+    auto menu = Menu::create(backbtn, paletteBtn, nullptr);
     menu->setPosition({50, winSize.height - 50});
     addChild(menu);
 
