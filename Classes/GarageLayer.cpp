@@ -45,11 +45,12 @@ bool GarageLayer::init() {
     floor->setPosition({winSize.width / 2, (winSize.height / 2) + 10});
     this->addChild(floor);
 
-    auto playerobj = PlayerObject::create(currentcube, this);
+    // auto playerobj = PlayerObject::create(currentcube, this);
+    auto playerobj = SimplePlayer::create(currentcube);
     playerobj->setPosition({winSize.width / 2, floor->getPosition().y + floor->getContentSize().height});
     playerobj->setAnchorPoint({0.5, -1});
-    playerobj->mainSprite->setColor(colors[this->currentFirstColor]);
-    playerobj->secondarySprite->setColor(colors[this->currentSecondColor]);
+    playerobj->m_pMainSprite->setColor(colors[this->currentFirstColor]);
+    playerobj->m_pSecondarySprite->setColor(colors[this->currentSecondColor]);
     this->addChild(playerobj);
 
     auto square = ui::Scale9Sprite::create("square02_001.png");

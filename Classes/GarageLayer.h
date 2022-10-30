@@ -1,6 +1,7 @@
 #pragma once
 #include "includes.h"
 #include "MenuLayer.h"
+#include "SimplePlayer.h"
 
 class GarageLayer : public Layer {
 public:

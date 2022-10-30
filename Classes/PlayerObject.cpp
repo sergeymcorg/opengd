@@ -106,7 +106,7 @@ bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
 }
 
 void PlayerObject::update(float delta) {
-    this->setPositionX(getPositionX() + 5.f);
+    // this->setPositionX(getPositionX() + 5.f);
 }
 
 PlayerObject* PlayerObject::create(int playerFrame, Layer* gameLayer) {

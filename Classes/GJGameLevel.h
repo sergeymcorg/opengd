@@ -31,7 +31,7 @@ public:
 
     std::string m_sLevelName;
     std::string m_sLevelDesc;
-    std::string m_sLevelString
+    std::string m_sLevelString;
     std::string m_sCreatorName;
 
     static GJGameLevel* create();
