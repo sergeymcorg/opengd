@@ -39,6 +39,7 @@ static cocos2d::Size designResolutionSize = {1280, 720};
 // static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 
 static cocos2d::Size windowSize = {1280, 720}; // 16 : 9
+// static cocos2d::Size windowSize = {1920, 1080}; // 16 : 9
 
 AppDelegate::AppDelegate()
 {

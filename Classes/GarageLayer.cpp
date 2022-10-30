@@ -11,25 +11,25 @@ Scene* GarageLayer::scene() {
 }
 
 bool GarageLayer::init() {
-    auto background = Sprite::create("GJ_gradientBG.png");
-    auto winSize = Director::getInstance()->getWinSize();
-    auto size = background->getContentSize();
+    if (!Layer::init()) return false;
 
-    background->setScaleX(winSize.width / size.width);
-    background->setScaleY(winSize.height / size.height);
+    auto winSize = Director::getInstance()->getWinSize();
+    
+    auto background = Sprite::create("GJ_gradientBG.png");
+    background->setScale(winSize.width / background->getContentSize().width, winSize.height / background->getContentSize().height);
     background->setAnchorPoint({0, 0});
     background->setColor({175, 175, 175});
     this->addChild(background);
 
     auto leftcorner = Sprite::createWithSpriteFrameName("GJ_sideArt_001.png");
-    leftcorner->setPosition({leftcorner->getContentSize().width, winSize.height});
-    leftcorner->setAnchorPoint({1, 1});
+    leftcorner->setPosition({0, winSize.height});
+    leftcorner->setAnchorPoint({0, 1});
     leftcorner->setFlippedY(true);
     this->addChild(leftcorner);
 
     auto rightcorner = Sprite::createWithSpriteFrameName("GJ_sideArt_001.png");
-    rightcorner->setPosition({winSize.width - rightcorner->getContentSize().width, winSize.height});
-    rightcorner->setAnchorPoint({0, 1});
+    rightcorner->setPosition(winSize);
+    rightcorner->setAnchorPoint({1, 1});
     rightcorner->setFlippedY(true);
     rightcorner->setFlippedX(true);
     this->addChild(rightcorner); 
@@ -40,75 +40,92 @@ bool GarageLayer::init() {
     //usernamefield->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
     //    //std::cout << usernamefield->getString() << std::endl;
     //});
-    usernamefield->setPosition({winSize.width / 2, winSize.height - (float)(winSize.height / 8)});
+    usernamefield->setPosition({winSize.width / 2, winSize.height - 80});
     this->addChild(usernamefield);
 
-    auto floor = Sprite::create("floor.png");
-    floor->setPosition({winSize.width / 2, (winSize.height / 2) + 10});
+    auto nameTxt = Sprite::createWithSpriteFrameName("GJ_nameTxt_001.png");
+    nameTxt->setPosition(usernamefield->getPosition() + ccp(-250, 20));
+    this->addChild(nameTxt);
+
+    auto floor = Sprite::createWithSpriteFrameName("floorLine_001.png");
+    floor->setPosition({winSize.width / 2, (winSize.height / 2) + 20});
     this->addChild(floor);
 
-    // auto playerobj = PlayerObject::create(currentcube, this);
-    auto playerobj = SimplePlayer::create(currentcube);
-    playerobj->setPosition({winSize.width / 2, floor->getPosition().y + floor->getContentSize().height});
-    playerobj->setAnchorPoint({0.5, -1});
-    playerobj->m_pMainSprite->setColor(colors[this->currentFirstColor]);
-    playerobj->m_pSecondarySprite->setColor(colors[this->currentSecondColor]);
-    this->addChild(playerobj);
+    auto bottomBG = Sprite::create("edit_barBG_001.png");
+    bottomBG->setScaleX(winSize.width / bottomBG->getContentSize().width);
+    bottomBG->setAnchorPoint({0, 0});
+    this->addChild(bottomBG);
+
+    this->m_pPreviewPlayer = SimplePlayer::create(GM->getVariable<int>("player-cube"));
+    m_pPreviewPlayer->setPosition({winSize.width / 2, floor->getPositionY() + floor->getContentSize().height / 2});
+    m_pPreviewPlayer->setAnchorPoint({0.5, 0});
+    m_pPreviewPlayer->setScale(1.6f);
+    m_pPreviewPlayer->setMainColor(m_colors[GM->getVariable<int>("player-main-color")]);
+    m_pPreviewPlayer->setSecondaryColor(m_colors[GM->getVariable<int>("player-secondary-color")]);
+    this->addChild(m_pPreviewPlayer);
 	
     auto square = ui::Scale9Sprite::create("square02_001.png");
     square->setAnchorPoint({0.5, 1});
-    square->setPosition({winSize.width / 2, (winSize.height / 2) - 10});
-    square->setContentSize({winSize.width - (float)(winSize.width / 3.7), 100});
+    square->setPosition({winSize.width / 2, (winSize.height / 2) - 40});
+    square->setContentSize({960, 110});
     square->setOpacity(75);
     this->addChild(square);
 
     auto hint = Sprite::createWithSpriteFrameName("GJ_unlockTxt_001.png");
-    hint->setPosition({square->getPosition().x + (float)(square->getContentSize().width / 3), square->getPosition().y});
+    hint->setAnchorPoint({1, 0.5});
+    hint->setPosition({winSize.width / 2 + square->getContentSize().width / 2 - 40, square->getPositionY() + 2});
     this->addChild(hint);
     
-    auto iconsmenu = Menu::create();
+    auto iconsMenu = Menu::create();
     
-    for(int i = 0; i < this->cubescount; i++){
-        log_ << i;
-		
-		auto sprStr1 = StringUtils::format("player_%02d_001.png", i);
-		auto sprStr2 = StringUtils::format("player_%02d_2_001.png", i);
-		
-		auto sprite1 = Sprite::createWithSpriteFrameName(sprStr1);
-		auto sprite2 = Sprite::createWithSpriteFrameName(sprStr2);
-	
-        auto node = Node::create();
-        if(sprite1 && sprite2) {
-            node->addChild(sprite1);
-            sprite2->setColor({255, 255, 255});
-            sprite1->setColor({158, 158, 158});
-            node->addChild(sprite2);
-        }
-        auto menuitem = MenuItemSpriteExtra::createWithNode(node,  [&](Node* btn) {
-            log_ << "cube clicked";
-        });
-        iconsmenu->addChild(menuitem);
-    }
-    iconsmenu->setAnchorPoint({0.5, 1});
-    iconsmenu->setPosition({winSize.width / 2 - 40, (winSize.height / 2) - 60});
-    iconsmenu->alignItemsHorizontallyWithPadding(75);
-    this->addChild(iconsmenu);
-    
-  
+    for (int i = 1; i <= MAX_CUBES_COUNT; i++) {
+        auto player = SimplePlayer::create(i);
+        player->setMainColor({158, 158, 158});
+        player->setSecondaryColor({255, 255, 255});
+        
+        auto btn = MenuItemSpriteExtra::createWithNode(player, [=](Node* btn) {
+            this->m_nSelectedCube = btn->getTag() - 1;
+            GM->setVariable("player-cube", btn->getTag());
+            this->m_pSelectionFrame->setPosition(iconsMenu->convertToWorldSpace(btn->getPosition()));
 
-    auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
+            this->m_pPreviewPlayer->removeFromParentAndCleanup(true);
+            this->m_pPreviewPlayer->release();
+            this->m_pPreviewPlayer = SimplePlayer::create(btn->getTag());
+            m_pPreviewPlayer->setPosition({winSize.width / 2, floor->getPositionY() + floor->getContentSize().height / 2});
+            m_pPreviewPlayer->setAnchorPoint({0.5, 0});
+            m_pPreviewPlayer->setScale(1.6f);
+            m_pPreviewPlayer->setMainColor(m_colors[GM->getVariable<int>("player-main-color")]);
+            m_pPreviewPlayer->setSecondaryColor(m_colors[GM->getVariable<int>("player-secondary-color")]);
+            this->addChild(m_pPreviewPlayer);
+        });
+        
+        btn->setTag(i);
+
+        iconsMenu->addChild(btn);
+    }
+
+    iconsMenu->setPosition({winSize.width / 2, square->getPositionY() - square->getContentSize().height / 2});
+    iconsMenu->alignItemsHorizontallyWithPadding(12);
+    this->addChild(iconsMenu);
+
+    this->m_nSelectedCube = GM->getVariable<int>("player-cube") - 1;
+    this->m_pSelectionFrame = Sprite::createWithSpriteFrameName("GJ_select_001.png");
+
+    this->addChild(this->m_pSelectionFrame);
+    this->m_pSelectionFrame->setPosition(iconsMenu->convertToWorldSpace(iconsMenu->getChildren().at(m_nSelectedCube)->getPosition()));
+
+    auto backBtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
     });
 	
 	auto paletteBtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
         ColoursPalette::create(this)->show();
     });
-	paletteBtn->setPositionY(paletteBtn->getPositionY() - 150);
-
-
-    auto menu = Menu::create(backbtn, paletteBtn, nullptr);
-    menu->setPosition({50, winSize.height - 50});
-    addChild(menu);
+    
+    auto menu = Menu::create(backBtn, paletteBtn, nullptr);
+    this->addChild(menu);
+    backBtn->setPosition(menu->convertToNodeSpace({48, winSize.height - 46}));
+    paletteBtn->setPosition(menu->convertToNodeSpace({48, winSize.height - 146}));
 
     return true;
 }

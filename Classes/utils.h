@@ -58,3 +58,8 @@ void iterateRecursive(string dir, vector<string> extensions, std::function<void(
         }
     }
 }
+
+template <typename T>
+T inRange(T value, T min, T max) {
+    return MIN(MAX(value, min), max);
+}

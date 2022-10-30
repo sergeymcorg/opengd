@@ -46,9 +46,9 @@ bool MenuLayer::init(){
     garageBtn->setPosition({-220, 20});
     creatorBtn->setPosition({220, 20});
 
-    // menu->addChild(playBtn);
-    // menu->addChild(garageBtn);
-    // menu->addChild(creatorBtn);
+    menu->addChild(playBtn);
+    menu->addChild(garageBtn);
+    menu->addChild(creatorBtn);
     menu->addChild(CompileLayer::create());
     auto selectCharacter = Sprite::createWithSpriteFrameName("GJ_chrSel_001.png");
     menu->addChild(selectCharacter);

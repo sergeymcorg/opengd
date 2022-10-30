@@ -2,8 +2,32 @@
 
 GameManager* GameManager::getInstance() {
     static GameManager* g_pGM = new(std::nothrow) GameManager();
+    // static GameManager* g_pGM;
+
+    // if (!g_pGM) {
+    //     g_pGM = new(std::nothrow) GameManager();
+    //     g_pGM->setDefaults();
+    // }
 
     return g_pGM;
+}
+
+bool GameManager::hasVariable(string name) {
+    return this->m_values.contains(name);
+}
+
+void GameManager::setDefaults() {
+    json defaults = {
+        {"player-cube", 1},
+        {"player-main-color", 0},
+        {"player-secondary-color", 3}
+    };
+
+    for (auto& [key, value] : defaults.items()) {
+        log_ << key << " : " << value << ";" << this->hasVariable(key);
+        if (!this->hasVariable(key))
+            this->setVariable(key, value);
+    }
 }
 
 void GameManager::save() {
@@ -26,14 +50,6 @@ void GameManager::loadFromSave() {
     else
         log_ << "Failed to load GameManager!";
     file.close();
-}
 
-bool GameManager::test() {
-    setVariable("gj_saveTest", 128);
-    save();
-    loadFromSave();
-    int t = getVariable<int>("gj_saveTest");
-    if(t == 128) return true;
-
-    return false;
+    this->setDefaults();
 }

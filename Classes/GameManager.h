@@ -28,8 +28,10 @@ public:
 
     void save();
     void loadFromSave();
-    bool test();
+    bool hasVariable(string name);
 
 private:
+    void setDefaults();
+
     json m_values;
 };

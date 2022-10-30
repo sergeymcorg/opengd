@@ -29,10 +29,13 @@ private:
     }
 };
 
+// defines
 #define log_ Logger()
+#define GM GameManager::getInstance()
 
 // Most used things
 #include "utils.h"
+#include "constants.h"
 #include "MenuItemSpriteExtra.h"
 #include "DropDownLayer.h"
 #include "GameManager.h"
