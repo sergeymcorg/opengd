@@ -20,7 +20,8 @@ void GameManager::setDefaults() {
     json defaults = {
         {"player-cube", 1},
         {"player-main-color", 0},
-        {"player-secondary-color", 3}
+        {"player-secondary-color", 3},
+        {"player-username", "Player"}
     };
 
     for (auto& [key, value] : defaults.items()) {
@@ -28,6 +29,7 @@ void GameManager::setDefaults() {
         if (!this->hasVariable(key))
             this->setVariable(key, value);
     }
+    this->save();
 }
 
 void GameManager::save() {

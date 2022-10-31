@@ -62,7 +62,7 @@ if(WIN32)
 execute_process(
   COMMAND cmd /c ${CMAKE_CURRENT_SOURCE_DIR}/setdate.bat
 )
-file (GLOB files "Classes/*.[c,h]pp")
+file (GLOB files "Classes/*.cpp")
 file (GLOB files2 "Classes/*.h")
 
 # add_custom_target(invalidate_files ALL_BUILD
