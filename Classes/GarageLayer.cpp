@@ -34,17 +34,19 @@ bool GarageLayer::init() {
     rightcorner->setFlippedX(true);
     this->addChild(rightcorner); 
 
-    auto usernamefield = ui::TextField::create("Player", "bigFont.fnt", 48);
-    usernamefield->setMaxLength(20);
-    usernamefield->setPlaceHolderColor({120, 170, 240});
-    //usernamefield->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type){
-    //    //std::cout << usernamefield->getString() << std::endl;
-    //});
-    usernamefield->setPosition({winSize.width / 2, winSize.height - 80});
-    this->addChild(usernamefield);
+    //if (!GM->getVariable<std::string>("player-username").compare("")) {
+        //GM->setVariable("player-username", "Player");
+       //GM->save();
+    //}
+    m_pUsernamefield = ui::TextField::create("Player", "bigFont.fnt", 48);
+    m_pUsernamefield->setString(GM->getVariable<std::string>("player-username"));
+    m_pUsernamefield->setPlaceHolderColor({ 120, 170, 240 });
+    m_pUsernamefield->setMaxLength(20);
+    m_pUsernamefield->setPosition({winSize.width / 2, winSize.height - 80});
+    this->addChild(m_pUsernamefield);
 
     auto nameTxt = Sprite::createWithSpriteFrameName("GJ_nameTxt_001.png");
-    nameTxt->setPosition(usernamefield->getPosition() + ccp(-250, 20));
+    nameTxt->setPosition(m_pUsernamefield->getPosition() + ccp(-250, 20));
     this->addChild(nameTxt);
 
     auto floor = Sprite::createWithSpriteFrameName("floorLine_001.png");
@@ -115,6 +117,7 @@ bool GarageLayer::init() {
     this->m_pSelectionFrame->setPosition(iconsMenu->convertToWorldSpace(iconsMenu->getChildren().at(m_nSelectedCube)->getPosition()));
 
     auto backBtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
+        GM->setVariable("player-username", this->m_pUsernamefield->getString());
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
     });
 	

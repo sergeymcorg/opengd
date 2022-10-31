@@ -2,6 +2,7 @@
 #include "includes.h"
 #include "MenuLayer.h"
 #include "SimplePlayer.h"
+#include "ui/CocosGUI.h"
 
 class GarageLayer : public Layer {
 private:
@@ -23,7 +24,7 @@ private:
     Sprite* m_pSelectionFrame;
     int m_nSelectedCube;
     SimplePlayer* m_pPreviewPlayer;
-
+    cocos2d::ui::TextField* m_pUsernamefield;
 public:
     static Scene* scene();
     bool init();
