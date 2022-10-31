@@ -45,3 +45,5 @@ private:
 // Always compile
 
 #include "CompileLayer.h"
+#include "TextButton.h"
+#include "GameToolbox.h"
