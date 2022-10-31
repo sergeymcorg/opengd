@@ -1,5 +1,10 @@
 #include "GameManager.h"
 
+#include "./Discord/cpp/discord.h"
+#include "CompileLayer.h"
+
+discord::Core* dCore{};
+
 GameManager* GameManager::getInstance() {
     static GameManager* g_pGM = new(std::nothrow) GameManager();
     // static GameManager* g_pGM;
@@ -54,4 +59,53 @@ void GameManager::loadFromSave() {
     file.close();
 
     this->setDefaults();
+}
+
+bool GameManager::connectDiscord() {
+    if (!ENABLE_DISCORD) return false;
+
+    // 690545589175451679
+    discord::Result result = discord::Core::Create(690545589175451679, DiscordCreateFlags_Default, &dCore);
+    if ((int)result != EDiscordResult::DiscordResult_Ok) {
+        log_ << "Failed to connect to Discord due to " << (int)result << "!";
+        return false;
+    }
+
+    return true;
+}
+bool GameManager::changeDActivity() {
+    if (!ENABLE_DISCORD) return false;
+    if (!dCore) return false;
+
+    Director::getInstance()->getRunningScene()->schedule([](float t) {
+        GM->processDiscord(t);
+    }, "discord");
+    
+
+    discord::Activity activity{};
+    auto cll = CompileLayer::create();
+    activity.SetState(cll->getRandom().c_str());
+    activity.SetDetails("Browsing menues");
+    activity.SetType(discord::ActivityType::Playing);
+    activity.GetAssets().SetLargeImage("gjlogo");
+    activity.GetAssets().SetLargeText("OpenGD 1.0 DEV");
+    activity.GetParty().SetId("221");
+    activity.GetParty().SetPrivacy(discord::ActivityPartyPrivacy::Public);
+    activity.GetParty().GetSize().SetCurrentSize(1);
+    activity.GetParty().GetSize().SetMaxSize(16);
+    activity.GetSecrets().SetJoin("1AF");
+    activity.GetSecrets().SetMatch("111J");
+    activity.GetSecrets().SetSpectate("21FF");
+    activity.SetInstance(true);
+    dCore->ActivityManager().UpdateActivity(activity, [](discord::Result result) {
+        if ((int)result != EDiscordResult::DiscordResult_Ok) {
+            log_ << "Failed to change DActivity due to " << (int)result << "!";
+        }
+        Director::getInstance()->getRunningScene()->unschedule("discord");
+    });
+
+    return true;
+}
+void GameManager::processDiscord(float t) {
+    dCore->RunCallbacks();
 }

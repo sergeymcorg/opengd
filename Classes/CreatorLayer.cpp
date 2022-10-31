@@ -65,7 +65,7 @@ bool CreatorLayer::init() {
     });
     menu->addChild(searchBtn);
 
-    menu->alignItemsInColumnsWithArray({Value(2), Value(2)}, 50);
+    menu->alignItemsInColumnsWithArray({Value(2), Value(2)}, 52);
 
     menu->setPosition(winSize / 2 + Size(250, 15));
 

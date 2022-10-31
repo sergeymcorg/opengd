@@ -110,24 +110,6 @@ unsigned int hash(const char *string)
     return result;
 }
 
-std::string CompileLayer::getRandom()
-{
-    std::string segment = std::string();
-    std::string result = "Build ";
-    std::string t = BUILD_TIME;
-
-    this->next = hash(t.c_str());
-
-    int i = 0;
-    while (i < 4)
-    {
-        result.append(this->rand());
-        i++;
-    }
-
-    return result;
-}
-
 bool CompileLayer::init()
 {
     if (!Layer::init())

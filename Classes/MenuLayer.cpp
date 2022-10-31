@@ -93,5 +93,9 @@ bool MenuLayer::init(){
     menu->addChild(moreGamesBtn);
     moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 86, 90}));
 
+    GM->changeDActivity();
+    GM->changeDActivity();
+    GM->changeDActivity();
+
     return true;
 }

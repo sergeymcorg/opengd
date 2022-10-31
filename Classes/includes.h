@@ -9,6 +9,8 @@
 USING_NS_CC;
 using std::string, std::vector;
 
+#define ENABLE_DISCORD 1
+
 // logger
 class Logger : private std::streambuf, public std::ostream {
 public:
@@ -39,3 +41,7 @@ private:
 #include "MenuItemSpriteExtra.h"
 #include "DropDownLayer.h"
 #include "GameManager.h"
+
+// Always compile
+
+#include "CompileLayer.h"

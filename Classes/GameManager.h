@@ -30,6 +30,11 @@ public:
     void loadFromSave();
     bool hasVariable(string name);
 
+    // Returns false if Discord fails to connect to the client or if it was disabled on compilation process
+    bool connectDiscord();
+    bool changeDActivity();
+    void processDiscord(float);
+
 private:
     void setDefaults();
 

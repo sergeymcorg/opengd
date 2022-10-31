@@ -2,14 +2,27 @@
 
 #include "includes.h"
 
-#define BUILD_TIME __TIME__
+unsigned int hash(const char* string);
 
 class CompileLayer : public Layer {
 protected:
     int next;
     std::string rand();
 public:
-    std::string getRandom();
+    inline std::string getRandom() {
+        std::string segment = std::string();
+        std::string result = "Build ";
+        std::string t = __TIME__;
+
+        this->next = hash(t.c_str());
+
+        int i = 0;
+        while (i < 4){
+            result.append(this->rand());
+            i++;
+        }
+        return result;
+    }
     bool init();
     CREATE_FUNC(CompileLayer);
 };
