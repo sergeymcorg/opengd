@@ -39,3 +39,5 @@ private:
 #include "MenuItemSpriteExtra.h"
 #include "DropDownLayer.h"
 #include "GameManager.h"
+#include "TextButton.h"
+#include "GameToolbox.h"
