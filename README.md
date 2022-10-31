@@ -11,12 +11,13 @@ For now it is under development.
 * **[dogotrigger](https://github.com/SergeyMC9730)#0355**
 * **[Kolyah35](https://github.com/Kolyah35)#0107**
 * **[iAndy_HD3](https://github.com/iAndyHD3)#3579**
+* **[Jorgame](https://github.com/ImJorGame)#8957**
 
 ## **TODO list for 1.0**
 - [x] LoadingLayer implementation
 - [ ] PlayLayer implementation
 - [ ] Player implementation
-- [ ] General menues
+- [x] General menues
 - [ ] Level Data builder and parser
 - [ ] Networking features
 
