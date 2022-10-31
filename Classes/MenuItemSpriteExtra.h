@@ -4,7 +4,10 @@
 class MenuItemSpriteExtra : public MenuItemSprite {
 private:
     MenuItemSpriteExtra(const char* sprite, Node* sprNode, std::function<void(Node*)> callback);
-    virtual bool init() override;
+    bool init() override;
+    void selected() override;
+    void unselected() override;
+    void activate() override;
 
     Node* m_pSprite;
     float m_fAnimDuration;
@@ -18,7 +21,4 @@ public:
     /// @return The button
     static MenuItemSpriteExtra* create(const char* sprite, std::function<void(Node*)> callback);
     static MenuItemSpriteExtra* createWithNode(Node* sprite, std::function<void(Node*)> callback);
-    virtual void selected() override;
-    virtual void unselected() override;
-    virtual void activate() override;
 };
