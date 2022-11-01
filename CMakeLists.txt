@@ -59,23 +59,18 @@ endif()
 
 # add cross-platforms source files and header files 
 if(WIN32)
-execute_process(
-  COMMAND cmd /c ${CMAKE_CURRENT_SOURCE_DIR}/setdate.bat
-)
-file (GLOB files "Classes/*.cpp")
-file (GLOB files2 "Classes/*.h")
-file (GLOB files3 "Classes/Discord/cpp/*.cpp")
-file (GLOB files4 "Classes/Discord/cpp/*.h")
-
-# add_library(DiscordGameSDK STATIC IMPORTED Classes/Discord/lib/x86/discord_game_sdk.dll)
-include_directories("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
-
-# add_custom_target(invalidate_files ALL_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E touch Classes/CompileLayer.cpp
-#     DEPENDS ${SOURCE_FILES} Classes/CompileLayer.cpp
-# )
-
+    file (GLOB files "Classes/*.cpp")
+    file (GLOB files2 "Classes/*.h")
+    if(WINDOWS OR WIN32)
+        message("[OpenGD] Game SDK will be compiled")
+        file (GLOB files3 "Classes/Discord/cpp/*.cpp")
+        file (GLOB files4 "Classes/Discord/cpp/*.h")
+    else()
+        set(files3 "")
+        set(files4 "")
+    endif()
+    include_directories("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
+    add_subdirectory("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
 endif()
 # add_subdirectory("imgui")
 
@@ -156,7 +151,9 @@ endif()
 target_link_options(${APP_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FORCE:MULTIPLE>)
 
 target_link_libraries(${APP_NAME} cocos2d)
+if(WINDOWS OR WIN32)
 target_link_libraries(${APP_NAME} dgsdk)
+endif()
 target_include_directories(${APP_NAME}
         PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
