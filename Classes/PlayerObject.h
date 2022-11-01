@@ -44,6 +44,8 @@ private:
 
 public:
     static PlayerObject* create(int, Layer*);
+     
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
 
     void setMainColor(Color3B col);
     void setSecondaryColor(Color3B col);
