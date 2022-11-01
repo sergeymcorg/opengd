@@ -195,9 +195,9 @@ bool GarageLayer::init() {
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
     });
 	
-	auto paletteBtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
-        ColoursPalette::create(this)->show();
-    });
+	//auto paletteBtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
+     //   ColoursPalette::create(this)->show();
+    //});
     
     auto menu = Menu::create(backBtn, paletteBtn, nullptr);
     this->addChild(menu);
