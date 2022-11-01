@@ -113,7 +113,7 @@ bool GarageLayer::init() {
 
     auto colorsMenu = Menu::create();
 
-    for (int i = 1; i <= 11; i++) {
+    for (int i = 1; i <= size(m_colors) - 1; i++) {
         log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
         log_ << "button?";
@@ -143,7 +143,7 @@ bool GarageLayer::init() {
 
     auto secondaryColorsMenu = Menu::create();
 
-    for (int i = 1; i <= 11; i++) {
+    for (int i = 1; i <= size(m_colors) - 1; i++) {
         log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
         log_ << "button?";
@@ -187,6 +187,9 @@ bool GarageLayer::init() {
     this->m_pSelectionFrame2->setPositionX(colorsMenu->getPositionX() + colorsMenu->getChildren().at(m_nSelectedMC)->getPositionX());
     this->m_pSelectionFrame3->setPositionX(secondaryColorsMenu->getPositionX() + secondaryColorsMenu->getChildren().at(m_nSelectedSC)->getPositionX());
 
+    this->m_pSelectionFrame2->setScale(0.95f);
+    this->m_pSelectionFrame3->setScale(0.95f);
+
     this->m_pSelectionFrame2->setPositionY(square->getPositionY() - square->getContentSize().height / 2 - 125);
     this->m_pSelectionFrame3->setPositionY(square->getPositionY() - square->getContentSize().height / 2 - 190);
 
@@ -199,10 +202,10 @@ bool GarageLayer::init() {
        ColoursPalette::create(this)->show();
     });
     
-    auto menu = Menu::create(backBtn, paletteBtn, nullptr);
+    auto menu = Menu::create(backBtn, nullptr);
     this->addChild(menu);
     backBtn->setPosition(menu->convertToNodeSpace({48, winSize.height - 46}));
-    paletteBtn->setPosition(menu->convertToNodeSpace({48, winSize.height - 146}));
+    //paletteBtn->setPosition(menu->convertToNodeSpace({48, winSize.height - 146}));
 
     return true;
 }
