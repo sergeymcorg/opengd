@@ -22,7 +22,11 @@ private:
     };
 
     Sprite* m_pSelectionFrame;
+    Sprite* m_pSelectionFrame2;
+    Sprite* m_pSelectionFrame3;
     int m_nSelectedCube;
+    int m_nSelectedMC;
+    int m_nSelectedSC;
     SimplePlayer* m_pPreviewPlayer;
     cocos2d::ui::TextField* m_pUsernamefield;
 public:

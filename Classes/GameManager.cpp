@@ -88,7 +88,7 @@ bool GameManager::changeDActivity() {
     discord::Activity activity{};
     auto cll = CompileLayer::create();
     activity.SetState(cll->getRandom().c_str());
-    activity.SetDetails("Browsing menues");
+    activity.SetDetails("Browsing menus");
     activity.SetType(discord::ActivityType::Playing);
     activity.GetAssets().SetLargeImage("gjlogo");
     activity.GetAssets().SetLargeText("OpenGD 1.0 DEV");

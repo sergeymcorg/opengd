@@ -34,10 +34,10 @@ bool GarageLayer::init() {
     rightcorner->setFlippedX(true);
     this->addChild(rightcorner); 
 
-    //if (!GM->getVariable<std::string>("player-username").compare("")) {
-        //GM->setVariable("player-username", "Player");
-       //GM->save();
-    //}
+    if (!GM->getVariable<std::string>("player-username").compare("")) {
+        GM->setVariable("player-username", "Player");
+       GM->save();
+    }
     m_pUsernamefield = ui::TextField::create("Player", "bigFont.fnt", 48);
     m_pUsernamefield->setString(GM->getVariable<std::string>("player-username"));
     m_pUsernamefield->setPlaceHolderColor({ 120, 170, 240 });
@@ -110,11 +110,85 @@ bool GarageLayer::init() {
     iconsMenu->alignItemsHorizontallyWithPadding(12);
     this->addChild(iconsMenu);
 
+
+    auto colorsMenu = Menu::create();
+
+    for (int i = 1; i <= 11; i++) {
+        log_ << "srptei";
+        auto colorSprite = Sprite::create("square.png");
+        log_ << "button?";
+        colorSprite->setColor(this->m_colors[i]);
+        auto btn = MenuItemSpriteExtra::createWithNode(colorSprite, [=](Node* button) {
+            
+
+            log_ << "huh.";
+            this->m_pSelectionFrame2->setPosition({colorsMenu->getPositionX()+button->getPositionX(),colorsMenu->getPositionY()});
+            log_ << m_pSelectionFrame2->getPositionX();
+            
+            m_pPreviewPlayer->setMainColor(m_colors[i]);
+            
+            GM->setVariable("player-main-color", button->getTag());
+           });
+        btn->setScale(1.7f);
+        btn->setNewScale(1.25f);
+        log_ << "button? 2";
+        btn->setTag(i);
+        colorsMenu->addChild(btn);
+    }
+
+    colorsMenu->setPosition({ winSize.width / 2, square->getPositionY() - square->getContentSize().height / 2 - 125 });
+    colorsMenu->alignItemsHorizontallyWithPadding(15);
+    this->addChild(colorsMenu);
+
+
+    auto secondaryColorsMenu = Menu::create();
+
+    for (int i = 1; i <= 11; i++) {
+        log_ << "srptei";
+        auto colorSprite = Sprite::create("square.png");
+        log_ << "button?";
+        colorSprite->setColor(this->m_colors[i]);
+        auto btn = MenuItemSpriteExtra::createWithNode(colorSprite, [=](Node* button) {
+
+
+            log_ << "huh.";
+            this->m_pSelectionFrame3->setPosition({ secondaryColorsMenu->getPositionX() + button->getPositionX(),secondaryColorsMenu->getPositionY() });
+            log_ << m_pSelectionFrame3->getPositionX();
+
+            m_pPreviewPlayer->setSecondaryColor(m_colors[i]);
+            GM->setVariable("player-secondary-color", button->getTag());
+
+            });
+        btn->setScale(1.7f);
+        btn->setNewScale(1.25f);
+        log_ << "button? 2";
+        btn->setTag(i);
+        secondaryColorsMenu->addChild(btn);
+    }
+
+    secondaryColorsMenu->setPosition({ winSize.width / 2, square->getPositionY() - square->getContentSize().height / 2 - 190 });
+    secondaryColorsMenu->alignItemsHorizontallyWithPadding(15);
+    this->addChild(secondaryColorsMenu);
+
+
     this->m_nSelectedCube = GM->getVariable<int>("player-cube") - 1;
+    this->m_nSelectedMC = GM->getVariable<int>("player-main-color") - 1;
+    this->m_nSelectedSC = GM->getVariable<int>("player-secondary-color") - 1;
     this->m_pSelectionFrame = Sprite::createWithSpriteFrameName("GJ_select_001.png");
+    this->m_pSelectionFrame2 = Sprite::createWithSpriteFrameName("GJ_select_001.png");
+    this->m_pSelectionFrame3 = Sprite::createWithSpriteFrameName("GJ_select_001.png");
 
     this->addChild(this->m_pSelectionFrame);
+    this->addChild(this->m_pSelectionFrame2);
+    this->addChild(this->m_pSelectionFrame3);
+
     this->m_pSelectionFrame->setPosition(iconsMenu->convertToWorldSpace(iconsMenu->getChildren().at(m_nSelectedCube)->getPosition()));
+
+    this->m_pSelectionFrame2->setPositionX(colorsMenu->getPositionX() + colorsMenu->getChildren().at(m_nSelectedMC)->getPositionX());
+    this->m_pSelectionFrame3->setPositionX(secondaryColorsMenu->getPositionX() + secondaryColorsMenu->getChildren().at(m_nSelectedSC)->getPositionX());
+
+    this->m_pSelectionFrame2->setPositionY(square->getPositionY() - square->getContentSize().height / 2 - 125);
+    this->m_pSelectionFrame3->setPositionY(square->getPositionY() - square->getContentSize().height / 2 - 190);
 
     auto backBtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
         GM->setVariable("player-username", this->m_pUsernamefield->getString());
