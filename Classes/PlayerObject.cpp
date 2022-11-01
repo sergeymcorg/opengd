@@ -102,6 +102,18 @@ bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
 
     scheduleUpdate();
 
+    auto dir = Director::getInstance();
+    auto listener = EventListenerTouchOneByOne::create();
+
+    listener->setEnabled(true);
+    listener->setSwallowTouches(true);
+
+
+    // trigger when you start touch
+    listener->onTouchBegan = CC_CALLBACK_2(PlayerObject::onTouchBegan, this);
+
+    dir->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
     return true;
 }
 
@@ -173,7 +185,13 @@ void PlayerObject::logValues() {
     //     )
     // );
 // }
-
+bool PlayerObject::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
+{
+    if (this->inPlayLayer) {
+        log_ << "Touch began.";
+        return true;
+    }
+}
 PlayerObject* PlayerObject::create(int playerFrame, Layer* gameLayer) {
     auto pRet = new (std::nothrow) PlayerObject();
 
