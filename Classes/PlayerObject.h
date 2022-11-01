@@ -3,8 +3,11 @@
 
 class PlayerObject : public GameObject {
 private:
-    void update(float delta);
+    void update(float dt);
+    void updateJump(float dt);
     bool init(int, Layer*);
+    void runRotateAction();
+    void stopRotation();
 
     void logValues();
 
@@ -27,7 +30,7 @@ private:
     double m_dXVel = 5.770002;
     double m_dYVel = 0;
     double m_dGravity = 0.958199;
-    double m_dJump = 11.180032;
+    double m_dJumpHeight = 11.180032;
 
     bool m_bUpsideDown;
     bool m_bOnGround;
@@ -36,6 +39,8 @@ private:
     
     bool m_bIsDead;
     bool m_bIsLocked;
+
+    bool m_bIsHolding;
 
 public:
     static PlayerObject* create(int, Layer*);
@@ -47,4 +52,6 @@ public:
     Color3B getMainColor();
     Color3B getSecondaryColor();
     Color3B getShipColor();
+
+    void jump();
 };

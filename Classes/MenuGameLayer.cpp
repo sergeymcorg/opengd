@@ -89,9 +89,9 @@ bool MenuGameLayer::init(){
 }
 void MenuGameLayer::processPlayerMovement(float delta) {
     if(this->player) {
-        if (this->player->getPositionX() == 500.f) {
-            // this->player->jump();
-        }
+        // if (this->player->getPositionX() == 500.f) {
+        //     this->player->jump();
+        // }
         if(this->player->getPositionX() >= 1300.f) {
             player->removeFromParentAndCleanup(true);
             auto playerTest = PlayerObject::create(((rand() * 256) % 14) + 1, this);
@@ -114,6 +114,7 @@ void MenuGameLayer::processBackground(float delta) {
         bgSprites->setPositionX(bgSprites->getPositionX() + this->bsizeX);
     }
 }
+
 void MenuGameLayer::update(float delta) {
     processBackground(delta);
     processPlayerMovement(delta);

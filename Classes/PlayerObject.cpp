@@ -134,17 +134,63 @@ void PlayerObject::update(float dt) {
 
     if (this->m_bIsDead)
         return;
+        
+    if (this->getPositionY() <= 236) { // TEMP ON GROUND CHECK
+        this->m_bOnGround = true;
+        this->stopRotation();
+    }
 
-    log_ << dt * this->m_fSpeed * this->m_dXVel;
+    if (this->getPositionX() >= 500) {
+        this->m_bIsHolding = true;
+    }
     
     if (!this->m_bIsLocked) {
+        this->updateJump(dt * 0.9);
+
         this->setPosition(this->getPosition() + ccp(dt * this->m_fSpeed * this->m_dXVel, dt * this->m_fSpeed * this->m_dYVel));
     }
+
+    auto particle = Sprite::create("square.png");
+    particle->setScale(0.05);
+    particle->setPosition(this->getPosition());
+    this->gameLayer->addChild(particle, 999);
+}
+
+void PlayerObject::updateJump(float dt) {
+    if (this->m_bIsHolding && this->m_bOnGround) {
+        this->m_bOnGround = false;
+        this->m_dYVel = this->m_dJumpHeight * 2 * 0.43;
+        this->runRotateAction();
+        return;
+    }
+
+    if (!this->m_bOnGround)
+        this->m_dYVel -= this->m_dGravity * dt * 2 * 0.43;
 }
 
 void PlayerObject::logValues() {
-    log_ << "xVel: " << this->m_dXVel << "; yVel: " << m_dYVel << "; gravity: " << m_dGravity << "; Jump: " << m_dJump;
+    log_ << "xVel: " << this->m_dXVel << "; yVel: " << m_dYVel << "; gravity: " << m_dGravity << "; Jump: " << m_dJumpHeight;
 }
+
+void PlayerObject::runRotateAction() {
+    this->stopRotation();
+    auto action = RotateBy::create(0.43333, 180);
+    action->setTag(0);
+    this->runAction(action);
+}
+
+void PlayerObject::stopRotation() {
+    this->stopActionByTag(0);
+
+    if (this->getRotation() != 0) {
+        auto degrees = (int)this->getRotation() % 360;
+        this->setRotation(90 * roundf(degrees / 90.0f));
+    }
+}
+
+// void PlayerObject::jump() {
+//     // this->m_dYVel = this->m_dJumpHeight;
+// }
 
 // void PlayerObject::jump() {
     // this->runAction(
