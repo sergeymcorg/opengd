@@ -178,6 +178,16 @@ bool GarageLayer::init() {
     this->m_pSelectionFrame2 = Sprite::createWithSpriteFrameName("GJ_select_001.png");
     this->m_pSelectionFrame3 = Sprite::createWithSpriteFrameName("GJ_select_001.png");
 
+    if (this->m_nSelectedMC < 0) {
+        this->m_nSelectedMC++;
+    }
+    if (this->m_nSelectedCube < 0) {
+        this->m_nSelectedCube++;
+    }
+    if (this->m_nSelectedSC < 0) {
+        this->m_nSelectedSC++;
+    }
+
     this->addChild(this->m_pSelectionFrame);
     this->addChild(this->m_pSelectionFrame2);
     this->addChild(this->m_pSelectionFrame3);

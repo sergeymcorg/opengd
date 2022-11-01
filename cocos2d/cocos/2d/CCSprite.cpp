@@ -170,7 +170,7 @@ bool Sprite::initWithFile(const std::string& _filename)
 {
     std::string filename = _filename;
 
-    if (Application::getInstance()->getTextureQuality() == MEDIUM && _filename.find("-hd") == std::string::npos) {
+    if (Application::getInstance()->getTextureQuality() == MEDIUM && _filename.find("-hd") == std::string::npos && filename.compare("square.png")) {
         filename = _filename.substr(0, _filename.find_last_of('.')) + "-hd" + _filename.substr(_filename.find_last_of('.'));
     }
 

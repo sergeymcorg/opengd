@@ -382,7 +382,7 @@ Texture2D * TextureCache::addImage(const std::string &_path)
 {
     std::string path = _path;
 
-    if (Application::getInstance()->getTextureQuality() == MEDIUM && _path.find("-hd") == std::string::npos) {
+    if (Application::getInstance()->getTextureQuality() == MEDIUM && _path.find("-hd") == std::string::npos && path.compare("square.png")) {
         path = _path.substr(0, _path.find_last_of('.')) + "-hd" + _path.substr(_path.find_last_of('.'));
     }
 
