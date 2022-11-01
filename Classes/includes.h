@@ -9,7 +9,11 @@
 USING_NS_CC;
 using std::string, std::vector;
 
+#ifdef _WIN32
 #define ENABLE_DISCORD 1
+#else
+#define ENABLE_DISCORD 0
+#endif
 
 // logger
 class Logger : private std::streambuf, public std::ostream {

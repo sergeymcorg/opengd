@@ -1,9 +1,11 @@
 #include "GameManager.h"
 
+#ifdef _WIN32
 #include "./Discord/cpp/discord.h"
 #include "CompileLayer.h"
 
 discord::Core* dCore{};
+#endif
 
 GameManager* GameManager::getInstance() {
     static GameManager* g_pGM = new(std::nothrow) GameManager();
@@ -74,6 +76,7 @@ bool GameManager::connectDiscord() {
     return true;
 }
 bool GameManager::changeDActivity() {
+#ifdef _WIN32
     if (!ENABLE_DISCORD) return false;
     if (!dCore) return false;
 
@@ -105,7 +108,13 @@ bool GameManager::changeDActivity() {
     });
 
     return true;
+#else
+    return false;
+#endif
 }
 void GameManager::processDiscord(float t) {
+#ifdef _WIN32
     dCore->RunCallbacks();
+#endif
+    return;
 }
