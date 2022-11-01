@@ -12,6 +12,7 @@ Scene* GarageLayer::scene() {
 
 bool GarageLayer::init() {
     if (!Layer::init()) return false;
+
     auto winSize = Director::getInstance()->getWinSize();
     
     auto background = Sprite::create("GJ_gradientBG.png");
@@ -61,8 +62,8 @@ bool GarageLayer::init() {
     m_pPreviewPlayer->setPosition({winSize.width / 2, floor->getPositionY() + floor->getContentSize().height / 2});
     m_pPreviewPlayer->setAnchorPoint({0.5, 0});
     m_pPreviewPlayer->setScale(1.6f);
-    m_pPreviewPlayer->setMainColor(GameToolbox::iconColors[GM->getVariable<int>("player-main-color")]);
-    m_pPreviewPlayer->setSecondaryColor(GameToolbox::iconColors[GM->getVariable<int>("player-secondary-color")]);
+    m_pPreviewPlayer->setMainColor(m_colors[GM->getVariable<int>("player-main-color")]);
+    m_pPreviewPlayer->setSecondaryColor(m_colors[GM->getVariable<int>("player-secondary-color")]);
     this->addChild(m_pPreviewPlayer);
 	
     auto square = ui::Scale9Sprite::create("square02_001.png");
@@ -95,8 +96,8 @@ bool GarageLayer::init() {
             m_pPreviewPlayer->setPosition({winSize.width / 2, floor->getPositionY() + floor->getContentSize().height / 2});
             m_pPreviewPlayer->setAnchorPoint({0.5, 0});
             m_pPreviewPlayer->setScale(1.6f);
-            m_pPreviewPlayer->setMainColor(GameToolbox::iconColors[GM->getVariable<int>("player-main-color")]);
-            m_pPreviewPlayer->setSecondaryColor(GameToolbox::iconColors[GM->getVariable<int>("player-secondary-color")]);
+            m_pPreviewPlayer->setMainColor(m_colors[GM->getVariable<int>("player-main-color")]);
+            m_pPreviewPlayer->setSecondaryColor(m_colors[GM->getVariable<int>("player-secondary-color")]);
             this->addChild(m_pPreviewPlayer);
         });
         
@@ -112,11 +113,11 @@ bool GarageLayer::init() {
 
     auto colorsMenu = Menu::create();
 
-    for (int i = 0; i <= size(GameToolbox::iconColors) - 1; i++) {
+    for (int i = 1; i <= size(m_colors) - 1; i++) {
         log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
         log_ << "button?";
-        colorSprite->setColor(GameToolbox::iconColors[i]);
+        colorSprite->setColor(this->m_colors[i]);
         auto btn = MenuItemSpriteExtra::createWithNode(colorSprite, [=](Node* button) {
             
 
@@ -124,7 +125,7 @@ bool GarageLayer::init() {
             this->m_pSelectionFrame2->setPosition({colorsMenu->getPositionX()+button->getPositionX(),colorsMenu->getPositionY()});
             log_ << m_pSelectionFrame2->getPositionX();
             
-            m_pPreviewPlayer->setMainColor(GameToolbox::iconColors[i]);
+            m_pPreviewPlayer->setMainColor(m_colors[i]);
             
             GM->setVariable("player-main-color", button->getTag());
            });
@@ -135,19 +136,26 @@ bool GarageLayer::init() {
         colorsMenu->addChild(btn);
     }
 
-    for (int i = 0; i <= size(GameToolbox::iconColors) - 1; i++) {
+    colorsMenu->setPosition({ winSize.width / 2, square->getPositionY() - square->getContentSize().height / 2 - 125 });
+    colorsMenu->alignItemsHorizontallyWithPadding(15);
+    this->addChild(colorsMenu);
+
+
+    auto secondaryColorsMenu = Menu::create();
+
+    for (int i = 1; i <= size(m_colors) - 1; i++) {
         log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
         log_ << "button?";
-        colorSprite->setColor(GameToolbox::iconColors[i]);
+        colorSprite->setColor(this->m_colors[i]);
         auto btn = MenuItemSpriteExtra::createWithNode(colorSprite, [=](Node* button) {
 
 
             log_ << "huh.";
-            this->m_pSelectionFrame3->setPosition({ colorsMenu->getPositionX() + button->getPositionX(),colorsMenu->getPositionY() });
+            this->m_pSelectionFrame3->setPosition({ secondaryColorsMenu->getPositionX() + button->getPositionX(),secondaryColorsMenu->getPositionY() });
             log_ << m_pSelectionFrame3->getPositionX();
 
-            m_pPreviewPlayer->setSecondaryColor(GameToolbox::iconColors[i]);
+            m_pPreviewPlayer->setSecondaryColor(m_colors[i]);
             GM->setVariable("player-secondary-color", button->getTag());
 
             });
@@ -155,15 +163,13 @@ bool GarageLayer::init() {
         btn->setNewScale(1.25f);
         log_ << "button? 2";
         btn->setTag(i);
-        colorsMenu->addChild(btn);
+        secondaryColorsMenu->addChild(btn);
     }
 
-    colorsMenu->setPosition({ winSize.width / 2, square->getPositionY() - square->getContentSize().height / 2 - 125 });
-    //colorsMenu->alignItemsHorizontallyWithPadding(15);
-    int colorCount = (int)size(GameToolbox::iconColors);
-    log_ << colorCount << "LOG???";
-    colorsMenu->alignItemsInRowsWithArray({Value(12), Value(12)}, 25);
-    this->addChild(colorsMenu);
+    secondaryColorsMenu->setPosition({ winSize.width / 2, square->getPositionY() - square->getContentSize().height / 2 - 190 });
+    secondaryColorsMenu->alignItemsHorizontallyWithPadding(15);
+    this->addChild(secondaryColorsMenu);
+
 
     this->m_nSelectedCube = GM->getVariable<int>("player-cube") - 1;
     this->m_nSelectedMC = GM->getVariable<int>("player-main-color") - 1;
@@ -189,7 +195,7 @@ bool GarageLayer::init() {
     this->m_pSelectionFrame->setPosition(iconsMenu->convertToWorldSpace(iconsMenu->getChildren().at(m_nSelectedCube)->getPosition()));
 
     this->m_pSelectionFrame2->setPositionX(colorsMenu->getPositionX() + colorsMenu->getChildren().at(m_nSelectedMC)->getPositionX());
-    //this->m_pSelectionFrame3->setPositionX(secondaryColorsMenu->getPositionX() + secondaryColorsMenu->getChildren().at(m_nSelectedSC)->getPositionX());
+    this->m_pSelectionFrame3->setPositionX(secondaryColorsMenu->getPositionX() + secondaryColorsMenu->getChildren().at(m_nSelectedSC)->getPositionX());
 
     this->m_pSelectionFrame2->setScale(0.95f);
     this->m_pSelectionFrame3->setScale(0.95f);
