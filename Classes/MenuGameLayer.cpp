@@ -20,8 +20,8 @@ bool MenuGameLayer::init(){
     addChild(GroundLayer::create(1), 2);
 
     auto playerTest = PlayerObject::create(1, this);
-    playerTest->mainSprite->setColor(GameToolbox::randomColor3B());
-    playerTest->secondarySprite->setColor(GameToolbox::randomColor3B());
+    // playerTest->mainSprite->setColor(GameToolbox::randomColor3B());
+    // playerTest->secondarySprite->setColor(GameToolbox::randomColor3B());
     playerTest->setPosition({-300, 232});
     addChild(playerTest);
     this->player = playerTest;
@@ -89,7 +89,7 @@ bool MenuGameLayer::init(){
 void MenuGameLayer::processPlayerMovement(float delta) {
     if(this->player) {
         if (this->player->getPositionX() == 500.f) {
-            this->player->jump();
+            // this->player->jump();
         }
         if(this->player->getPositionX() >= 1300.f) {
             log_ << "TRIGGER";
@@ -97,8 +97,8 @@ void MenuGameLayer::processPlayerMovement(float delta) {
             auto playerTest = PlayerObject::create(((rand() * 256) % 14) + 1, this);
             playerTest->setPosition({-300, 232});
             this->player = playerTest;
-            playerTest->mainSprite->setColor(GameToolbox::randomColor3B());
-            playerTest->secondarySprite->setColor(GameToolbox::randomColor3B());
+            // playerTest->mainSprite->setColor(GameToolbox::randomColor3B());
+            // playerTest->secondarySprite->setColor(GameToolbox::randomColor3B());
             addChild(playerTest);
         }
     }

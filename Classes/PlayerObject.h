@@ -2,7 +2,12 @@
 #include "GameObject.h"
 
 class PlayerObject : public GameObject {
-public:
+private:
+    void update(float delta);
+    bool init(int, Layer*);
+
+    void logValues();
+
     Layer* gameLayer;
     bool inPlayLayer;
 
@@ -19,11 +24,19 @@ public:
 
     MotionStreak* motionStreak;
 
+    double m_dXVel = 5.770002;
+    double m_dYVel = 0;
+    double m_dGravity = 0.958199;
+    double m_dJump = 11.180032;
+
+    bool m_bUpsideDown;
+    bool m_bOnGround;
+
+    float m_fSpeed = 1.8f;
+    
+    bool m_bIsDead;
+    bool m_bIsLocked;
+
 public:
-    bool init(int, Layer*);
-    void jump();
-
-    void update(float delta);
-
     static PlayerObject* create(int, Layer*);
 };

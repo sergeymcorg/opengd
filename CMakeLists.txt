@@ -71,16 +71,23 @@ if(WIN32)
     endif()
     include_directories("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
     add_subdirectory("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
+
+    # file (GLOB files5 "imgui/ImGUI/*.cpp")
+    # file (GLOB files6 "imgui/ImGUI/*.h")
+    # include_directories("${PROJECT_SOURCE_DIR}/imgui/ImGUI")
+    
 endif()
 # add_subdirectory("imgui")
 
 list(APPEND GAME_SOURCE
      ${files}
      ${files3}
+    #  ${files5}
      )
 list(APPEND GAME_HEADER
      ${files2}
      ${files4}
+    #  ${files6}
      )
 
 if(ANDROID)

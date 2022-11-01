@@ -19,7 +19,6 @@ bool GroundLayer::init(int groundID) {
     this->addChild(line);
     line->setPosition({winSize.width / 2, this->m_pSprite->getContentSize().height + this->m_pSprite->getPositionY()});
        
-    /*
     auto gradient1 = Sprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     this->addChild(gradient1);
     gradient1->setScale(1.6f);
@@ -29,8 +28,7 @@ bool GroundLayer::init(int groundID) {
     gradient2->setScale(1.6f);
     gradient2->setFlippedX(true);
     gradient2->setPositionX(winSize.width);
-    */
-
+    
     scheduleUpdate();
     
     return true;
