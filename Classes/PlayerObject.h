@@ -38,8 +38,9 @@ private:
     bool m_bIsLocked;
 
 public:
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     static PlayerObject* create(int, Layer*);
-
+    //void jump();
     void setMainColor(Color3B col);
     void setSecondaryColor(Color3B col);
     void setShipColor(Color3B col);
