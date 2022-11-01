@@ -30,7 +30,9 @@ set(APP_NAME OpenGD)
 
 project(${APP_NAME})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+if(NOT ANDROID)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+endif()
 
 if(XCODE)
     if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
@@ -58,25 +60,24 @@ if(APPLE OR WINDOWS)
 endif()
 
 # add cross-platforms source files and header files 
-if(WIN32)
-    file (GLOB files "Classes/*.cpp")
-    file (GLOB files2 "Classes/*.h")
-    if(WINDOWS OR WIN32)
-        message("[OpenGD] Game SDK will be compiled")
-        file (GLOB files3 "Classes/Discord/cpp/*.cpp")
-        file (GLOB files4 "Classes/Discord/cpp/*.h")
-    else()
-        set(files3 "")
-        set(files4 "")
-    endif()
-    include_directories("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
-    add_subdirectory("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
+file (GLOB files "Classes/*.cpp")
+file (GLOB files2 "Classes/*.h")
+
+   # if(WINDOWS OR WIN32)
+   #     message("[OpenGD] Game SDK will be compiled")
+   #     file (GLOB files3 "Classes/Discord/cpp/*.cpp")
+   #     file (GLOB files4 "Classes/Discord/cpp/*.h")
+  #  else()
+  #      set(files3 "")
+  #      set(files4 "")
+  #  endif()
+ #   include_directories("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
+   # add_subdirectory("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
 
     # file (GLOB files5 "imgui/ImGUI/*.cpp")
     # file (GLOB files6 "imgui/ImGUI/*.h")
     # include_directories("${PROJECT_SOURCE_DIR}/imgui/ImGUI")
     
-endif()
 # add_subdirectory("imgui")
 
 list(APPEND GAME_SOURCE
@@ -155,7 +156,7 @@ else()
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
 endif()
 
-target_link_options(${APP_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FORCE:MULTIPLE>)
+#target_link_options(${APP_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FORCE:MULTIPLE>)
 
 target_link_libraries(${APP_NAME} cocos2d)
 if(WINDOWS OR WIN32)

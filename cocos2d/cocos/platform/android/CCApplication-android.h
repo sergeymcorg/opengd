@@ -101,6 +101,9 @@ public:
 
 protected:
     static Application * sm_pSharedApplication;
+
+    CC_SYNTHESIZE(TextureQuality, m_eTextureQuality, TextureQuality)
+
 };
 
 NS_CC_END
