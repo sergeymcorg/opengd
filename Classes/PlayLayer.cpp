@@ -13,6 +13,7 @@ bool PlayLayer::init(){
     
     this->m_pGround = GroundLayer::create(1);
     this->addChild(this->m_pGround);
+    this->m_pGround->setSpeed(623);
     
     //temp back button
     auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_01_001.png", [&](Node* btn) {
@@ -49,7 +50,7 @@ bool PlayLayer::init(){
 void PlayLayer::update(float dt) {
     auto winSize = Director::getInstance()->getWinSize();
 
-    this->m_pBG->setPositionX(this->m_pBG->getPositionX() - dt * 70);
+    this->m_pBG->setPositionX(this->m_pBG->getPositionX() - dt * 62);
     if (this->m_pBG->getPositionX() <= -1024)
         this->m_pBG->setPositionX(this->m_pBG->getPositionX() + 1024);
 

@@ -20,21 +20,21 @@ bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
         inPlayLayer = true;
     }
 
-    setTextureRect(Rect(0, 0, 30, 30)); // player hitbox lol
+    setTextureRect(Rect(0, 0, 60, 60)); // player hitbox lol
 
-    mainSprite = Sprite::createWithSpriteFrameName(sprStr1);
-    addChild(mainSprite, 1);
+    m_pMainSprite = Sprite::createWithSpriteFrameName(sprStr1);
+    addChild(m_pMainSprite, 1);
 
-    secondarySprite = Sprite::createWithSpriteFrameName(sprStr2);
+    m_pSecondarySprite = Sprite::createWithSpriteFrameName(sprStr2);
 
-    mainSprite->addChild(secondarySprite, -1);
+    m_pMainSprite->addChild(m_pSecondarySprite, -1);
     //secondarySprite->setPosition(mainSprite->convertToNodeSpace(Vec2(0, 0))); // this shit DONT WORK!! cuz rob made it a global var
     //secondarySprite->setPosition(mainSprite->convertToNodeSpace(Vec2(15, 15)));
-    secondarySprite->setPosition(Vec2(30, 30));
+    m_pSecondarySprite->setPosition(Vec2(30, 30));
     
-    shipFrame = Sprite::createWithSpriteFrameName("ship_01_001.png");
-    shipFrame->setVisible(false);
-    addChild(shipFrame, 2);
+    m_pShipSprite = Sprite::createWithSpriteFrameName("ship_01_001.png");
+    m_pShipSprite->setVisible(false);
+    addChild(m_pShipSprite, 2);
 
     // particles
     dragEffect1 = ParticleSystemQuad::create("dragEffect.plist");
@@ -105,12 +105,24 @@ bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
     return true;
 }
 
+void PlayerObject::setMainColor(Color3B col) {
+    this->m_pMainSprite->setColor(col);
+}
+
+void PlayerObject::setSecondaryColor(Color3B col) {
+    this->m_pSecondarySprite->setColor(col);
+}
+
 void PlayerObject::update(float dt) {
+    dt *= 60; // rob :skull:
+
     if (this->m_bIsDead)
         return;
+
+    log_ << dt * this->m_fSpeed * this->m_dXVel;
     
     if (!this->m_bIsLocked) {
-        this->setPosition(this->getPosition() + ccp(dt * this->m_fSpeed * this->m_dXVel * 64, dt * this->m_fSpeed * this->m_dYVel * 64));
+        this->setPosition(this->getPosition() + ccp(dt * this->m_fSpeed * this->m_dXVel, dt * this->m_fSpeed * this->m_dYVel));
     }
 }
 

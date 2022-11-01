@@ -28,6 +28,8 @@ bool GroundLayer::init(int groundID) {
     gradient2->setScale(1.6f);
     gradient2->setFlippedX(true);
     gradient2->setPositionX(winSize.width);
+
+    this->m_fSpeed = 700;
     
     scheduleUpdate();
     

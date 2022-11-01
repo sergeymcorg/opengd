@@ -11,9 +11,9 @@ private:
     Layer* gameLayer;
     bool inPlayLayer;
 
-    Sprite* mainSprite;
-    Sprite* secondarySprite;
-    Sprite* shipFrame;
+    Sprite* m_pMainSprite;
+    Sprite* m_pSecondarySprite;
+    Sprite* m_pShipSprite;
 
     ParticleSystemQuad* dragEffect1;
     ParticleSystemQuad* dragEffect2;
@@ -32,11 +32,14 @@ private:
     bool m_bUpsideDown;
     bool m_bOnGround;
 
-    float m_fSpeed = 1.8f;
+    float m_fSpeed = 0.9f;
     
     bool m_bIsDead;
     bool m_bIsLocked;
 
 public:
     static PlayerObject* create(int, Layer*);
+
+    void setMainColor(Color3B col);
+    void setSecondaryColor(Color3B col);
 };
