@@ -12,6 +12,7 @@ For now it is under development.
 * **[Kolyah35](https://github.com/Kolyah35)#0107**
 * **[iAndy_HD3](https://github.com/iAndyHD3)#3579**
 * **[Jorgame](https://github.com/ImJorGame)#8957**
+* **[cdc's first account](https://github.com/CdcOnGitHub)#0451
 
 ## **TODO list for 1.0**
 - [x] LoadingLayer implementation
