@@ -15,7 +15,6 @@ Scene* MenuLayer::scene() {
 }
 
 bool MenuLayer::init(){
-    // e
     if (!Layer::init()) return false;
     
     auto winSize = Director::getInstance()->getWinSize();
