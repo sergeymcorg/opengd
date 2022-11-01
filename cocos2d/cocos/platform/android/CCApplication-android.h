@@ -29,7 +29,11 @@ THE SOFTWARE.
 #include "platform/CCApplicationProtocol.h"
 
 NS_CC_BEGIN
-
+enum TextureQuality {
+    LOW = 0,
+    MEDIUM,
+    HIGH
+};
 class CC_DLL Application : public ApplicationProtocol
 {
 public:
