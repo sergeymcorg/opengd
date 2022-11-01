@@ -26,7 +26,7 @@ For now it is under development.
 Download Windows or Linux dependencies. Python and Shell script is placed inside `cocos2d` folder.
 
 ## **Troubleshooting**
-**Q:** `[build] LINK : fatal error LNK1181: не удается открыть входной файл "Classes\Discord\lib\x86\Release\dgsdk.lib` <br>
+**Q:** `[build] LINK : fatal error LNK1181: unable to open file "Classes\Discord\lib\x86\Release\dgsdk.lib` <br>
 **A:** Add `dgsdk.lib` from `opengd/Classes/Discord/lib/x86/dgsdk.lib` to `opengd/build (or out)/Classes/Discord/lib/x86/dgsdk.lib`<br><br>
 **Q:** Game crashes before any image being shown<br>
 **A:** It means that game failed to load textures. After building include Resources folder from 1.0 APK to build folder, where `OpenGD.exe` is located.<br><br>
