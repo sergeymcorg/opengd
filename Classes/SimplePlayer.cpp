@@ -9,10 +9,16 @@ bool SimplePlayer::init(int cubeID) {
     auto secFrame = StringUtils::format("player_%02d_2_001.png", cubeID);
 
     this->m_pMainSprite = Sprite::createWithSpriteFrameName(mainFrame);
+    if (this->m_pMainSprite == nullptr) {
+        this->m_pMainSprite = Sprite::createWithSpriteFrameName("GJ_arrow_03_001.png");
+    }
     this->addChild(m_pMainSprite);
     m_pMainSprite->setAnchorPoint({0, 0});
     
     this->m_pSecondarySprite = Sprite::createWithSpriteFrameName(secFrame);
+    if (this->m_pSecondarySprite == nullptr) {
+        this->m_pSecondarySprite = Sprite::createWithSpriteFrameName("GJ_arrow_03_001.png");
+    }
     this->addChild(m_pSecondarySprite, -1);
     m_pSecondarySprite->setPosition(this->m_pMainSprite->getContentSize() / 2);
 

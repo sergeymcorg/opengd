@@ -13,7 +13,7 @@ public:
 	
 	bool init();
 	virtual void keyBackClicked();
-	virtual bool onTouchBegan (Touch *touch, Event *unused_event);
+	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
 
 	virtual void show();
 	virtual void close();

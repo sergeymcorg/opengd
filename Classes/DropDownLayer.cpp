@@ -12,7 +12,11 @@ void DropDownLayer::showLayer(bool instant) {
         this->m_pBGLayer->runAction(FadeTo::create(0.5f, 125));
     }
 } 
-
+bool DropDownLayer::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
+{
+    log_ << "touch began";
+    return true;
+}
 void DropDownLayer::hideLayer(bool instant, bool removeFromParent) {
     this->stopAllActions();
 
@@ -72,6 +76,24 @@ bool DropDownLayer::init(const char* title, float height) {
     this->setup();
 
     this->hideLayer(true, false);
+
+    // set up listener 
+
+    auto dir = Director::getInstance();
+
+
+    auto listener = EventListenerTouchOneByOne::create();
+
+    listener->setEnabled(true);
+    listener->setSwallowTouches(true);
+
+
+    // trigger when you start touch
+    listener->onTouchBegan = CC_CALLBACK_2(DropDownLayer::onTouchBegan, this);
+
+
+    dir->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
 
     return true;
 }

@@ -16,7 +16,7 @@ private:
 
 public:
     static DropDownLayer* create(const char* title, float height = 220);
-
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     virtual void hideLayer(bool instant, bool removeFromParent);
     virtual void showLayer(bool instant);
 };

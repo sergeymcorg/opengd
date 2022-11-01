@@ -91,7 +91,7 @@ bool GarageLayer::init() {
             this->m_pSelectionFrame->setPosition(iconsMenu->convertToWorldSpace(btn->getPosition()));
 
             this->m_pPreviewPlayer->removeFromParentAndCleanup(true);
-            this->m_pPreviewPlayer->release();
+            //this->m_pPreviewPlayer->release(); // this shit crashes dont do this
             this->m_pPreviewPlayer = SimplePlayer::create(btn->getTag());
             m_pPreviewPlayer->setPosition({winSize.width / 2, floor->getPositionY() + floor->getContentSize().height / 2});
             m_pPreviewPlayer->setAnchorPoint({0.5, 0});

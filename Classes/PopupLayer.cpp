@@ -9,35 +9,44 @@ void PopupLayer::show() {
 	scene->addChild(this);
 }
 
-//not working
-bool PopupLayer::onTouchBegan(Touch *touch, Event *unused_event) {
-	log_ << "touch began!";
+//touch
+bool PopupLayer::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
+{
+	log_ << "touch began";
 	return true;
 }
 
 
 //TODO: block touch other layers
-
+// I did it!
 bool PopupLayer::init() {
-
 	if(!this->initWithColor(Color4B(0, 0, 0, 0)))
 		return false;
 	
-
-	auto dir = Director::getInstance();
-	/*
-	dir->getTouchDispatcher()->incrementForcePrio(2);
-	this->setTouchEnabled(true);
-	this->setKeypadEnabled(true);
-	this->setKeyboardEnabled(true);
-	*/
-		
+	
 	m_pLayer = Layer::create();
 	m_pLayer->setScale(0);
-	m_pLayer->setContentSize(dir->getWinSize());
 	this->addChild(m_pLayer);
+
+
+	// set up listener 
+
+	auto dir = Director::getInstance();
+
+
+	auto listener = EventListenerTouchOneByOne::create();
+
+	listener->setEnabled(true);
+	listener->setSwallowTouches(true);
+
+
+	// trigger when you start touch
+	listener->onTouchBegan = CC_CALLBACK_2(PopupLayer::onTouchBegan, this);
+
+
+	dir->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 	
-	
+
 	return true;
 }
 
@@ -51,10 +60,7 @@ void PopupLayer::close() {
 	this->removeFromParentAndCleanup(true);
 
 }
-
-
 PopupLayer* PopupLayer::create() {
-	
 	PopupLayer* pRet = new (std::nothrow) PopupLayer();
     if (pRet && pRet->init()) {
         pRet->autorelease();
