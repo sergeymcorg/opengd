@@ -45,9 +45,5 @@ private:
 #include "MenuItemSpriteExtra.h"
 #include "DropDownLayer.h"
 #include "GameManager.h"
-
-// Always compile
-
-#include "CompileLayer.h"
 #include "TextButton.h"
 #include "GameToolbox.h"

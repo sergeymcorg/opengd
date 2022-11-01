@@ -109,17 +109,84 @@ unsigned int hash(const char *string)
 
     return result;
 }
+unsigned int hash(char* string, int size)
+{
+    unsigned int string_size = size;
+    unsigned int string_pointer = 0;
+
+    uint8_t array_pointer = 0;
+
+    unsigned int result = 0;
+
+    while (string_size > string_pointer)
+    {
+        if (string[string_pointer] != 0) {
+            printf("[%d] %d\n", string_pointer, string[string_pointer]);
+        }
+        result += (rndnums[array_pointer++] + ((unsigned int)string[string_pointer++] << string_pointer));
+    }
+
+    return result;
+}
 
 bool CompileLayer::init()
 {
     if (!Layer::init())
         return false;
 
-    auto gh = Label::createWithBMFont("chatFont.fnt", getRandom());
+    auto gh = Label::createWithBMFont("chatFont.fnt", getApplicationHash());
     gh->setPosition({-550, 340});
     gh->setScale(0.7f);
     gh->setOpacity(64);
     addChild(gh, 999999);
 
     return true;
+}
+
+std::string CompileLayer::application_name() {
+#if defined(PLATFORM_POSIX) || defined(__linux__) //check defines for your setup
+    std::string sp;
+    std::ifstream("/proc/self/comm") >> sp;
+    return sp;
+#elif defined(_WIN32)
+    char buf[MAX_PATH];
+    GetModuleFileNameA(nullptr, buf, MAX_PATH);
+    return buf;
+#else
+    static_assert(false, "Unknown platform!");
+#endif
+}
+
+std::string CompileLayer::getApplicationHash() {
+    log_ << application_name();
+
+    std::string app = application_name();
+
+    /*
+    std::ifstream file(app);
+    if (file.good()) {
+        char* buffer = (char*)malloc(64 * 1024 * 1024);
+        file.seekg(0);
+        file.read(buffer, 64 * 1024 * 1024);
+        this->next = hash(buffer, 64 * 1024 * 1024);
+        log_ << this->next;
+        std::string hhs = "Build ";
+        hhs.append(rand());
+        log_ << hhs;
+        free(buffer);
+        file.close();
+        return hhs;
+    } else {
+        file.close();
+        return "Build -";
+    }
+    */
+
+    this->next = std::filesystem::hash_value(std::filesystem::path{ app });
+    std::string hhs = "Build ";
+    hhs.append(rand());
+    hhs.append(rand());
+    hhs.append(rand());
+    hhs.append(rand());
+    return hhs;
 }

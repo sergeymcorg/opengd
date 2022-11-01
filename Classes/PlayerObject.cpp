@@ -113,6 +113,22 @@ void PlayerObject::setSecondaryColor(Color3B col) {
     this->m_pSecondarySprite->setColor(col);
 }
 
+void PlayerObject::setShipColor(Color3B col) {
+    this->m_pShipSprite->setColor(col);
+}
+
+Color3B PlayerObject::getMainColor() {
+    return this->m_pMainSprite->getColor();
+}
+
+Color3B PlayerObject::getSecondaryColor() {
+    return this->m_pSecondarySprite->getColor();
+}
+
+Color3B PlayerObject::getShipColor() {
+    return this->m_pShipSprite->getColor();
+}
+
 void PlayerObject::update(float dt) {
     dt *= 60; // rob :skull:
 

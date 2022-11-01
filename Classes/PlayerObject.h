@@ -42,4 +42,9 @@ public:
 
     void setMainColor(Color3B col);
     void setSecondaryColor(Color3B col);
+    void setShipColor(Color3B col);
+
+    Color3B getMainColor();
+    Color3B getSecondaryColor();
+    Color3B getShipColor();
 };

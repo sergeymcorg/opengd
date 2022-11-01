@@ -46,10 +46,12 @@ bool MenuLayer::init(){
     garageBtn->setPosition({-220, 20});
     creatorBtn->setPosition({220, 20});
 
+    auto cl = CompileLayer::create();
+
     menu->addChild(playBtn);
     menu->addChild(garageBtn);
     menu->addChild(creatorBtn);
-    menu->addChild(CompileLayer::create());
+    menu->addChild(cl);
     auto selectCharacter = Sprite::createWithSpriteFrameName("GJ_chrSel_001.png");
     menu->addChild(selectCharacter);
     selectCharacter->setPosition(garageBtn->getPosition() - ccp(100, 100));
@@ -93,8 +95,6 @@ bool MenuLayer::init(){
     menu->addChild(moreGamesBtn);
     moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 86, 90}));
 
-    GM->changeDActivity();
-    GM->changeDActivity();
     GM->changeDActivity();
 
     return true;
