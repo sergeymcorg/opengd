@@ -26,7 +26,7 @@ For now it is under development.
 Download Windows or Linux dependencies. Python and Shell script is placed inside `cocos2d` folder.<br>
 **Windows**<br><br>
 `cmake -B build -T host=x64 -A win32`<br>
-Then open [Visual Studio](https://visualstudio.microsoft.com/) and build<br>
+Then open [Visual Studio](https://visualstudio.microsoft.com/) and build<br><br>
 **Linux**<br><br>
 `cmake -B build`<br>
 `cd build`<br>
