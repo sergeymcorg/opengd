@@ -159,9 +159,9 @@ endif()
 #target_link_options(${APP_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FORCE:MULTIPLE>)
 
 target_link_libraries(${APP_NAME} cocos2d)
-if(WINDOWS OR WIN32)
-target_link_libraries(${APP_NAME} dgsdk)
-endif()
+#if(WINDOWS OR WIN32)
+#target_link_libraries(${APP_NAME} dgsdk)
+#endif()
 target_include_directories(${APP_NAME}
         PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
