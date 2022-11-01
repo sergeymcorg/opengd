@@ -199,10 +199,10 @@ bool GarageLayer::init() {
      //   ColoursPalette::create(this)->show();
     //});
     
-    //auto menu = Menu::create(backBtn, paletteBtn, nullptr);
+    auto menu = Menu::create(backBtn, nullptr);
     this->addChild(menu);
     backBtn->setPosition(menu->convertToNodeSpace({48, winSize.height - 46}));
-    paletteBtn->setPosition(menu->convertToNodeSpace({48, winSize.height - 146}));
+    //paletteBtn->setPosition(menu->convertToNodeSpace({48, winSize.height - 146}));
 
     return true;
 }
