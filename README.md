@@ -23,7 +23,16 @@ For now it is under development.
 - [ ] Networking features
 
 ## **Compiling the game**
-Download Windows or Linux dependencies. Python and Shell script is placed inside `cocos2d` folder.
+Download Windows or Linux dependencies. Python and Shell script is placed inside `cocos2d` folder.<br>
+**Windows**<br><br>
+`cmake -B build -T host=x64 -A win32`<br>
+Then open [Visual Studio](https://visualstudio.microsoft.com/) and build<br><br>
+**Linux**<br><br>
+`cmake -B build`<br>
+`cd build`<br>
+`make`<br><br>
+
+**Run everything from Root repo directory.**<br>
 
 ## **Troubleshooting**
 **Q:** `[build] LINK : fatal error LNK1181: unable to open file "Classes\Discord\lib\x86\Release\dgsdk.lib` <br>
