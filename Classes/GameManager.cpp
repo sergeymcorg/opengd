@@ -82,7 +82,6 @@ bool GameManager::connectDiscord() {
 }
 bool GameManager::changeDActivity() {
 #if	ENABLE_DISCORD == 1
-    if (!ENABLE_DISCORD) return false;
     if (!dCore) return false;
 
     Director::getInstance()->getRunningScene()->schedule([](float t) {
@@ -97,10 +96,12 @@ bool GameManager::changeDActivity() {
     activity.SetType(discord::ActivityType::Playing);
     activity.GetAssets().SetLargeImage("gjlogo");
     activity.GetAssets().SetLargeText("OpenGD 1.0 DEV");
+    /*
     activity.GetParty().SetId("221");
     activity.GetParty().SetPrivacy(discord::ActivityPartyPrivacy::Public);
     activity.GetParty().GetSize().SetCurrentSize(1);
     activity.GetParty().GetSize().SetMaxSize(16);
+    */
     activity.GetSecrets().SetJoin("1AF");
     activity.GetSecrets().SetMatch("111J");
     activity.GetSecrets().SetSpectate("21FF");
@@ -110,6 +111,23 @@ bool GameManager::changeDActivity() {
             log_ << "Failed to change DActivity due to " << (int)result << "!";
         }
         Director::getInstance()->getRunningScene()->unschedule("discord");
+    });
+    this->createDiscordSession();
+
+    dCore->ActivityManager().OnActivityJoin.Connect([](const char *secret) {
+        log_ << "Someone joined!!!";
+        dCore->LobbyManager().ConnectLobbyWithActivitySecret(secret, [](discord::Result, discord::Lobby lobby) {
+            GM->createMultiplayerSession(lobby.GetId());
+            /*
+            for (int i = 0; i < (int)dCore->LobbyManager().MemberCount(); i++) {
+                discord::UserId* uid = (discord::UserId*)malloc(sizeof(discord::UserId));
+                discord::Result res = dCore->LobbyManager().GetMemberUserId(lobby.GetId(), i, uid);
+                if ((int)res == DiscordResult_Ok) {
+                    dCore->LobbyManager().SendNetworkMessage(lobby.GetId(), uid[0], 0, (uint8_t*)"Hello!", 7);
+                }
+            }
+            */
+        });
     });
 
     return true;
@@ -122,4 +140,38 @@ void GameManager::processDiscord(float t) {
     dCore->RunCallbacks();
 #endif
     return;
+}
+
+bool GameManager::createMultiplayerSession(uint64_t lid) {
+#if ENABLE_DISCORD == 1
+
+    dCore->LobbyManager().ConnectNetwork(lid);
+    
+    dCore->LobbyManager().OpenNetworkChannel(lid, 0, false);
+
+    return true;
+#else
+    return false;
+#endif
+}
+
+uint64_t GameManager::createDiscordSession() {
+#if ENABLE_DISCORD == 1
+    discord::LobbyTransaction txn;
+    dCore->LobbyManager().GetLobbyCreateTransaction(&txn);
+    txn.SetCapacity(16);
+    txn.SetType(discord::LobbyType::Public);
+    txn.SetLocked(false);
+    dCore->LobbyManager().CreateLobby(txn, [](discord::Result res, discord::Lobby lobby) {
+        if ((int)res == (int)discord::Result::Ok) {
+            log_ << "Made DLobby " << (uint64_t)lobby.GetId();
+        }
+        else {
+            log_ << "Failed to create DLobby due to " << (int)res << "!";
+        }
+    });
+    return UINT64_MAX;
+#else
+    return UINT64_MAX;
+#endif;
 }

@@ -174,7 +174,7 @@ bool Sprite::initWithFile(const std::string& _filename)
         filename = _filename.substr(0, _filename.find_last_of('.')) + "-hd" + _filename.substr(_filename.find_last_of('.'));
     }
 
-    printf("Creating sprite: %s -> %s\n", _filename.c_str(), filename.c_str());
+    // printf("Creating sprite: %s -> %s\n", _filename.c_str(), filename.c_str());
 
     if (filename.empty())
     {
