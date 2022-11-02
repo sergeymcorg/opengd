@@ -16,6 +16,7 @@ private:
     CC_SYNTHESIZE(float, m_fNewScale, NewScale)
 
 public:
+
     /// @brief Basically a ButtonSprite implementation.
     /// @param text The button text
     /// @param font The font of the text
@@ -48,5 +49,8 @@ public:
     /// @return A new button
     static TextButton* create(string text, std::function<void(TextButton*)> callback);
 
-    void setText(string text);
+    void setText(std::string text);
+    
+    Label* getLabel();
+    ui::Scale9Sprite* getBG();
 };

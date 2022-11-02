@@ -1,19 +1,20 @@
 #include "TextButton.h"
 
 void TextButton::selected() {
-    this->m_pBG->runAction(EaseBounceOut::create(ScaleTo::create(.3f, m_fNewScale)));
     MenuItemSprite::selected();
+    this->runAction(EaseBounceOut::create(ScaleTo::create(.3f, m_fNewScale)));
 }
 
 void TextButton::unselected() {
-    this->m_pBG->stopAllActions();
-    this->m_pBG->runAction(EaseBounceOut::create(ScaleTo::create(0.4f, 1.0f)));
     MenuItemSprite::unselected();
+    this->stopAllActions();
+    this->runAction(EaseBounceOut::create(ScaleTo::create(0.3f, 1.0f)));
 }
 
 void TextButton::activate() {
-    this->m_pBG->stopAllActions();
-    this->m_pBG->setScale(1.0f);
+    MenuItemSprite::activate();
+    this->stopAllActions();
+    this->setScale(1.0f);
     this->m_fCallback(this);
 }
 
@@ -35,7 +36,7 @@ bool TextButton::init(string text, string font, float width, float height, strin
 
     this->setContentSize(this->m_pBG->getContentSize());
 
-    this->setNewScale(1.26f);
+    this->setNewScale(1.25f);
 
     this->m_fCallback = callback;
 
@@ -45,6 +46,8 @@ bool TextButton::init(string text, string font, float width, float height, strin
     return true;
 }
 
+
+// Getters and Setters
 void TextButton::setText(string text) {
     this->m_pText->setString(text);
 
@@ -56,6 +59,18 @@ void TextButton::setText(string text) {
     this->m_pText->setPosition(this->m_pBG->getContentSize() / 2);
 }
 
+Label* TextButton::getLabel()
+{
+    return this->m_pText;
+}
+
+ui::Scale9Sprite* TextButton::getBG()
+{
+    return this->m_pBG;
+}
+
+// Create funcs
+#pragma region
 TextButton* TextButton::create(string text, string font, float width, float height, string bgTexture, std::function<void(TextButton*)> callback) {
     auto pRet = new(std::nothrow) TextButton();
 
@@ -79,3 +94,6 @@ TextButton* TextButton::create(string text, string font, std::function<void(Text
 TextButton* TextButton::create(string text, string font, float width, float height, std::function<void(TextButton*)> callback) {
     return TextButton::create(text, font, width, height, "GJ_button_01.png", callback);
 }
+
+
+#pragma endregion

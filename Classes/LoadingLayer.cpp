@@ -98,7 +98,7 @@ void LoadingLayer::loadAssets() {
         else if (Application::getInstance()->getTextureQuality() == MEDIUM && path.find("-hd") == string::npos) return;
 
         // SpriteFrameCache doesnt like absolute filenames
-        frameCache->addSpriteFramesWithFile(ghc::filesystem::path(path).filename().string());
+        frameCache->addSpriteFramesWithFile(std::filesystem::path(path).filename().string());
         this->assetLoaded(nullptr);
     });
 }

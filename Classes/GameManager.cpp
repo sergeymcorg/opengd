@@ -1,6 +1,6 @@
 #include "GameManager.h"
 
-#if ENABLE_DISCORD == 1
+#ifdef _WIN32
 #include "./Discord/cpp/discord.h"
 #include "CompileLayer.h"
 
@@ -64,8 +64,6 @@ void GameManager::loadFromSave() {
 }
 
 bool GameManager::connectDiscord() {
-	
-#if ENABLE_DISCORD == 1
     if (!ENABLE_DISCORD) return false;
 
     // 690545589175451679
@@ -76,12 +74,9 @@ bool GameManager::connectDiscord() {
     }
 
     return true;
-#else
-	return false;
-#endif
 }
 bool GameManager::changeDActivity() {
-#if	ENABLE_DISCORD == 1
+#ifdef _WIN32
     if (!ENABLE_DISCORD) return false;
     if (!dCore) return false;
 
@@ -118,7 +113,7 @@ bool GameManager::changeDActivity() {
 #endif
 }
 void GameManager::processDiscord(float t) {
-#if ENABLE_DISCORD == 1
+#ifdef _WIN32
     dCore->RunCallbacks();
 #endif
     return;

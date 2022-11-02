@@ -1,13 +1,13 @@
 #pragma once
 #include "includes.h"
-#include "../libs/filesystem.hpp"
+#include <filesystem>
 
 USING_NS_CC;
-using namespace ghc::filesystem;
+using namespace std::filesystem;
 
 #define ccp(x,y) Point(x,y)
 
-inline vector<string> splitString(string str, char separator) {
+vector<string> splitString(string str, char separator) {
     string temp = "";
     vector<string> v;
     for (size_t i = 0; i < str.length(); ++i) {
@@ -23,7 +23,7 @@ inline vector<string> splitString(string str, char separator) {
     return v;
 }
 
-inline string joinStrings(vector<string> strings, const char* delim) {
+string joinStrings(vector<string> strings, const char* delim) {
     string ret;
     for (size_t i = 0; i < strings.size(); i++) {
         auto str = strings[i];
@@ -33,11 +33,11 @@ inline string joinStrings(vector<string> strings, const char* delim) {
 }
 
 template <typename T>
-inline bool isInVector(vector<T> vec, T item) {
+bool isInVector(vector<T> vec, T item) {
     return std::find(vec.begin(), vec.end(), item) != vec.end();
 }
 
-inline int countFilesRecursively(string dir, vector<string> extensions) {
+int countFilesRecursively(string dir, vector<string> extensions) {
     int count = 0;
 
     for (auto const& entry : recursive_directory_iterator(dir)) {
@@ -50,7 +50,7 @@ inline int countFilesRecursively(string dir, vector<string> extensions) {
     return count;
 }
 
-inline void iterateRecursive(string dir, vector<string> extensions, std::function<void(const string)> fn) {
+void iterateRecursive(string dir, vector<string> extensions, std::function<void(const string)> fn) {
     for (auto const& entry : recursive_directory_iterator(dir)) {
         if (!entry.is_directory()) {
             if (isInVector(extensions, entry.path().extension().string()))
@@ -60,6 +60,6 @@ inline void iterateRecursive(string dir, vector<string> extensions, std::functio
 }
 
 template <typename T>
-inline T inRange(T value, T min, T max) {
+T inRange(T value, T min, T max) {
     return MIN(MAX(value, min), max);
 }
