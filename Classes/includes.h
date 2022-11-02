@@ -15,7 +15,7 @@ using std::string, std::vector;
 #define ENABLE_DISCORD 0
 #endif
 */
-#define ENABLE_DISCORD 1
+#define ENABLE_DISCORD 0
 
 // logger
 class Logger : private std::streambuf, public std::ostream {

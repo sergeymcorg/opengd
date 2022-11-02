@@ -63,7 +63,7 @@ endif()
 file (GLOB files "Classes/*.cpp")
 file (GLOB files2 "Classes/*.h")
 
-set(ENABLE_DISCORD 1)
+set(ENABLE_DISCORD 0)
 
 if(ENABLE_DISCORD AND WIN32)
     message("[OpenGD] Game SDK will be compiled")
