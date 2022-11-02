@@ -1,13 +1,13 @@
 #pragma once
 #include "includes.h"
-#include <filesystem>
+#include "../libs/filesystem.hpp"
 
 USING_NS_CC;
-using namespace std::filesystem;
+using namespace ghc::filesystem;
 
 #define ccp(x,y) Point(x,y)
 
-vector<string> splitString(string str, char separator) {
+inline vector<string> splitString(string str, char separator) {
     string temp = "";
     vector<string> v;
     for (size_t i = 0; i < str.length(); ++i) {
@@ -23,7 +23,7 @@ vector<string> splitString(string str, char separator) {
     return v;
 }
 
-string joinStrings(vector<string> strings, const char* delim) {
+inline string joinStrings(vector<string> strings, const char* delim) {
     string ret;
     for (size_t i = 0; i < strings.size(); i++) {
         auto str = strings[i];
@@ -33,11 +33,11 @@ string joinStrings(vector<string> strings, const char* delim) {
 }
 
 template <typename T>
-bool isInVector(vector<T> vec, T item) {
+inline bool isInVector(vector<T> vec, T item) {
     return std::find(vec.begin(), vec.end(), item) != vec.end();
 }
 
-int countFilesRecursively(string dir, vector<string> extensions) {
+inline int countFilesRecursively(string dir, vector<string> extensions) {
     int count = 0;
 
     for (auto const& entry : recursive_directory_iterator(dir)) {
@@ -50,7 +50,7 @@ int countFilesRecursively(string dir, vector<string> extensions) {
     return count;
 }
 
-void iterateRecursive(string dir, vector<string> extensions, std::function<void(const string)> fn) {
+inline void iterateRecursive(string dir, vector<string> extensions, std::function<void(const string)> fn) {
     for (auto const& entry : recursive_directory_iterator(dir)) {
         if (!entry.is_directory()) {
             if (isInVector(extensions, entry.path().extension().string()))
@@ -60,6 +60,6 @@ void iterateRecursive(string dir, vector<string> extensions, std::function<void(
 }
 
 template <typename T>
-T inRange(T value, T min, T max) {
+inline T inRange(T value, T min, T max) {
     return MIN(MAX(value, min), max);
 }
