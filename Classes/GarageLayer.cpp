@@ -113,7 +113,7 @@ bool GarageLayer::init() {
 
     auto colorsMenu = Menu::create();
 
-    for (int i = 1; i <= size(GameToolbox::iconColors) - 1; i++) {
+    for (int i = 1; i <= GameToolbox::iconColors.size() - 1; i++) {
         log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
         log_ << "button?";
@@ -143,7 +143,7 @@ bool GarageLayer::init() {
 
     auto secondaryColorsMenu = Menu::create();
 
-    for (int i = 1; i <= size(GameToolbox::iconColors) - 1; i++) {
+    for (int i = 1; i <= GameToolbox::iconColors.size() - 1; i++) {
         log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
         log_ << "button?";
