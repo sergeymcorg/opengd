@@ -181,8 +181,8 @@ std::string CompileLayer::getApplicationHash() {
         return "Build -";
     }
     */
-
-    this->next = std::filesystem::hash_value(std::filesystem::path{ app });
+    
+    this->next = ghc::filesystem::hash_value(ghc::filesystem::path{ app });
     std::string hhs = "Build ";
     hhs.append(rand());
     hhs.append(rand());
