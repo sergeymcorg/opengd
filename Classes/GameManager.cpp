@@ -1,6 +1,6 @@
 #include "GameManager.h"
 
-#ifdef _WIN32
+#if ENABLE_DISCORD == 1
 #include "./Discord/cpp/discord.h"
 #include "CompileLayer.h"
 
@@ -64,19 +64,24 @@ void GameManager::loadFromSave() {
 }
 
 bool GameManager::connectDiscord() {
+	
+#if ENABLE_DISCORD == 1
     if (!ENABLE_DISCORD) return false;
 
     // 690545589175451679
-    discord::Result result = discord::Core::Create(690545589175451679, DiscordCreateFlags_Default, &dCore);
+    discord::Result result = discord::Core::Create(690545589175451679, DiscordCreateFlags_NoRequireDiscord, &dCore);
     if ((int)result != EDiscordResult::DiscordResult_Ok) {
         log_ << "Failed to connect to Discord due to " << (int)result << "!";
         return false;
     }
 
     return true;
+#else
+	return false;
+#endif
 }
 bool GameManager::changeDActivity() {
-#ifdef _WIN32
+#if	ENABLE_DISCORD == 1
     if (!ENABLE_DISCORD) return false;
     if (!dCore) return false;
 
@@ -113,7 +118,7 @@ bool GameManager::changeDActivity() {
 #endif
 }
 void GameManager::processDiscord(float t) {
-#ifdef _WIN32
+#if ENABLE_DISCORD == 1
     dCore->RunCallbacks();
 #endif
     return;
