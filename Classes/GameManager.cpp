@@ -69,7 +69,7 @@ bool GameManager::connectDiscord() {
     if (!ENABLE_DISCORD) return false;
 
     // 690545589175451679
-    discord::Result result = discord::Core::Create(690545589175451679, DiscordCreateFlags_Default, &dCore);
+    discord::Result result = discord::Core::Create(690545589175451679, DiscordCreateFlags_NoRequireDiscord, &dCore);
     if ((int)result != EDiscordResult::DiscordResult_Ok) {
         log_ << "Failed to connect to Discord due to " << (int)result << "!";
         return false;
