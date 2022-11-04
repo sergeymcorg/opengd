@@ -49,7 +49,7 @@ bool GarageLayer::init() {
     nameTxt->setPosition(m_pUsernamefield->getPosition() + ccp(-250, 20));
     this->addChild(nameTxt);
 
-    auto floor = Sprite::createWithSpriteFrameName("floorLine_001.png");
+    auto floor = Sprite::create("floor.png");
     floor->setPosition({winSize.width / 2, (winSize.height / 2) + 20});
     this->addChild(floor);
 
@@ -113,7 +113,7 @@ bool GarageLayer::init() {
 
     auto colorsMenu = Menu::create();
 
-    for (int i = 1; i <= size(m_colors) - 1; i++) {
+    for (int i = 0; i <= size(m_colors) - 1; i++) {
         log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
         log_ << "button?";
@@ -143,7 +143,7 @@ bool GarageLayer::init() {
 
     auto secondaryColorsMenu = Menu::create();
 
-    for (int i = 1; i <= size(m_colors) - 1; i++) {
+    for (int i = 0; i <= size(m_colors) - 1; i++) {
         log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
         log_ << "button?";

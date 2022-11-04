@@ -7,6 +7,7 @@
 #include "CreatorLayer.h"
 #include "AlertLayer.h"
 #include "ColoursPalette.h"
+#include "AudioEngine.h"
 
 Scene* MenuLayer::scene() {
     auto scene = Scene::create();
@@ -17,6 +18,8 @@ Scene* MenuLayer::scene() {
 bool MenuLayer::init(){
     if (!Layer::init()) return false;
     
+    AudioEngine::play2d("audiotracks/menuLoop.mp3", true, 0.5f);
+
     auto winSize = Director::getInstance()->getWinSize();
     
     addChild(MenuGameLayer::create(), -1);
@@ -59,7 +62,8 @@ bool MenuLayer::init(){
     levelEditor->setPosition(creatorBtn->getPosition() + ccp(100, -100));
     
     auto achievementsBtn = MenuItemSpriteExtra::create("GJ_achBtn_001.png", [&](Node* btn) {
-		AlertLayer::create("coming soon", "this feature has not been added yet!", "OK", "", 600, 250)->show();
+	    // AlertLayer::create("coming soon", "this feature has not been added yet!", "OK", "", 600, 250)->show();
+        AchievementNotifier::getInstance()->showAchievements();
 		//ColoursPalette::create(nullptr)->show();
     });
     
@@ -96,6 +100,7 @@ bool MenuLayer::init(){
     GM->changeDActivity();
     GM->changeDActivity();
     GM->changeDActivity();
+
 
     return true;
 }

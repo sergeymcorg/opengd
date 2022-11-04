@@ -2,6 +2,8 @@
 #include "includes.h"
 #include "utils.h"
 #include "MenuLayer.h"
+#include "AchievementManager.h"
+#include "AchievementNotifier.h"
 #include <filesystem>
 
 class LoadingLayer : public Layer {

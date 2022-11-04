@@ -69,6 +69,9 @@ bool LoadingLayer::init() {
     
     this->loadAssets();
     
+    AchievementManager::getInstance()->loadAchievements();
+    AchievementNotifier::getInstance()->addToOrder("geometry.ach.level01b");
+    AchievementNotifier::getInstance()->addToOrder("geometry.ach.level03b");
     return true;
 }
 

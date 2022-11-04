@@ -28,7 +28,8 @@ void GameManager::setDefaults() {
         {"player-cube", 1},
         {"player-main-color", 0},
         {"player-secondary-color", 3},
-        {"player-username", "Player"}
+        {"player-username", "Player"},
+        {"completed-achievements", {}}
     };
 
     for (auto& [key, value] : defaults.items()) {
@@ -117,4 +118,8 @@ void GameManager::processDiscord(float t) {
     dCore->RunCallbacks();
 #endif
     return;
+}
+
+Color3B GameManager::getColor(unsigned int id){
+    return this->m_colors[id];
 }
