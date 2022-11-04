@@ -162,7 +162,7 @@ void PlayerObject::update(float dt) {
     }
 
     // if (!this->m_bFlyMode)
-    this->motionStreak->setPosition(this->getPosition() + ccp({-10, 0}));
+    // this->motionStreak->setPosition(this->getPosition() + ccp({-10, 0}));
 
     // auto particle = Sprite::create("square.png");
     // particle->setScale(0.05);
