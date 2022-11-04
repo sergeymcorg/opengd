@@ -19,7 +19,7 @@ bool MenuGameLayer::init(){
     
     addChild(GroundLayer::create(1), 2);
 
-    auto playerTest = PlayerObject::create(1, this);
+    auto playerTest = PlayerObject::create(GameToolbox::randomInt(1,13), this);
     playerTest->setMainColor(GameToolbox::randomColor3B());
     playerTest->setSecondaryColor(GameToolbox::randomColor3B());
     playerTest->setShipColor(playerTest->getMainColor());
@@ -94,7 +94,7 @@ void MenuGameLayer::processPlayerMovement(float delta) {
         // }
         if(this->player->getPositionX() >= 1300.f) {
             player->removeFromParentAndCleanup(true);
-            auto playerTest = PlayerObject::create(((rand() * 256) % 14) + 1, this);
+            auto playerTest = PlayerObject::create(GameToolbox::randomInt(1, 13), this);
             playerTest->setPosition({-300, 232});
             this->player = playerTest;
             playerTest->setMainColor(GameToolbox::randomColor3B());

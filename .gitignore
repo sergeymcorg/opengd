@@ -4,6 +4,8 @@ Resources
 # CMake Files
 build
 out
+proj.android/app/.cxx
+proj.android/app/build
 
 .vscode
 .vs

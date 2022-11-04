@@ -34,6 +34,9 @@ public:
     bool connectDiscord();
     bool changeDActivity();
     void processDiscord(float);
+    uint64_t createDiscordSession();
+    // Creates multiplayer session using Game SDK.
+    bool createMultiplayerSession(uint64_t lid);
 
 private:
     void setDefaults();
