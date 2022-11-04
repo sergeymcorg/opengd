@@ -6,8 +6,39 @@
 #include "MenuGameLayer.h"
 #include "CreatorLayer.h"
 #include "AlertLayer.h"
+#include "AlertLayerProtocol.h"
 #include "ColoursPalette.h"
 #include "AudioEngine.h"
+
+bool music = true;
+
+class NGProtocol : public AlertLayerProtocol 
+{
+public:
+    void onBtn(cocos2d::Ref* pSender, bool btn2, PopupLayer* other) override
+    {
+        if (!btn2)
+        {
+            Application::getInstance()->openURL("https://www.newgrounds.com/audio/");
+        }
+        else {
+            other->close();
+        }
+    }
+
+    static NGProtocol* create()
+    {
+        auto pRet = new(std::nothrow) NGProtocol;
+        if (pRet)
+        {
+            return pRet;
+        }
+        else {
+            CC_SAFE_DELETE(pRet);
+            return nullptr;
+        }
+    }
+};
 
 Scene* MenuLayer::scene() {
     auto scene = Scene::create();
@@ -18,7 +49,10 @@ Scene* MenuLayer::scene() {
 bool MenuLayer::init(){
     if (!Layer::init()) return false;
     
-    AudioEngine::play2d("audiotracks/menuLoop.mp3", true, 0.5f);
+    if(music){
+        AudioEngine::play2d("audiotracks/menuLoop.mp3", true, 0.5f);
+        music = false;
+    }
 
     auto winSize = Director::getInstance()->getWinSize();
     
@@ -49,10 +83,12 @@ bool MenuLayer::init(){
     garageBtn->setPosition({-220, 20});
     creatorBtn->setPosition({220, 20});
 
+    auto cl = CompileLayer::create();
+
     menu->addChild(playBtn);
     menu->addChild(garageBtn);
     menu->addChild(creatorBtn);
-    menu->addChild(CompileLayer::create());
+    menu->addChild(cl);
     auto selectCharacter = Sprite::createWithSpriteFrameName("GJ_chrSel_001.png");
     menu->addChild(selectCharacter);
     selectCharacter->setPosition(garageBtn->getPosition() - ccp(100, 100));
@@ -63,7 +99,7 @@ bool MenuLayer::init(){
     
     auto achievementsBtn = MenuItemSpriteExtra::create("GJ_achBtn_001.png", [&](Node* btn) {
 	    // AlertLayer::create("coming soon", "this feature has not been added yet!", "OK", "", 600, 250)->show();
-        AchievementNotifier::getInstance()->showAchievements();
+        AchievementNotifier::getInstance()->showAchievements(); //just for test
 		//ColoursPalette::create(nullptr)->show();
     });
     
@@ -72,7 +108,7 @@ bool MenuLayer::init(){
     });
     
     auto statsBtn = MenuItemSpriteExtra::create("GJ_statsBtn_001.png", [&](Node* btn) {
-		AlertLayer::create("Newgrounds", "Visit Newgrounds to find awesome music?", "Open", "Cancel", 600, 350)->show();
+		AlertLayer::create(NGProtocol::create(), "Newgrounds", "Visit Newgrounds to find awesome music?", "Open", "Cancel", 600, 350)->show();
     });
 
     auto bottomMenu = Menu::create(achievementsBtn, optionsBtn, statsBtn, nullptr);    
@@ -97,8 +133,6 @@ bool MenuLayer::init(){
     menu->addChild(moreGamesBtn);
     moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 86, 90}));
 
-    GM->changeDActivity();
-    GM->changeDActivity();
     GM->changeDActivity();
 
 

@@ -32,7 +32,7 @@ bool PopupLayer::init() {
 	// set up listener 
 
 	auto dir = Director::getInstance();
-
+    
 
 	auto listener = EventListenerTouchOneByOne::create();
 

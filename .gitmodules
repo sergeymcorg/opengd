@@ -1,0 +1,3 @@
+[submodule "imgui"]
+	path = imgui
+	url = https://github.com/namkazt/cocos2d-x-ImGui.git

@@ -77,6 +77,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         // glview = GLViewImpl::createWithRect("OpenGD", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
         glview = GLViewImpl::createWithRect("OpenGD", cocos2d::Rect(0, 0, windowSize.width, windowSize.height));
+        // glview = GLViewImpl::createWithFullScreen("OpenGD");
 #else
         glview = GLViewImpl::create("OpenGD");
 #endif
@@ -124,6 +125,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
  
     // run
     director->runWithScene(LoadingLayer::scene());
+
+// #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+// 	director->getScheduler()->schedule([=](float dt)
+// 	{
+// 		if(director->getRunningScene()->getChildByName("ImGUILayer") == NULL)
+// 		{
+// 			director->getRunningScene()->addChild(ImGuiLayer::create(), INT_MAX, "ImGUILayer");
+// 		}
+// 	}, this, 0,false, "checkImGUI");
+// #endif
+
+    // GLViewImpl::full
 
     return true;
 }

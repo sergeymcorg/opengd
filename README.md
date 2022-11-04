@@ -13,6 +13,8 @@ For now it is under development.
 * **[iAndy_HD3](https://github.com/iAndyHD3)#3579**
 * **[Jorgame](https://github.com/ImJorGame)#8957**
 * **[cdc's first account](https://github.com/CdcOnGitHub)#0451**
+* **[Jammy Dodger](https://github.com/Wyliemaster)#1461**
+* **[Enz](https://github.com/MikaKC)#7402**
 
 ## **TODO list for 1.0**
 - [x] LoadingLayer implementation
@@ -20,13 +22,12 @@ For now it is under development.
 - [ ] Player implementation
 - [x] General menues
 - [ ] Level Data builder and parser
-- [ ] Networking features
 
 ## **Compiling the game**
 Download Windows or Linux dependencies. Python and Shell script is placed inside `cocos2d` folder.<br>
 **Windows**<br><br>
 `cmake -B build -T host=x64 -A win32`<br>
-Then open [Visual Studio](https://visualstudio.microsoft.com/) and build<br><br>
+`cmake --build build --config Release`<br><br>
 **Linux**<br><br>
 `cmake -B build`<br>
 `cd build`<br>

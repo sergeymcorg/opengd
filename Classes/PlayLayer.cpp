@@ -9,19 +9,11 @@ Scene* PlayLayer::scene() {
 bool PlayLayer::init(){
     if (!Layer::init()) return false;
 
-
-    startPos = Point(0, 105);
-
-    timer = 0;
-    attempts = 0;
-    jumps = 0;
-
-    auto dir = Director::getInstance();
-    auto winSize = dir->getWinSize();
+    auto winSize = Director::getInstance()->getWinSize();
     
-    auto grl = GroundLayer::create(1);
-    this->addChild(grl, 9999);
-    this->groundLayer = grl;
+    this->m_pGround = GroundLayer::create(1);
+    this->addChild(this->m_pGround);
+    this->m_pGround->setSpeed(623);
     
     //temp back button
     auto backbtn = MenuItemSpriteExtra::create("GJ_arrow_01_001.png", [&](Node* btn) {
@@ -32,49 +24,35 @@ bool PlayLayer::init(){
     menu->setPosition({50, winSize.height - 50});
     addChild(menu, 99999);
     
-    
-    auto bg = Sprite::create("game_bg_01_001.png");
+    this->m_pBG = Sprite::create("game_bg_01_001.png");
     const Texture2D::TexParams texParams = {
         backend::SamplerFilter::LINEAR, 
         backend::SamplerFilter::LINEAR, 
         backend::SamplerAddressMode::REPEAT, 
         backend::SamplerAddressMode::REPEAT
     };
+    this->m_pBG->getTexture()->setTexParameters(texParams);
+    this->m_pBG->setTextureRect(Rect(0, 0, 1024 * 5, 1024));
+    this->m_pBG->setPosition(winSize / 2);
+    this->m_pBG->setColor({0, 102, 255});
+    this->addChild(this->m_pBG, -1);
 
-    this->bgSpr = bg;
-    this->bgSpr->getTexture()->setTexParameters(texParams);
-    this->bgSpr->setTextureRect(Rect(0, 0, 2048, 1024));
-    this->bgSpr->setPosition(winSize / 2);
-
-    this->addChild(this->bgSpr, 1);
-
-    // bg scale
-    this->bgSpr->setScale(1.185f); // epic hardcore (please fix lmao)
+    this->m_pPlayer = PlayerObject::create(GM->getVariable<int>("player-cube"), this);
+    this->m_pPlayer->setPosition({0, 236});
+    this->addChild(this->m_pPlayer);
+    this->m_pPlayer->setAnchorPoint({0, 0});
     
-    /*bg->runAction(
-        RepeatForever::create(
-            Sequence::create(
-                TintTo::create(4.0f, {255, 0, 0}),
-                TintTo::create(4.0f, {255, 255, 0}),
-                TintTo::create(4.0f, {0, 255, 0}),
-                TintTo::create(4.0f, {0, 255, 255}),
-                TintTo::create(4.0f, {0, 0, 255}),
-                TintTo::create(4.0f, {255, 0, 255}),
-                TintTo::create(4.0f, {255, 0, 0}),
-                nullptr
-            )
-        )
-    );*/
-
-
-    
-   // scheduleUpdate();
+    this->scheduleUpdate();
     
     return true;
 }
-/*
-void PlayLayer::update(float delta) {
+
+void PlayLayer::update(float dt) {
+    auto winSize = Director::getInstance()->getWinSize();
+
+    this->m_pBG->setPositionX(this->m_pBG->getPositionX() - dt * 62);
+    if (this->m_pBG->getPositionX() <= -1024)
+        this->m_pBG->setPositionX(this->m_pBG->getPositionX() + 1024);
+
     
-  //  this->updateGround(delta);
 }
-*/

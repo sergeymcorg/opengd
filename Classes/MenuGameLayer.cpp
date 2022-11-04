@@ -19,9 +19,10 @@ bool MenuGameLayer::init(){
     
     addChild(GroundLayer::create(1), 2);
 
-    auto playerTest = PlayerObject::create(1, this);
-    playerTest->mainSprite->setColor(GameToolbox::randomColor3B());
-    playerTest->secondarySprite->setColor(GameToolbox::randomColor3B());
+    auto playerTest = PlayerObject::create(GameToolbox::randomInt(1,13), this);
+    playerTest->setMainColor(GameToolbox::randomColor3B());
+    playerTest->setSecondaryColor(GameToolbox::randomColor3B());
+    playerTest->setShipColor(playerTest->getMainColor());
     playerTest->setPosition({-300, 232});
     addChild(playerTest);
     this->player = playerTest;
@@ -88,17 +89,17 @@ bool MenuGameLayer::init(){
 }
 void MenuGameLayer::processPlayerMovement(float delta) {
     if(this->player) {
-        if (this->player->getPositionX() == 500.f) {
-            this->player->jump();
-        }
+        // if (this->player->getPositionX() == 500.f) {
+        //     this->player->jump();
+        // }
         if(this->player->getPositionX() >= 1300.f) {
-            log_ << "TRIGGER";
             player->removeFromParentAndCleanup(true);
-            auto playerTest = PlayerObject::create(((rand() * 256) % 14) + 1, this);
+            auto playerTest = PlayerObject::create(GameToolbox::randomInt(1, 13), this);
             playerTest->setPosition({-300, 232});
             this->player = playerTest;
-            playerTest->mainSprite->setColor(GameToolbox::randomColor3B());
-            playerTest->secondarySprite->setColor(GameToolbox::randomColor3B());
+            playerTest->setMainColor(GameToolbox::randomColor3B());
+            playerTest->setSecondaryColor(GameToolbox::randomColor3B());
+            playerTest->setShipColor(playerTest->getMainColor());
             addChild(playerTest);
         }
     }
@@ -113,6 +114,7 @@ void MenuGameLayer::processBackground(float delta) {
         bgSprites->setPositionX(bgSprites->getPositionX() + this->bsizeX);
     }
 }
+
 void MenuGameLayer::update(float delta) {
     processBackground(delta);
     processPlayerMovement(delta);

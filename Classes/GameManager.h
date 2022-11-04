@@ -34,25 +34,12 @@ public:
     bool connectDiscord();
     bool changeDActivity();
     void processDiscord(float);
-
-    Color3B getColor(unsigned int id);
+    uint64_t createDiscordSession();
+    // Creates multiplayer session using Game SDK.
+    bool createMultiplayerSession(uint64_t lid);
 
 private:
     void setDefaults();
-    const vector<Color3B> m_colors = {
-        {125, 255, 0}, 
-        {0, 255, 0}, 
-        {0, 255, 125}, 
-        {0, 255, 255}, 
-        {0, 125, 255}, 
-        {0, 0, 255}, 
-        {125, 0, 255}, 
-        {255, 0, 255}, 
-        {255, 0, 125},
-        {255, 0, 0},
-        {255, 125, 0},
-        {255, 255, 0}
-    };
 
     json m_values;
 };

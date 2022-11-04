@@ -2,7 +2,7 @@
 
 bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
     // cap the icon limit
-    int frame = std::min(std::max(playerFrame, 1), 13);
+    int frame = inRange(playerFrame, 1, 13);
 
     auto sprStr1 = StringUtils::format("player_%02d_001.png", frame);
     auto sprStr2 = StringUtils::format("player_%02d_2_001.png", frame);
@@ -20,21 +20,21 @@ bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
         inPlayLayer = true;
     }
 
-    setTextureRect(Rect(0, 0, 30, 30)); // player hitbox lol
+    setTextureRect(Rect(0, 0, 60, 60)); // player hitbox lol
 
-    mainSprite = Sprite::createWithSpriteFrameName(sprStr1);
-    addChild(mainSprite, 1);
+    m_pMainSprite = Sprite::createWithSpriteFrameName(sprStr1);
+    addChild(m_pMainSprite, 1);
 
-    secondarySprite = Sprite::createWithSpriteFrameName(sprStr2);
+    m_pSecondarySprite = Sprite::createWithSpriteFrameName(sprStr2);
 
-    mainSprite->addChild(secondarySprite, -1);
+    m_pMainSprite->addChild(m_pSecondarySprite, -1);
     //secondarySprite->setPosition(mainSprite->convertToNodeSpace(Vec2(0, 0))); // this shit DONT WORK!! cuz rob made it a global var
     //secondarySprite->setPosition(mainSprite->convertToNodeSpace(Vec2(15, 15)));
-    secondarySprite->setPosition(Vec2(30, 30));
+    m_pSecondarySprite->setPosition(Vec2(30, 30));
     
-    shipFrame = Sprite::createWithSpriteFrameName("ship_01_001.png");
-    shipFrame->setVisible(false);
-    addChild(shipFrame, 2);
+    m_pShipSprite = Sprite::createWithSpriteFrameName("ship_01_001.png");
+    m_pShipSprite->setVisible(false);
+    addChild(m_pShipSprite, 2);
 
     // particles
     dragEffect1 = ParticleSystemQuad::create("dragEffect.plist");
@@ -102,40 +102,145 @@ bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
 
     scheduleUpdate();
 
+    auto dir = Director::getInstance();
+    auto listener = EventListenerTouchOneByOne::create();
+
+    listener->setEnabled(true);
+    listener->setSwallowTouches(true);
+
+    // trigger when you start touch
+    listener->onTouchBegan = CC_CALLBACK_2(PlayerObject::onTouchBegan, this);
+
+    dir->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
     return true;
 }
 
-void PlayerObject::update(float delta) {
-    // this->setPositionX(getPositionX() + 5.f); // temp
-}
-void PlayerObject::jump() {
-    this->runAction(
-        Sequence::create(
-            Spawn::create(
-                Sequence::create(
-                    RotateBy::create(0.15, 80.f),
-                    RotateBy::create(0.025, 0.f),
-                    RotateBy::create(0.225, 80.f),
-                    RotateBy::create(0, -160),
-                    nullptr
-                ),
-                Sequence::create(
-                    //MoveBy::create(0.025, { 0, 80.f }),
-                    //MoveBy::create(0.15, { 0, 50.f }),
-                    //MoveBy::create(0.05, { 0.f, 0.f }),
-                    //MoveBy::create(0.15, { 0, -80.f }),
-                    //MoveBy::create(0.025, { 0, -50.f }),
-                    MoveBy::create(0.2, {0, 130.f}),
-                    MoveBy::create(0.2, { 0, -130.f }),
-                    nullptr
-                ),
-                nullptr
-            ),
-            nullptr
-        )
-    );
+void PlayerObject::setMainColor(Color3B col) {
+    this->m_pMainSprite->setColor(col);
 }
 
+void PlayerObject::setSecondaryColor(Color3B col) {
+    this->m_pSecondarySprite->setColor(col);
+}
+
+void PlayerObject::setShipColor(Color3B col) {
+    this->m_pShipSprite->setColor(col);
+}
+
+Color3B PlayerObject::getMainColor() {
+    return this->m_pMainSprite->getColor();
+}
+
+Color3B PlayerObject::getSecondaryColor() {
+    return this->m_pSecondarySprite->getColor();
+}
+
+Color3B PlayerObject::getShipColor() {
+    return this->m_pShipSprite->getColor();
+}
+
+void PlayerObject::update(float dt) {
+    dt *= 60; // rob :skull:
+
+    if (this->m_bIsDead)
+        return;
+        
+    if (this->getPositionY() <= 236) { // TEMP ON GROUND CHECK
+        this->m_bOnGround = true;
+        this->stopRotation();
+    }
+
+    if (this->getPositionX() >= 500) {
+        this->m_bIsHolding = true;
+    }
+    
+    if (!this->m_bIsLocked) {
+        this->updateJump(dt * 0.9);
+
+        this->setPosition(this->getPosition() + ccp(dt * this->m_fSpeed * this->m_dXVel, dt * this->m_fSpeed * this->m_dYVel));
+    }
+
+    // if (!this->m_bFlyMode)
+    // this->motionStreak->setPosition(this->getPosition() + ccp({-10, 0}));
+
+    // auto particle = Sprite::create("square.png");
+    // particle->setScale(0.05);
+    // particle->setPosition(this->getPosition());
+    // this->gameLayer->addChild(particle, 999);
+}
+
+void PlayerObject::updateJump(float dt) {
+    
+    if (this->m_bIsHolding && this->m_bOnGround) {
+        this->m_bOnGround = false;
+        this->m_dYVel = this->m_dJumpHeight; // 0.43
+        this->runRotateAction();
+        return;
+    }
+
+    if (!this->m_bOnGround)
+        this->m_dYVel -= this->m_dGravity * dt;
+}
+
+void PlayerObject::logValues() {
+    log_ << "xVel: " << this->m_dXVel << "; yVel: " << m_dYVel << "; gravity: " << m_dGravity << "; Jump: " << m_dJumpHeight;
+}
+
+void PlayerObject::runRotateAction() {
+    this->stopRotation();
+    auto action = RotateBy::create(0.43333, 180);
+    action->setTag(0);
+    this->runAction(action);
+}
+
+void PlayerObject::stopRotation() {
+    this->stopActionByTag(0);
+
+    if (this->getRotation() != 0) {
+        auto degrees = (int)this->getRotation() % 360;
+        this->setRotation(90 * roundf(degrees / 90.0f));
+    }
+}
+
+// void PlayerObject::jump() {
+//     // this->m_dYVel = this->m_dJumpHeight;
+// }
+
+// void PlayerObject::jump() {
+    // this->runAction(
+    //     Sequence::create(
+    //         Spawn::create(
+    //             Sequence::create(
+    //                 RotateBy::create(0.15, 80.f),
+    //                 RotateBy::create(0.025, 0.f),
+    //                 RotateBy::create(0.225, 80.f),
+    //                 RotateBy::create(0, -160),
+    //                 nullptr
+    //             ),
+    //             Sequence::create(
+    //                 //MoveBy::create(0.025, { 0, 80.f }),
+    //                 //MoveBy::create(0.15, { 0, 50.f }),
+    //                 //MoveBy::create(0.05, { 0.f, 0.f }),
+    //                 //MoveBy::create(0.15, { 0, -80.f }),
+    //                 //MoveBy::create(0.025, { 0, -50.f }),
+    //                 MoveBy::create(0.2, {0, 130.f}),
+    //                 MoveBy::create(0.2, { 0, -130.f }),
+    //                 nullptr
+    //             ),
+    //             nullptr
+    //         ),
+    //         nullptr
+    //     )
+    // );
+// }
+bool PlayerObject::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
+{
+    if (this->inPlayLayer) {
+        log_ << "Touch began.";
+        return true;
+    }
+}
 PlayerObject* PlayerObject::create(int playerFrame, Layer* gameLayer) {
     auto pRet = new (std::nothrow) PlayerObject();
 

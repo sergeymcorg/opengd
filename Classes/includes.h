@@ -2,18 +2,20 @@
 
 #include "cocos2d.h"
 #include <cocos-ext.h>
-#include <Windows.h>
+//#include <Windows.h>
 #include <iostream>
 #include <iomanip>
 
 USING_NS_CC;
 using std::string, std::vector;
-
+/*
 #ifdef _WIN32
 #define ENABLE_DISCORD 1
 #else
 #define ENABLE_DISCORD 0
 #endif
+*/
+#define ENABLE_DISCORD 0
 
 // logger
 class Logger : private std::streambuf, public std::ostream {
@@ -45,9 +47,5 @@ private:
 #include "MenuItemSpriteExtra.h"
 #include "DropDownLayer.h"
 #include "GameManager.h"
-
-// Always compile
-
-#include "CompileLayer.h"
 #include "TextButton.h"
 #include "GameToolbox.h"

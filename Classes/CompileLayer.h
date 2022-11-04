@@ -8,6 +8,7 @@ class CompileLayer : public Layer {
 protected:
     int next;
     std::string rand();
+    std::string application_name();
 public:
     inline std::string getRandom() {
         std::string segment = std::string();
@@ -23,6 +24,7 @@ public:
         }
         return result;
     }
+    std::string getApplicationHash();
     bool init();
     CREATE_FUNC(CompileLayer);
 };

@@ -62,8 +62,8 @@ bool GarageLayer::init() {
     m_pPreviewPlayer->setPosition({winSize.width / 2, floor->getPositionY() + floor->getContentSize().height / 2});
     m_pPreviewPlayer->setAnchorPoint({0.5, 0});
     m_pPreviewPlayer->setScale(1.6f);
-    m_pPreviewPlayer->setMainColor(m_colors[GM->getVariable<int>("player-main-color")]);
-    m_pPreviewPlayer->setSecondaryColor(m_colors[GM->getVariable<int>("player-secondary-color")]);
+    m_pPreviewPlayer->setMainColor(GameToolbox::iconColors[GM->getVariable<int>("player-main-color")]);
+    m_pPreviewPlayer->setSecondaryColor(GameToolbox::iconColors[GM->getVariable<int>("player-secondary-color")]);
     this->addChild(m_pPreviewPlayer);
 	
     auto square = ui::Scale9Sprite::create("square02_001.png");
@@ -96,8 +96,8 @@ bool GarageLayer::init() {
             m_pPreviewPlayer->setPosition({winSize.width / 2, floor->getPositionY() + floor->getContentSize().height / 2});
             m_pPreviewPlayer->setAnchorPoint({0.5, 0});
             m_pPreviewPlayer->setScale(1.6f);
-            m_pPreviewPlayer->setMainColor(m_colors[GM->getVariable<int>("player-main-color")]);
-            m_pPreviewPlayer->setSecondaryColor(m_colors[GM->getVariable<int>("player-secondary-color")]);
+            m_pPreviewPlayer->setMainColor(GameToolbox::iconColors[GM->getVariable<int>("player-main-color")]);
+            m_pPreviewPlayer->setSecondaryColor(GameToolbox::iconColors[GM->getVariable<int>("player-secondary-color")]);
             this->addChild(m_pPreviewPlayer);
         });
         
@@ -113,11 +113,11 @@ bool GarageLayer::init() {
 
     auto colorsMenu = Menu::create();
 
-    for (int i = 0; i <= size(m_colors) - 1; i++) {
+    for (int i = 0; i < GameToolbox::iconColors.size(); i++) {
         log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
         log_ << "button?";
-        colorSprite->setColor(this->m_colors[i]);
+        colorSprite->setColor(GameToolbox::iconColors[i]);
         auto btn = MenuItemSpriteExtra::createWithNode(colorSprite, [=](Node* button) {
             
 
@@ -125,7 +125,7 @@ bool GarageLayer::init() {
             this->m_pSelectionFrame2->setPosition({colorsMenu->getPositionX()+button->getPositionX(),colorsMenu->getPositionY()});
             log_ << m_pSelectionFrame2->getPositionX();
             
-            m_pPreviewPlayer->setMainColor(m_colors[i]);
+            m_pPreviewPlayer->setMainColor(GameToolbox::iconColors[i]);
             
             GM->setVariable("player-main-color", button->getTag());
            });
@@ -143,11 +143,11 @@ bool GarageLayer::init() {
 
     auto secondaryColorsMenu = Menu::create();
 
-    for (int i = 0; i <= size(m_colors) - 1; i++) {
+    for (int i = 0; i < GameToolbox::iconColors.size(); i++) {
         log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
         log_ << "button?";
-        colorSprite->setColor(this->m_colors[i]);
+        colorSprite->setColor(GameToolbox::iconColors[i]);
         auto btn = MenuItemSpriteExtra::createWithNode(colorSprite, [=](Node* button) {
 
 
@@ -155,7 +155,7 @@ bool GarageLayer::init() {
             this->m_pSelectionFrame3->setPosition({ secondaryColorsMenu->getPositionX() + button->getPositionX(),secondaryColorsMenu->getPositionY() });
             log_ << m_pSelectionFrame3->getPositionX();
 
-            m_pPreviewPlayer->setSecondaryColor(m_colors[i]);
+            m_pPreviewPlayer->setSecondaryColor(GameToolbox::iconColors[i]);
             GM->setVariable("player-secondary-color", button->getTag());
 
             });
@@ -208,9 +208,9 @@ bool GarageLayer::init() {
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MenuLayer::scene()));
     });
 	
-	//auto paletteBtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
-     //   ColoursPalette::create(this)->show();
-    //});
+	auto paletteBtn = MenuItemSpriteExtra::create("GJ_arrow_03_001.png", [&](Node* btn) {
+       ColoursPalette::create(this)->show();
+    });
     
     auto menu = Menu::create(backBtn, nullptr);
     this->addChild(menu);

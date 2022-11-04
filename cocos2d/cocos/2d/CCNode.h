@@ -1110,7 +1110,8 @@ public:
      * @param flags Renderer flag.
      */
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags);
-    virtual void draw() final;
+    // virtual void draw() final; // W H Y
+    virtual void draw();
 
     /**
      * Visits this node's children and draw them recursively.
