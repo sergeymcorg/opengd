@@ -1,5 +1,7 @@
 #pragma once
+#include "includes.h"
 #include "GameObject.h"
+#include "CircleWave.h"
 
 class PlayerObject : public GameObject {
 private:

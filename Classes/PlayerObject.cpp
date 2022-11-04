@@ -108,7 +108,6 @@ bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
     listener->setEnabled(true);
     listener->setSwallowTouches(true);
 
-
     // trigger when you start touch
     listener->onTouchBegan = CC_CALLBACK_2(PlayerObject::onTouchBegan, this);
 
@@ -162,22 +161,26 @@ void PlayerObject::update(float dt) {
         this->setPosition(this->getPosition() + ccp(dt * this->m_fSpeed * this->m_dXVel, dt * this->m_fSpeed * this->m_dYVel));
     }
 
-    auto particle = Sprite::create("square.png");
-    particle->setScale(0.05);
-    particle->setPosition(this->getPosition());
-    this->gameLayer->addChild(particle, 999);
+    // if (!this->m_bFlyMode)
+    this->motionStreak->setPosition(this->getPosition() + ccp({-10, 0}));
+
+    // auto particle = Sprite::create("square.png");
+    // particle->setScale(0.05);
+    // particle->setPosition(this->getPosition());
+    // this->gameLayer->addChild(particle, 999);
 }
 
 void PlayerObject::updateJump(float dt) {
+    
     if (this->m_bIsHolding && this->m_bOnGround) {
         this->m_bOnGround = false;
-        this->m_dYVel = this->m_dJumpHeight * 2 * 0.43;
+        this->m_dYVel = this->m_dJumpHeight; // 0.43
         this->runRotateAction();
         return;
     }
 
     if (!this->m_bOnGround)
-        this->m_dYVel -= this->m_dGravity * dt * 2 * 0.43;
+        this->m_dYVel -= this->m_dGravity * dt;
 }
 
 void PlayerObject::logValues() {
