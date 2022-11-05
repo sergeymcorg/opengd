@@ -6,39 +6,10 @@
 #include "MenuGameLayer.h"
 #include "CreatorLayer.h"
 #include "AlertLayer.h"
-#include "AlertLayerProtocol.h"
 #include "ColoursPalette.h"
 #include "AudioEngine.h"
 
 bool music = true;
-
-class NGProtocol : public AlertLayerProtocol 
-{
-public:
-    void onBtn(cocos2d::Ref* pSender, bool btn2, PopupLayer* other) override
-    {
-        if (!btn2)
-        {
-            Application::getInstance()->openURL("https://www.newgrounds.com/audio/");
-        }
-        else {
-            other->close();
-        }
-    }
-
-    static NGProtocol* create()
-    {
-        auto pRet = new(std::nothrow) NGProtocol;
-        if (pRet)
-        {
-            return pRet;
-        }
-        else {
-            CC_SAFE_DELETE(pRet);
-            return nullptr;
-        }
-    }
-};
 
 Scene* MenuLayer::scene() {
     auto scene = Scene::create();
@@ -108,7 +79,14 @@ bool MenuLayer::init(){
     });
     
     auto statsBtn = MenuItemSpriteExtra::create("GJ_statsBtn_001.png", [&](Node* btn) {
-		AlertLayer::create(NGProtocol::create(), "Newgrounds", "Visit Newgrounds to find awesome music?", "Open", "Cancel", 600, 350)->show();
+        auto alert = AlertLayer::create("WIP!", "This feature is not yet supported!", "Close", "Click me!", NULL, NULL);
+        alert->setBtn2Callback([=](TextButton*){
+            alert->close();
+            AlertLayer::create("Woah hello ;)", "apparently you can do this now. its pretty cool!", "Close", "My mood rn", NULL, [=](TextButton*) {
+                Application::getInstance()->openURL("https://www.youtube.com/watch?v=XSsRrlM3tNg");
+            })->show();
+        });
+        alert->show();
     });
 
     auto bottomMenu = Menu::create(achievementsBtn, optionsBtn, statsBtn, nullptr);    

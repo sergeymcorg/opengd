@@ -172,8 +172,8 @@ bool GarageLayer::init() {
 
 
     this->m_nSelectedCube = GM->getVariable<int>("player-cube") - 1;
-    this->m_nSelectedMC = GM->getVariable<int>("player-main-color") - 1;
-    this->m_nSelectedSC = GM->getVariable<int>("player-secondary-color") - 1;
+    this->m_nSelectedMC = GM->getVariable<int>("player-main-color");
+    this->m_nSelectedSC = GM->getVariable<int>("player-secondary-color");
     this->m_pSelectionFrame = Sprite::createWithSpriteFrameName("GJ_select_001.png");
     this->m_pSelectionFrame2 = Sprite::createWithSpriteFrameName("GJ_select_001.png");
     this->m_pSelectionFrame3 = Sprite::createWithSpriteFrameName("GJ_select_001.png");

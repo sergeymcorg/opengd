@@ -65,13 +65,13 @@ file (GLOB files2 "Classes/*.h")
 
 set(ENABLE_DISCORD 0)
 
-if(ENABLE_DISCORD AND WIN32)
-    message("[OpenGD] Game SDK will be compiled")
-    file (GLOB files3 "Classes/Discord/cpp/*.cpp")
-    file (GLOB files4 "Classes/Discord/cpp/*.h")
-    include_directories("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
-    add_subdirectory("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
-endif()
+# if(ENABLE_DISCORD AND WIN32)
+#     message("[OpenGD] Game SDK will be compiled")
+#     file (GLOB files3 "Classes/Discord/cpp/*.cpp")
+#     file (GLOB files4 "Classes/Discord/cpp/*.h")
+#     include_directories("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
+#     add_subdirectory("${PROJECT_SOURCE_DIR}/Classes/Discord/lib/x86")
+# endif()
 
     # file (GLOB files5 "imgui/ImGUI/*.cpp")
     # file (GLOB files6 "imgui/ImGUI/*.h")
@@ -79,13 +79,13 @@ endif()
 # add_subdirectory("imgui")
 
 list(APPEND GAME_SOURCE
-     ${files} "Classes/AlertLayerProtocol.cpp"
-     ${files3}
+     ${files}
+    #  ${files3}
     #  ${files5}
      )
 list(APPEND GAME_HEADER
-     ${files2} "Classes/AlertLayerProtocol.h"
-     ${files4}
+     ${files2}
+    #  ${files4}image.png
     #  ${files6}
      )
 

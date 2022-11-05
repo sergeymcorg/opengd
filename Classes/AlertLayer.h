@@ -1,22 +1,21 @@
 #pragma once
 #include "includes.h"
-#include "PopupLayer.h"
-#include "AlertLayerProtocol.h"
-#include "ui/CocosGUI.h"
 
 class AlertLayer : public PopupLayer {
 private:
-	bool init(std::string title, std::string desc, std::string btn1str, std::string btn2str, float width, float height);
-	bool init(AlertLayerProtocol*, std::string title, std::string desc, std::string btn1str, std::string btn2str, float width, float height);
+    bool init(string title, string desc, string btn1, string btn2, float width, std::function<void(TextButton*)> btn1Callback, std::function<void(TextButton*)> btn2Callback);
 
-	void setup(std::string, std::string, std::string, std::string, float, float);
-
-	AlertLayerProtocol* m_protocol = nullptr;
+    TextButton* m_pBtn1;
+    TextButton* m_pBtn2;
 
 public:
-    static AlertLayer* create(std::string title, std::string desc, std::string btn1str, std::string btn2str, float width, float height);
-	static AlertLayer* create(AlertLayerProtocol* protocol, std::string title, std::string desc, std::string btn1str, std::string btn2str, float width, float height);
+    static AlertLayer* create(string title, string desc, string btn1, string btn2, float width, std::function<void(TextButton*)> btn1Callback, std::function<void(TextButton*)> btn2Callback);
+    static AlertLayer* create(string title, string desc, string btn1, string btn2, std::function<void(TextButton*)> btn1Callback, std::function<void(TextButton*)> btn2Callback);
+    static AlertLayer* create(string title, string desc, string btn1, float width, std::function<void(TextButton*)> btn1Callback);
+    static AlertLayer* create(string title, string desc, string btn1, std::function<void(TextButton*)> btn1Callback);
+    static AlertLayer* create(string title, string desc, float width);
+    static AlertLayer* create(string title, string desc);
 
-	void onBtn1(Ref* sender);
-	void onBtn2(Ref* sender);
+    void setBtn1Callback(std::function<void(TextButton*)> callback);
+    void setBtn2Callback(std::function<void(TextButton*)> callback);
 };

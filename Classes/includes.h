@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include <cocos-ext.h>
+#include "ui/CocosGUI.h"
 //#include <Windows.h>
 #include <iostream>
 #include <iomanip>
@@ -49,3 +50,4 @@ private:
 #include "GameManager.h"
 #include "TextButton.h"
 #include "GameToolbox.h"
+#include "PopupLayer.h"

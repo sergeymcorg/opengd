@@ -25,14 +25,18 @@ bool TextButton::init(string text, string font, float width, float height, strin
 
     this->m_pBG = ui::Scale9Sprite::create(bgTexture);
     this->m_pBG->setContentSize({
-        (width == 0) ? this->m_pText->getContentSize().width + 32 : width,
-        (height == 0) ? this->m_pText->getContentSize().height + 32 : height
+        (width == 0) ? this->m_pText->getContentSize().width + 16 : width,
+        (height == 0) ? this->m_pText->getContentSize().height + 16 : height
     });
     this->addChild(this->m_pBG);
     this->m_pBG->setPosition(this->m_pBG->getContentSize() / 2);
     this->m_pBG->addChild(this->m_pText);
 
     this->m_pText->setPosition(this->m_pBG->getContentSize() / 2);
+    this->m_pText->setScale(MIN(
+        (this->m_pBG->getContentSize().width - 16) / this->m_pText->getContentSize().width,
+        (this->m_pBG->getContentSize().height - 16) / this->m_pText->getContentSize().height
+    ));
 
     this->setContentSize(this->m_pBG->getContentSize());
 
@@ -67,6 +71,10 @@ Label* TextButton::getLabel()
 ui::Scale9Sprite* TextButton::getBG()
 {
     return this->m_pBG;
+}
+
+void TextButton::setCallback(std::function<void(TextButton*)> callback) {
+    this->m_fCallback = callback;
 }
 
 // Create funcs

@@ -18,6 +18,8 @@ bool PopupLayer::init() {
 
 	// set up listener 
 	SETUP_SWALLOW_LISTENER(this)
+
+    this->setup();
 	
 	return true;
 }
@@ -28,6 +30,6 @@ void PopupLayer::keyBackClicked() {
 }
 
 void PopupLayer::close() {
-	this->removeFromParent();
     REMOVE_SWALLOW_LISTENER(this)
+	this->removeFromParent();
 }

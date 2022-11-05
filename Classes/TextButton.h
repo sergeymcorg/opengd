@@ -50,6 +50,7 @@ public:
     static TextButton* create(string text, std::function<void(TextButton*)> callback);
 
     void setText(std::string text);
+    void setCallback(std::function<void(TextButton*)> callback);
     
     Label* getLabel();
     ui::Scale9Sprite* getBG();
