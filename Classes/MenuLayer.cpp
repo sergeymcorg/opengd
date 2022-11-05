@@ -8,9 +8,7 @@
 #include "AlertLayer.h"
 #include "AlertLayerProtocol.h"
 #include "ColoursPalette.h"
-#include "AudioEngine.h"
-
-bool music = true;
+#include "ListLayer.h"
 
 class NGProtocol : public AlertLayerProtocol 
 {
@@ -49,11 +47,6 @@ Scene* MenuLayer::scene() {
 bool MenuLayer::init(){
     if (!Layer::init()) return false;
     
-    if(music){
-        AudioEngine::play2d("audiotracks/menuLoop.mp3", true, 0.5f);
-        music = false;
-    }
-
     auto winSize = Director::getInstance()->getWinSize();
     
     addChild(MenuGameLayer::create(), -1);
@@ -98,8 +91,7 @@ bool MenuLayer::init(){
     levelEditor->setPosition(creatorBtn->getPosition() + ccp(100, -100));
     
     auto achievementsBtn = MenuItemSpriteExtra::create("GJ_achBtn_001.png", [&](Node* btn) {
-	    // AlertLayer::create("coming soon", "this feature has not been added yet!", "OK", "", 600, 250)->show();
-        AchievementNotifier::getInstance()->showAchievements(); //just for test
+		AlertLayer::create("coming soon", "this feature has not been added yet!", "OK", "", 600, 250)->show();
 		//ColoursPalette::create(nullptr)->show();
     });
     
@@ -125,7 +117,7 @@ bool MenuLayer::init(){
     
     auto moreGamesBtn = MenuItemSpriteExtra::create("GJ_moreGamesBtn_001.png", [&](Node* btn) {
         log_ << "more games!";
-        auto a = DropDownLayer::create("test");
+        auto a = ListLayer::create("More Games");
         this->addChild(a);
         a->showLayer(false);
     });
@@ -134,7 +126,6 @@ bool MenuLayer::init(){
     moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 86, 90}));
 
     GM->changeDActivity();
-
 
     return true;
 }

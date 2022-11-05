@@ -11,12 +11,24 @@ void DropDownLayer::showLayer(bool instant) {
         this->m_pBGLayer->setOpacity(0);
         this->m_pBGLayer->runAction(FadeTo::create(0.5f, 125));
     }
-} 
+}
+
 bool DropDownLayer::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 {
     log_ << "touch began";
     return true;
 }
+
+Menu* DropDownLayer::getButtonsMenu()
+{
+    return this->m_pButtonsMenu;
+}
+
+Layer* DropDownLayer::getMainLayer()
+{
+    return this->m_pMainLayer;
+}
+
 void DropDownLayer::hideLayer(bool instant, bool removeFromParent) {
     this->stopAllActions();
 
@@ -35,7 +47,7 @@ void DropDownLayer::hideLayer(bool instant, bool removeFromParent) {
     }
 } 
 
-bool DropDownLayer::init(const char* title, float height) {
+bool DropDownLayer::init() {
     if (!Layer::init()) return false;
     
     auto winSize = Director::getInstance()->getWinSize();
@@ -63,17 +75,7 @@ bool DropDownLayer::init(const char* title, float height) {
     this->m_pButtonsMenu->addChild(exitBtn);
     exitBtn->setPosition(m_pButtonsMenu->convertToNodeSpace({48, winSize.height - 46}));
 
-    auto chain1 = Sprite::createWithSpriteFrameName("chain_01_001.png");
-	this->m_pMainLayer->addChild(chain1);
-	chain1->setAnchorPoint({ 0.5, 0.0 });
-	chain1->setPosition({ winSize.width / 2 - 100, height });
-
-	auto chain2 = Sprite::createWithSpriteFrameName("chain_01_001.png");
-	this->m_pMainLayer->addChild(chain2);
-	chain2->setAnchorPoint({ 0.5, 0.0 });
-	chain2->setPosition({ winSize.width / 2 + 100, height });
-
-    this->setup();
+    setup();
 
     this->hideLayer(true, false);
 
@@ -96,17 +98,4 @@ bool DropDownLayer::init(const char* title, float height) {
 
 
     return true;
-}
-
-DropDownLayer* DropDownLayer::create(const char* title, float height) {
-    DropDownLayer* pRet = new(std::nothrow) DropDownLayer();
-
-    if (pRet && pRet->init(title, height)) {
-        pRet->autorelease();
-        return pRet;
-    } else {
-        delete pRet;
-        pRet = nullptr;
-        return nullptr;
-    }
 }
