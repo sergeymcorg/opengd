@@ -71,9 +71,7 @@ AlertLayer* AlertLayer::create(string title, string desc, string btn1, std::func
 }
 
 AlertLayer* AlertLayer::create(string title, string desc, float width) {
-    return AlertLayer::create(title, desc, "OK", "", width, [=](Node* layer) {
-        dynamic_cast<AlertLayer*>(layer)->close();
-    }, NULL);
+    return AlertLayer::create(title, desc, "OK", "", width, NULL, NULL);
 }
 
 AlertLayer* AlertLayer::create(string title, string desc) {
