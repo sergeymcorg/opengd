@@ -32,15 +32,15 @@ void AlertLayer::setup(std::string title, std::string desc, std::string btn1str,
 	auto square = ui::Scale9Sprite::create("square01_001.png");
 	square->setPosition({ winSize.width / 2, winSize.height / 2 });
 	square->setContentSize({ t_width, t_height });
-	this->m_pLayer->addChild(square);
+	this->m_pMainLayer->addChild(square);
 
 	auto descLabel = Label::createWithBMFont("chatFont.fnt", desc, TextHAlignment::CENTER, (int)t_width);
 	descLabel->setPosition({ winSize.width / 2, winSize.height / 2 });
-	this->m_pLayer->addChild(descLabel);
+	this->m_pMainLayer->addChild(descLabel);
 
 	auto titleLabel = Label::createWithBMFont("goldFont.fnt", title);
 	titleLabel->setPosition({ winSize.width / 2, winSize.height / 2 + (t_height / 5 + 5) });
-	this->m_pLayer->addChild(titleLabel);
+	this->m_pMainLayer->addChild(titleLabel);
 
 	auto btn1 = TextButton::create(btn1str, CC_CALLBACK_1(AlertLayer::onBtn1, this));
 
@@ -77,7 +77,7 @@ void AlertLayer::setup(std::string title, std::string desc, std::string btn1str,
 		btnMenu->alignItemsHorizontallyWithPadding(50);
 	}
 
-	this->m_pLayer->addChild(btnMenu);
+	this->m_pMainLayer->addChild(btnMenu);
 }
 
 

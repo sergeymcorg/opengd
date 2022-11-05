@@ -1,5 +1,4 @@
 #pragma once
-
 #include "includes.h"
 #include "PopupLayer.h"
 #include "AlertLayerProtocol.h"

@@ -212,7 +212,7 @@ bool ColoursPalette::init(GarageLayer *t_garagelayer)
     background->setContentSize(Size(450.0f * multiplier, 300.0f * multiplier));
 		
     background->setPosition(win_size.width / 2, win_size.height / 2);
-    this->m_pLayer->addChild(background);
+    this->m_pMainLayer->addChild(background);
 		
 	auto btntest = ui::Button::create("GJ_button_01.png");
 	btntest->setScale9Enabled(true);
@@ -224,7 +224,7 @@ bool ColoursPalette::init(GarageLayer *t_garagelayer)
     btntest->addTouchEventListener(CC_CALLBACK_2(ColoursPalette::close, this));
 
 	btntest->setPosition({winSize.width / 2, winSize.height / 2});
-	m_pLayer->addChild(btntest);
+	m_pMainLayer->addChild(btntest);
 		
 		/*
         auto col2 = ButtonSprite::create("Col2", 30, 10, 10, 1, "bigFont.fnt", "GJ_button_04.png", 20);
@@ -299,7 +299,7 @@ bool ColoursPalette::init(GarageLayer *t_garagelayer)
         icons_bg->setContentSize(Size(415.0f * multiplier, 55.0f * multiplier));
         icons_bg->setOpacity(50);
         icons_bg->setPosition(win_size.width / 2, win_size.height / 2 + (90 * multiplier));
-        this->m_pLayer->addChild(icons_bg);
+        this->m_pMainLayer->addChild(icons_bg);
 		
 		/*
 

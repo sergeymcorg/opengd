@@ -63,3 +63,13 @@ template <typename T>
 inline T inRange(T value, T min, T max) {
     return MIN(MAX(value, min), max);
 }
+
+#define SETUP_SWALLOW_LISTENER(node) auto listener = EventListenerTouchOneByOne::create();\
+	listener->setEnabled(true);\
+	listener->setSwallowTouches(true);\
+    listener->onTouchBegan = [=](Touch*, Event*) -> bool {\
+        return true;\
+    };\
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, node);
+
+#define REMOVE_SWALLOW_LISTENER(node) Director::getInstance()->getEventDispatcher()->removeEventListenersForTarget(node);
