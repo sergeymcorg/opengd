@@ -15,7 +15,7 @@ public:
     /// @return The variable from the json dict
     template <typename T>
     T getVariable(string name) {
-        return this->m_values.contains(name) ? static_cast<T>(this->m_values[name]) : NULL;
+        return this->m_values.contains(name) ? static_cast<T>(this->m_values[name]) : static_cast<T>(NULL);
     }
 
     /// @brief Get a game variable. Usage: GameManager::getInstance()->setVariable(name, value)

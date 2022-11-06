@@ -27,11 +27,11 @@ bool AchievementManager::loadAchievements(){
             icon.push_back(val);
         }
         // bad code
-        if(icon[0]._Equal("icon")){
+        if(icon[0].compare("icon")){
             this->achievements[key].icon = tIcon;
-        }else if(icon[0]._Equal("color") || icon[0]._Equal("color2")){
+        }else if(!icon[0].compare("color") || !icon[0].compare("color2")){
             this->achievements[key].icon = tColor;
-        }else if(icon[0]._Equal("color2") || icon[0]._Equal("color2")){
+        }else if(!icon[0].compare("color2") || !icon[0].compare("color2")){
             this->achievements[key].icon = tColor2;
         }
 
