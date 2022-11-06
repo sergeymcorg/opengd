@@ -69,6 +69,15 @@ static int register_all_packages()
     return 0; //flag for packages manager
 }
 
+void resize_callback(GLFWwindow * window, int w, int h)
+{
+    static const float ratio = (float)designResolutionSize.height / (float)designResolutionSize.width;
+    auto newHeight = w * ratio;
+
+    auto glview = Director::getInstance()->getOpenGLView();
+    glview->setFrameSize(w, newHeight);
+}
+
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
@@ -76,7 +85,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         // glview = GLViewImpl::createWithRect("OpenGD", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
-        glview = GLViewImpl::createWithRect("OpenGD", cocos2d::Rect(0, 0, windowSize.width, windowSize.height));
+        glview = GLViewImpl::createWithRect("OpenGD", cocos2d::Rect(0, 0, windowSize.width, windowSize.height), 1.0f, true);
         // glview = GLViewImpl::createWithFullScreen("OpenGD");
 #else
         glview = GLViewImpl::create("OpenGD");
@@ -95,7 +104,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
     Application::getInstance()->setTextureQuality(TextureQuality::MEDIUM);
 
     // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_WIDTH);
+
+    // make the window resizeable
+    auto dispatcher = director->getEventDispatcher();
+    auto eventName = GLViewImpl::EVENT_WINDOW_RESIZED;
+    dispatcher->addCustomEventListener(eventName, [](cocos2d::EventCustom *event) {
+        auto glview = static_cast<cocos2d::GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView());
+        auto window = glview->getWindow();
+
+        glfwSetWindowSizeCallback(window, resize_callback);
+    });
 
     if (Application::getInstance()->getTextureQuality() == LOW) 
         director->setContentScaleFactor(0.5f);
