@@ -24,7 +24,7 @@ https://discord.gg/PcfVcQ4gxT <br>
 - [x] LoadingLayer implementation
 - [ ] PlayLayer implementation
 - [ ] Player implementation
-- [x] General menues
+- [x] General menus
 - [ ] Level Data builder and parser
 
 ## **Compiling the game**
