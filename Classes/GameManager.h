@@ -15,7 +15,7 @@ public:
     /// @return The variable from the json dict
     template <typename T>
     T getVariable(string name) {
-        return this->m_values.contains(name) ? static_cast<T>(this->m_values[name]) : NULL;
+        return this->m_values.contains(name) ? static_cast<T>(this->m_values[name]) : static_cast<T>(NULL);
     }
 
     /// @brief Get a game variable. Usage: GameManager::getInstance()->setVariable(name, value)
@@ -30,13 +30,13 @@ public:
     void loadFromSave();
     bool hasVariable(string name);
 
-    // Returns false if Discord fails to connect to the client or if it was disabled on compilation process
-    bool connectDiscord();
-    bool changeDActivity();
-    void processDiscord(float);
-    uint64_t createDiscordSession();
-    // Creates multiplayer session using Game SDK.
-    bool createMultiplayerSession(uint64_t lid);
+    // // Returns false if Discord fails to connect to the client or if it was disabled on compilation process
+    // bool connectDiscord();
+    // bool changeDActivity();
+    // void processDiscord(float);
+    // uint64_t createDiscordSession();
+    // // Creates multiplayer session using Game SDK.
+    // bool createMultiplayerSession(uint64_t lid);
 
 private:
     void setDefaults();

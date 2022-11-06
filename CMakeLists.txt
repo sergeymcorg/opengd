@@ -30,8 +30,10 @@ set(APP_NAME OpenGD)
 
 project(${APP_NAME})
 
-if(NOT ANDROID)
+if(NOT LINUX AND NOT ANDROID)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+else()
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 endif()
 
 if(XCODE)

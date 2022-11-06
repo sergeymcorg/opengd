@@ -102,9 +102,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
+    
+#ifdef _WIN32
     AllocConsole();
     freopen_s(reinterpret_cast<FILE**>(stdout), "CONOUT$", "w", stdout);
     SetConsoleOutputCP(65001); // if for some reason someone would need to output unicode chars
+#endif
 
     srand(time(0));
 
