@@ -3,10 +3,8 @@
 
 class DropDownLayer : public Layer {
 private:
-    bool init(const char* title, float height);
 
     // Inherit this function to add your custom code
-    virtual void setup() {};
     
     Layer* m_pMainLayer;
     LayerColor* m_pBGLayer;
@@ -14,9 +12,19 @@ private:
     Point m_eEndPos;
     Point m_eStartPos;
 
+protected:
+    // Getters
+    Menu* getButtonsMenu();
+    Layer* getMainLayer();
+
+
 public:
-    static DropDownLayer* create(const char* title, float height = 220);
+    
+    virtual void setup()=0;
+
     bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     virtual void hideLayer(bool instant, bool removeFromParent);
     virtual void showLayer(bool instant);
+    
+    bool init();
 };
