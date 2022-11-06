@@ -30,13 +30,13 @@ public:
     void loadFromSave();
     bool hasVariable(string name);
 
-    // Returns false if Discord fails to connect to the client or if it was disabled on compilation process
-    bool connectDiscord();
-    bool changeDActivity();
-    void processDiscord(float);
-    uint64_t createDiscordSession();
-    // Creates multiplayer session using Game SDK.
-    bool createMultiplayerSession(uint64_t lid);
+    // // Returns false if Discord fails to connect to the client or if it was disabled on compilation process
+    // bool connectDiscord();
+    // bool changeDActivity();
+    // void processDiscord(float);
+    // uint64_t createDiscordSession();
+    // // Creates multiplayer session using Game SDK.
+    // bool createMultiplayerSession(uint64_t lid);
 
 private:
     void setDefaults();

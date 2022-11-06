@@ -64,8 +64,6 @@ bool LoadingLayer::init() {
     m_pBarSprite->setAnchorPoint({0, 0});
     m_pBarSprite->setPosition({ 4.0, 8.0 });
     m_pGrooveSprite->addChild(m_pBarSprite, -1);
-
-    GM->connectDiscord();
     
     this->loadAssets();
     
