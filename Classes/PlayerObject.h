@@ -44,6 +44,10 @@ private:
 
     bool m_bIsHolding;
 
+    bool m_bFlying;
+
+    Point m_obLastGroundPos;
+
 public:
     static PlayerObject* create(int, Layer*);
      
@@ -58,4 +62,9 @@ public:
     Color3B getShipColor();
 
     void jump();
+
+    bool isFlying();
+    bool isUpsideDown();
+
+    Point getLastGroundPos();
 };

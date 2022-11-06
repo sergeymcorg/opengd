@@ -149,6 +149,8 @@ void PlayerObject::update(float dt) {
     if (this->getPositionY() <= 236) { // TEMP ON GROUND CHECK
         this->m_bOnGround = true;
         this->stopRotation();
+        this->setPositionY(236);
+        this->m_obLastGroundPos = this->getPosition();
     }
 
     if (this->getPositionX() >= 500) {
@@ -181,6 +183,18 @@ void PlayerObject::updateJump(float dt) {
 
     if (!this->m_bOnGround)
         this->m_dYVel -= this->m_dGravity * dt;
+}
+
+bool PlayerObject::isFlying() {
+    return this->m_bFlying;
+}
+
+bool PlayerObject::isUpsideDown() {
+    return this->m_bUpsideDown;
+}
+
+Point PlayerObject::getLastGroundPos() {
+    return this->m_obLastGroundPos;
 }
 
 void PlayerObject::logValues() {
