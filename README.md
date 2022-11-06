@@ -16,6 +16,10 @@ For now it is under development.
 * **[Jammy Dodger](https://github.com/Wyliemaster)#1461**
 * **[Enz](https://github.com/MikaKC)#7402**
 
+## **Discord server**
+Join the discord server!<br>
+https://discord.gg/PcfVcQ4gxT <br>
+
 ## **TODO list for 1.0**
 - [x] LoadingLayer implementation
 - [ ] PlayLayer implementation
