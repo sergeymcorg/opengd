@@ -107,14 +107,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_WIDTH);
 
     // make the window resizeable
-    auto dispatcher = director->getEventDispatcher();
-    auto eventName = GLViewImpl::EVENT_WINDOW_RESIZED;
-    dispatcher->addCustomEventListener(eventName, [](cocos2d::EventCustom *event) {
-        auto glview = static_cast<cocos2d::GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView());
-        auto window = glview->getWindow();
+    auto glfwview = static_cast<cocos2d::GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView());
+    auto window = glfwview->getWindow();
 
-        glfwSetWindowSizeCallback(window, resize_callback);
-    });
+    glfwSetWindowSizeCallback(window, resize_callback);
 
     if (Application::getInstance()->getTextureQuality() == LOW) 
         director->setContentScaleFactor(0.5f);
