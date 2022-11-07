@@ -1,7 +1,6 @@
 #include "MenuLayer.h"
 #include "GarageLayer.h"
 #include "GroundLayer.h"
-#include "CompileLayer.h"
 #include "PlayLayer.h"
 #include "MenuGameLayer.h"
 #include "CreatorLayer.h"
@@ -55,12 +54,9 @@ bool MenuLayer::init(){
     garageBtn->setPosition({-220, 20});
     creatorBtn->setPosition({220, 20});
 
-    auto cl = CompileLayer::create();
-
     menu->addChild(playBtn);
     menu->addChild(garageBtn);
     menu->addChild(creatorBtn);
-    menu->addChild(cl);
     auto selectCharacter = Sprite::createWithSpriteFrameName("GJ_chrSel_001.png");
     menu->addChild(selectCharacter);
     selectCharacter->setPosition(garageBtn->getPosition() - ccp(100, 100));
