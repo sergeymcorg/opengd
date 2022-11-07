@@ -3,9 +3,11 @@ Resources
 
 # CMake Files
 build
+build-linux
 out
 proj.android/app/.cxx
 proj.android/app/build
+proj.android/.idea
 
 .vscode
 .vs
