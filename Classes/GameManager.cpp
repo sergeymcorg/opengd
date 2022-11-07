@@ -1,12 +1,5 @@
 #include "GameManager.h"
 
-#if ENABLE_DISCORD == 1
-#include "./Discord/cpp/discord.h"
-#include "CompileLayer.h"
-
-discord::Core* dCore{};
-#endif
-
 GameManager* GameManager::getInstance() {
     static GameManager* g_pGM = new(std::nothrow) GameManager();
     // static GameManager* g_pGM;

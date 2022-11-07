@@ -114,14 +114,9 @@ bool GarageLayer::init() {
     auto colorsMenu = Menu::create();
 
     for (int i = 0; i < GameToolbox::iconColors.size(); i++) {
-        log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
-        log_ << "button?";
         colorSprite->setColor(GameToolbox::iconColors[i]);
         auto btn = MenuItemSpriteExtra::createWithNode(colorSprite, [=](Node* button) {
-            
-
-            log_ << "huh.";
             this->m_pSelectionFrame2->setPosition({colorsMenu->getPositionX()+button->getPositionX(),colorsMenu->getPositionY()});
             log_ << m_pSelectionFrame2->getPositionX();
             
@@ -131,7 +126,6 @@ bool GarageLayer::init() {
            });
         btn->setScale(1.7f);
         btn->setNewScale(1.25f);
-        log_ << "button? 2";
         btn->setTag(i);
         colorsMenu->addChild(btn);
     }
@@ -144,14 +138,9 @@ bool GarageLayer::init() {
     auto secondaryColorsMenu = Menu::create();
 
     for (int i = 0; i < GameToolbox::iconColors.size(); i++) {
-        log_ << "srptei";
         auto colorSprite = Sprite::create("square.png");
-        log_ << "button?";
         colorSprite->setColor(GameToolbox::iconColors[i]);
         auto btn = MenuItemSpriteExtra::createWithNode(colorSprite, [=](Node* button) {
-
-
-            log_ << "huh.";
             this->m_pSelectionFrame3->setPosition({ secondaryColorsMenu->getPositionX() + button->getPositionX(),secondaryColorsMenu->getPositionY() });
             log_ << m_pSelectionFrame3->getPositionX();
 
@@ -161,7 +150,6 @@ bool GarageLayer::init() {
             });
         btn->setScale(1.7f);
         btn->setNewScale(1.25f);
-        log_ << "button? 2";
         btn->setTag(i);
         secondaryColorsMenu->addChild(btn);
     }

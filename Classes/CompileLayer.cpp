@@ -3,8 +3,7 @@
 #include <string>
 #include <cmath>
 
-std::string CompileLayer::rand()
-{
+std::string CompileLayer::rand() {
     next = next * 1103515245 + 12345;
 
     uint8_t res1 = (uint8_t)next;
@@ -13,13 +12,11 @@ std::string CompileLayer::rand()
     char *res2 = (char *)malloc(3);
     std::string res3 = std::string();
 
-    while (len--)
-    {
+    while (len--) {
         *res2++ = hx[res1 >> 4];
         *res2++ = hx[res1 & 0x0F];
     }
 
-    
     *res2 = 0;
     res2 -= 2;
     res3.append(res2);
@@ -93,8 +90,7 @@ unsigned int rndnums[256] = {0x568c, 0x54388, 0xd5c9, 0xbfc1,
                              0x43f55, 0x96ff1, 0x767c, 0x10e1d
 };
 
-unsigned int hash(const char *string)
-{
+unsigned int hash(const char *string) {
     unsigned int string_size = strlen(string);
     unsigned int string_pointer = 0;
 
@@ -109,8 +105,7 @@ unsigned int hash(const char *string)
 
     return result;
 }
-unsigned int hash(char* string, int size)
-{
+unsigned int hash(char* string, int size) {
     unsigned int string_size = size;
     unsigned int string_pointer = 0;
 
@@ -118,21 +113,15 @@ unsigned int hash(char* string, int size)
 
     unsigned int result = 0;
 
-    while (string_size > string_pointer)
-    {
-        if (string[string_pointer] != 0) {
-            printf("[%d] %d\n", string_pointer, string[string_pointer]);
-        }
+    while (string_size > string_pointer) {
         result += (rndnums[array_pointer++] + ((unsigned int)string[string_pointer++] << string_pointer));
     }
 
     return result;
 }
 
-bool CompileLayer::init()
-{
-    if (!Layer::init())
-        return false;
+bool CompileLayer::init() {
+    if (!Layer::init()) return false;
 
     auto gh = Label::createWithBMFont("chatFont.fnt", getApplicationHash());
     gh->setPosition({-550, 340});
@@ -158,11 +147,11 @@ std::string CompileLayer::application_name() {
 }
 
 std::string CompileLayer::getApplicationHash() {
-    log_ << application_name();
-
+#ifdef __ANDROID__ 
+    return "Build 01234567";    
+#else
     std::string app = application_name();
 
-    /*
     std::ifstream file(app);
     if (file.good()) {
         char* buffer = (char*)malloc(64 * 1024 * 1024);
@@ -172,6 +161,9 @@ std::string CompileLayer::getApplicationHash() {
         log_ << this->next;
         std::string hhs = "Build ";
         hhs.append(rand());
+        hhs.append(rand());
+        hhs.append(rand());
+        hhs.append(rand());
         log_ << hhs;
         free(buffer);
         file.close();
@@ -180,13 +172,5 @@ std::string CompileLayer::getApplicationHash() {
         file.close();
         return "Build -";
     }
-    */
-    
-    this->next = ghc::filesystem::hash_value(ghc::filesystem::path{ app });
-    std::string hhs = "Build ";
-    hhs.append(rand());
-    hhs.append(rand());
-    hhs.append(rand());
-    hhs.append(rand());
-    return hhs;
+#endif
 }
