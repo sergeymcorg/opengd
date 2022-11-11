@@ -26,6 +26,7 @@ cmake_minimum_required(VERSION 3.6)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
 set(APP_NAME OpenGD)
 
 project(${APP_NAME})
@@ -167,9 +168,9 @@ target_include_directories(${APP_NAME}
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
         PRIVATE libs
 )
-
+if(NOT ANDROID)
 add_compile_definitions(_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)
-
+endif()
 # mark app resources
 setup_cocos_app_config(${APP_NAME})
 if(APPLE)

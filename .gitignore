@@ -3,10 +3,15 @@ Resources
 
 # CMake Files
 build
+<<<<<<< HEAD
 build_android
+=======
+build-linux
+>>>>>>> d4150dd5d9ddaf634802ac0a2418cc2cc6719340
 out
 proj.android/app/.cxx
 proj.android/app/build
+proj.android/.idea
 
 .vscode
 .vs

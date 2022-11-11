@@ -65,11 +65,16 @@ bool LoadingLayer::init() {
     m_pBarSprite->setPosition({ 4.0, 8.0 });
     m_pGrooveSprite->addChild(m_pBarSprite, -1);
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+	
     this->loadAssets();
     
     AchievementManager::getInstance()->loadAchievements();
     AchievementNotifier::getInstance()->addToOrder("geometry.ach.level01b"); //just for test
     AchievementNotifier::getInstance()->addToOrder("geometry.ach.level03b"); // and it also for test
+
+#endif
+
     return true;
 }
 
@@ -90,7 +95,7 @@ void LoadingLayer::loadAssets() {
     iterateRecursive(basePath, {".png"}, [&](string path) {        
         if (Application::getInstance()->getTextureQuality() == LOW && path.find("-hd") != string::npos) return;
         else if (Application::getInstance()->getTextureQuality() == MEDIUM && path.find("-hd") == string::npos) return;
-
+		
         texCache->addImageAsync(path, CC_CALLBACK_1(LoadingLayer::assetLoaded, this));
     });
 
@@ -99,6 +104,7 @@ void LoadingLayer::loadAssets() {
         else if (Application::getInstance()->getTextureQuality() == MEDIUM && path.find("-hd") == string::npos) return;
 
         // SpriteFrameCache doesnt like absolute filenames
+		
         frameCache->addSpriteFramesWithFile(ghc::filesystem::path(path).filename().string());
         this->assetLoaded(nullptr);
     });

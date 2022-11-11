@@ -88,9 +88,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setDisplayStats(true);
 
     // Set the primary monitor FPS (fake vsync)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     auto mon = glfwGetPrimaryMonitor();
     auto md = glfwGetVideoMode(mon);    
     director->setAnimationInterval(1.0f / md->refreshRate);
+#endif
 
     Application::getInstance()->setTextureQuality(TextureQuality::MEDIUM);
 
