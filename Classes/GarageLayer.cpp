@@ -42,6 +42,8 @@ bool GarageLayer::init() {
     m_pUsernamefield->setString(GM->getVariable<std::string>("player-username"));
     m_pUsernamefield->setPlaceHolderColor({ 120, 170, 240 });
     m_pUsernamefield->setMaxLength(20);
+    m_pUsernamefield->setMaxLengthEnabled(true);
+    m_pUsernamefield->setCursorEnabled(true);
     m_pUsernamefield->setPosition({winSize.width / 2, winSize.height - 80});
     this->addChild(m_pUsernamefield);
 

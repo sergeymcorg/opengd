@@ -5,6 +5,7 @@ Resources
 build
 build_android
 build-linux
+CMakeFiles
 out
 proj.android/app/.cxx
 proj.android/app/build
