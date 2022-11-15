@@ -48,7 +48,19 @@ bool PlayLayer::init(){
 }
 
 void PlayLayer::update(float dt) {
+    float step = std::min(2.0f, dt * 60.0f);
+
     auto winSize = Director::getInstance()->getWinSize();
+    
+    if (!this->m_pPlayer->getIsDead()) {
+        step /= 4.0f;
+        for (int i = 0; i < 4; i++) {
+            this->m_pPlayer->update(step);
+
+            if (this->m_pPlayer->getIsDead())
+                break;
+        }
+    }
 
     this->m_pBG->setPositionX(this->m_pBG->getPositionX() - dt * 62);
     if (this->m_pBG->getPositionX() <= -1024)

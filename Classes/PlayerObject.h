@@ -5,7 +5,6 @@
 
 class PlayerObject : public GameObject {
 private:
-    void update(float dt);
     void updateJump(float dt);
     bool init(int, Layer*);
     void runRotateAction();
@@ -65,6 +64,8 @@ public:
 
     bool isFlying();
     bool isUpsideDown();
+    GETTER(m_bIsDead, IsDead)
 
     Point getLastGroundPos();
+    void update(float dt);
 };

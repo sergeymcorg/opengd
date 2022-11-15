@@ -73,3 +73,5 @@ inline T inRange(T value, T min, T max) {
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, node);
 
 #define REMOVE_SWALLOW_LISTENER(node) Director::getInstance()->getEventDispatcher()->removeEventListenersForTarget(node);
+
+#define GETTER(varName, funcName) auto get##funcName() { return varName; }

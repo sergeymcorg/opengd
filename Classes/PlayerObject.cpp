@@ -100,7 +100,7 @@ bool PlayerObject::init(int playerFrame, Layer* gameLayer_) {
 
     motionStreak->setStartingPositionInitialized(false);
 
-    scheduleUpdate();
+    // scheduleUpdate();
 
     auto dir = Director::getInstance();
     auto listener = EventListenerTouchOneByOne::create();
@@ -141,7 +141,7 @@ Color3B PlayerObject::getShipColor() {
 }
 
 void PlayerObject::update(float dt) {
-    dt *= 60; // rob :skull:
+    // dt *= 60; // rob :skull:
 
     if (this->m_bIsDead)
         return;
