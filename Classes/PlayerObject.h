@@ -64,7 +64,7 @@ public:
 
     bool isFlying();
     bool isUpsideDown();
-    GETTER(m_bIsDead, IsDead)
+    GETTER(m_bIsDead, IsDead, bool)
 
     Point getLastGroundPos();
     void update(float dt);

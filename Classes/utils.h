@@ -7,9 +7,9 @@ using namespace ghc::filesystem;
 
 #define ccp(x,y) Point(x,y)
 
-inline vector<string> splitString(string str, char separator) {
+inline std::vector<string> splitString(string str, char separator) {
     string temp = "";
-    vector<string> v;
+    std::vector<string> v;
     for (size_t i = 0; i < str.length(); ++i) {
         if (str[i] == separator) {
             v.push_back(temp);
@@ -23,7 +23,7 @@ inline vector<string> splitString(string str, char separator) {
     return v;
 }
 
-inline string joinStrings(vector<string> strings, const char* delim) {
+inline string joinStrings(std::vector<string> strings, const char* delim) {
     string ret;
     for (size_t i = 0; i < strings.size(); i++) {
         auto str = strings[i];
@@ -33,11 +33,11 @@ inline string joinStrings(vector<string> strings, const char* delim) {
 }
 
 template <typename T>
-inline bool isInVector(vector<T> vec, T item) {
+inline bool isInVector(std::vector<T> vec, T item) {
     return std::find(vec.begin(), vec.end(), item) != vec.end();
 }
 
-inline int countFilesRecursively(string dir, vector<string> extensions) {
+inline int countFilesRecursively(string dir, std::vector<string> extensions) {
     int count = 0;
 
     for (auto const& entry : recursive_directory_iterator(dir)) {
@@ -50,7 +50,7 @@ inline int countFilesRecursively(string dir, vector<string> extensions) {
     return count;
 }
 
-inline void iterateRecursive(string dir, vector<string> extensions, std::function<void(const string)> fn) {
+inline void iterateRecursive(string dir, std::vector<string> extensions, std::function<void(const string)> fn) {
     for (auto const& entry : recursive_directory_iterator(dir)) {
         if (!entry.is_directory()) {
             if (isInVector(extensions, entry.path().extension().string()))
@@ -74,4 +74,4 @@ inline T inRange(T value, T min, T max) {
 
 #define REMOVE_SWALLOW_LISTENER(node) Director::getInstance()->getEventDispatcher()->removeEventListenersForTarget(node);
 
-#define GETTER(varName, funcName) auto get##funcName() { return varName; }
+#define GETTER(varName, funcName, vType) vType get##funcName() { return varName; }
