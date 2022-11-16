@@ -23,4 +23,4 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build .
+      run: cd build && cmake --build .
