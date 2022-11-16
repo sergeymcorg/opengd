@@ -23,7 +23,7 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      run: cd build && cmake --build --config Release
+      run: cd build && cmake --build .
   build_linux:
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
