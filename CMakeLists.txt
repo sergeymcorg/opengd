@@ -153,6 +153,7 @@ set(all_code_files
     ${GAME_HEADER}
     ${GAME_SOURCE}
     )
+add_subdirectory(Classes/level-converter)
 if(NOT ANDROID)
     add_executable(${APP_NAME} ${all_code_files})
 else()
@@ -164,6 +165,7 @@ endif()
 #target_link_options(${APP_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FORCE:MULTIPLE>)
 
 target_link_libraries(${APP_NAME} cocos2d)
+target_link_libraries(${APP_NAME} gjleveldata)
 if(ENABLE_DISCORD AND WIN32)
     target_link_libraries(${APP_NAME} dgsdk)
 endif()
