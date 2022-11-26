@@ -6,6 +6,10 @@
 class ListLayer : public DropDownLayer
 {
 public:
+    Menu *getCCButtonMenu();
+
+    Layer *getCCMainLayer();
+
     ListLayer();
 
     ListLayer(const char*);
@@ -13,9 +17,7 @@ public:
     ~ListLayer();
 
     static ListLayer* create(const char* title);
-
-
-private:
+protected:
     void setup() override;
     
     const char* m_Title;

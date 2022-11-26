@@ -8,6 +8,7 @@
 #include "ColoursPalette.h"
 #include "AudioEngine.h"
 #include "ListLayer.h"
+#include "GJMoreGamesLayer.h"
 
 bool music = true;
 
@@ -100,9 +101,8 @@ bool MenuLayer::init(){
     
     auto moreGamesBtn = MenuItemSpriteExtra::create("GJ_moreGamesBtn_001.png", [&](Node* btn) {
         log_ << "more games!";
-        auto a = ListLayer::create("More Games");
-        this->addChild(a);
-        a->showLayer(false);
+        auto a = GJMoreGamesLayer::create();
+        addChild(a);
     });
 
     menu->addChild(moreGamesBtn);

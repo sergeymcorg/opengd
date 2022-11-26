@@ -89,6 +89,14 @@ void ListLayer::setup()
     this->getMainLayer()->addChild(mainLayer);
 }
 
+Menu *ListLayer::getCCButtonMenu() {
+    return this->getButtonsMenu();
+}
+
+Layer *ListLayer::getCCMainLayer() {
+    return this->getMainLayer();
+}
+
 ListLayer* ListLayer::create(const char* title) {
     ListLayer* pRet = new(std::nothrow) ListLayer(title);
 
