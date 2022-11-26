@@ -69,15 +69,6 @@ static int register_all_packages()
     return 0; //flag for packages manager
 }
 
-void resize_callback(GLFWwindow * window, int w, int h)
-{
-    static const float ratio = (float)designResolutionSize.height / (float)designResolutionSize.width;
-    auto newHeight = w * ratio;
-
-    auto glview = Director::getInstance()->getOpenGLView();
-    glview->setFrameSize(w, newHeight);
-}
-
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
@@ -110,7 +101,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glfwview = static_cast<cocos2d::GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView());
     auto window = glfwview->getWindow();
 
-    glfwSetWindowSizeCallback(window, resize_callback);
+    glfwSetWindowAspectRatio(window, 16, 9);
 
     if (Application::getInstance()->getTextureQuality() == LOW) 
         director->setContentScaleFactor(0.5f);
