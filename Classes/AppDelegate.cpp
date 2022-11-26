@@ -76,7 +76,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         // glview = GLViewImpl::createWithRect("OpenGD", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
-        glview = GLViewImpl::createWithRect("OpenGD", cocos2d::Rect(0, 0, windowSize.width, windowSize.height));
+        glview = GLViewImpl::createWithRect("OpenGD", cocos2d::Rect(0, 0, windowSize.width, windowSize.height), 1.0f, true);
         // glview = GLViewImpl::createWithFullScreen("OpenGD");
 #else
         glview = GLViewImpl::create("OpenGD");
@@ -97,7 +97,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
     Application::getInstance()->setTextureQuality(TextureQuality::MEDIUM);
 
     // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_WIDTH);
+
+    // make the window resizeable
+    auto glfwview = static_cast<cocos2d::GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView());
+    auto window = glfwview->getWindow();
+
+    glfwSetWindowAspectRatio(window, 16, 9);
 
     if (Application::getInstance()->getTextureQuality() == LOW) 
         director->setContentScaleFactor(0.5f);
