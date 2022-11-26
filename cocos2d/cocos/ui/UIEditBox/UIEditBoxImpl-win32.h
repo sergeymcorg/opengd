@@ -27,6 +27,9 @@ THE SOFTWARE.
 #ifndef __UIEditBoxIMPLWIN_H__
 #define __UIEditBoxIMPLWIN_H__
 
+#define GWL_WNDPROC GWLP_WNDPROC
+#define GWL_USERDATA GWLP_USERDATA
+
 #include "platform/CCPlatformConfig.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
