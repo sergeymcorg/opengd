@@ -1,3 +1,6 @@
 [submodule "Classes/level-converter"]
 	path = Classes/level-converter
 	url = https://github.com/SergeyMC9730/level-converter
+[submodule "Classes/curl"]
+	path = Classes/curl
+	url = https://github.com/curl/curl.git

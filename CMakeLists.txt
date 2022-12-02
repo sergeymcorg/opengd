@@ -22,10 +22,11 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.13)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+cmake_policy(SET CMP0079 NEW)
 
 set(APP_NAME OpenGD)
 
@@ -154,6 +155,7 @@ set(all_code_files
     ${GAME_SOURCE}
     )
 add_subdirectory(Classes/level-converter)
+add_subdirectory(Classes/curl)
 if(NOT ANDROID)
     add_executable(${APP_NAME} ${all_code_files})
 else()
@@ -164,8 +166,8 @@ endif()
 
 #target_link_options(${APP_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/FORCE:MULTIPLE>)
 
-target_link_libraries(${APP_NAME} cocos2d)
-target_link_libraries(${APP_NAME} gjleveldata)
+target_link_libraries(cocos2d libcurl)
+target_link_libraries(${APP_NAME} cocos2d gjleveldata)
 if(ENABLE_DISCORD AND WIN32)
     target_link_libraries(${APP_NAME} dgsdk)
 endif()

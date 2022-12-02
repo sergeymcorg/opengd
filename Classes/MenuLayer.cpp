@@ -9,6 +9,7 @@
 #include "AudioEngine.h"
 #include "ListLayer.h"
 #include "GJMoreGamesLayer.h"
+#include "SimpleHTTPRequestLayer.h"
 
 bool music = true;
 
@@ -71,6 +72,23 @@ bool MenuLayer::init(){
         AchievementNotifier::getInstance()->showAchievements(); //just for test
 		//ColoursPalette::create(nullptr)->show();
     });
+
+    auto netBtn = MenuItemSpriteExtra::create("GJ_achBtn_001.png", [&](Node* btn) {
+        // Testing stuff
+	    SimpleHTTPRequestLayer *l = SimpleHTTPRequestLayer::create();
+        l->start("https://levelapi.dogotrigger.xyz", [=](cocos2d::network::HttpClient *client, cocos2d::network::HttpResponse *response){
+            if(response->isSucceed()) {
+                auto alert = AlertLayer::create("Success!", "It works!!", "Close", NULL);
+                alert->setBtn1Callback([=](TextButton*){
+                    alert->close();
+                    l->close();
+                });
+                alert->show();
+            }
+        });
+
+        addChild(l);
+    });
     
     auto optionsBtn = MenuItemSpriteExtra::create("GJ_optionsBtn_001.png", [&](Node* btn) {
         log_ << "options!";
@@ -87,7 +105,7 @@ bool MenuLayer::init(){
         alert->show();
     });
 
-    auto bottomMenu = Menu::create(achievementsBtn, optionsBtn, statsBtn, nullptr);    
+    auto bottomMenu = Menu::create(achievementsBtn, optionsBtn, statsBtn, netBtn, nullptr);    
     bottomMenu->setPositionY(90);
     bottomMenu->alignItemsHorizontallyWithPadding(10);
     this->addChild(bottomMenu);
