@@ -115,8 +115,6 @@ bool MenuLayer::init(){
     menu->addChild(moreGamesBtn);
     //moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 86, 90}));
     moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 156, 130}));
-    
-    // for some reason these 2 buttons are the only ones that dont need to be scaled
 
     // To make it close to GD
     menu->setScale(offsetScale);
