@@ -37,13 +37,6 @@ bool MenuLayer::init(){
     log_oSpr->setPosition({ winSize.width / 2, winSize.height - 110 });
     log_oSpr->setScale(offsetScale);
     this->addChild(log_oSpr);
-        
-    /*
-    auto comparison = Sprite::create("compare-hd.png");
-    comparison->setScale(0.94F);
-    comparison->setOpacity(100);
-    comparison->setPosition({ winSize.width / 2, winSize.height / 2});
-    this->addChild(comparison);*/
     
     auto menu = Menu::create();
     this->addChild(menu);
