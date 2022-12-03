@@ -20,6 +20,8 @@ Scene* MenuLayer::scene() {
 
 bool MenuLayer::init(){
     if (!Layer::init()) return false;
+
+    float offsetScale = 1.13F;
     
     if(music){
         AudioEngine::play2d("audiotracks/menuLoop.mp3", true, 0.5f);
@@ -31,9 +33,17 @@ bool MenuLayer::init(){
     addChild(MenuGameLayer::create(), -1);
     
     auto log_oSpr = Sprite::createWithSpriteFrameName("GJ_logo_001.png");
-    log_oSpr->setPosition({ winSize.width / 2, winSize.height - 100 });
+    //log_oSpr->setPosition({ winSize.width / 2, winSize.height - 100 });
+    log_oSpr->setPosition({ winSize.width / 2, winSize.height - 110 });
+    log_oSpr->setScale(offsetScale);
     this->addChild(log_oSpr);
-    
+        
+    /*
+    auto comparison = Sprite::create("compare-hd.png");
+    comparison->setScale(0.94F);
+    comparison->setOpacity(100);
+    comparison->setPosition({ winSize.width / 2, winSize.height / 2});
+    this->addChild(comparison);*/
     
     auto menu = Menu::create();
     this->addChild(menu);
@@ -88,8 +98,11 @@ bool MenuLayer::init(){
     });
 
     auto bottomMenu = Menu::create(achievementsBtn, optionsBtn, statsBtn, nullptr);    
-    bottomMenu->setPositionY(90);
+    //bottomMenu->setPositionY(90);
+    bottomMenu->setPosition({(winSize.width / 2) + 83, 146});
     bottomMenu->alignItemsHorizontallyWithPadding(10);
+    bottomMenu->setScale(offsetScale);
+
     this->addChild(bottomMenu);
     
     auto robBtn = MenuItemSpriteExtra::create("robtoplogo_small.png", [&](Node* btn) {
@@ -97,7 +110,8 @@ bool MenuLayer::init(){
     });
 
     menu->addChild(robBtn);
-    robBtn->setPosition(menu->convertToNodeSpace({120, 60}));
+    //robBtn->setPosition(menu->convertToNodeSpace({120, 60}));
+    robBtn->setPosition(menu->convertToNodeSpace({190, 100}));
     
     auto moreGamesBtn = MenuItemSpriteExtra::create("GJ_moreGamesBtn_001.png", [&](Node* btn) {
         log_ << "more games!";
@@ -106,7 +120,17 @@ bool MenuLayer::init(){
     });
 
     menu->addChild(moreGamesBtn);
-    moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 86, 90}));
+    //moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 86, 90}));
+    moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 156, 130}));
+    
+    // for some reason these 2 buttons are the only ones that dont need to be scaled
+
+    // To make it close to GD
+    menu->setScale(offsetScale);
+    log_ << menu->getPositionX();
+    log_ << menu->getPositionY();
+    
+    menu->setPosition({(winSize.width / 2) + 82, (winSize.height / 2) + 47});
 
     return true;
 }
