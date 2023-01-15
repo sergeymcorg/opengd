@@ -35,7 +35,7 @@ bool MenuLayer::init(){
     auto log_oSpr = Sprite::createWithSpriteFrameName("GJ_logo_001.png");
     //log_oSpr->setPosition({ winSize.width / 2, winSize.height - 100 });
     log_oSpr->setPosition({ winSize.width / 2, winSize.height - 110 });
-    log_oSpr->setScale(offsetScale);
+    log_oSpr->setScale(1.f);
     this->addChild(log_oSpr);
     
     auto menu = Menu::create();
@@ -54,20 +54,25 @@ bool MenuLayer::init(){
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, CreatorLayer::scene()));
     });
 
-    playBtn->setPosition({0, 20});
-    garageBtn->setPosition({-220, 20});
-    creatorBtn->setPosition({220, 20});
+    // playBtn->setPosition({0, 20});
+    // garageBtn->setPosition({-220, 20});
+    // creatorBtn->setPosition({220, 20});
 
-    menu->addChild(playBtn);
-    menu->addChild(garageBtn);
-    menu->addChild(creatorBtn);
+    auto mainButtonMenu = Menu::create(garageBtn, playBtn, creatorBtn, nullptr);    
+    mainButtonMenu->setPositionY(0);
+    mainButtonMenu->setPositionX(-70);
+    mainButtonMenu->alignItemsHorizontallyWithPadding(50);
+    mainButtonMenu->setScale(0.9f);
+    //mainButtonMenu->setPosition({(winSize.width / 2), (winSize.height / 2)});
+
+    menu->addChild(mainButtonMenu);
     auto selectCharacter = Sprite::createWithSpriteFrameName("GJ_chrSel_001.png");
     menu->addChild(selectCharacter);
-    selectCharacter->setPosition(garageBtn->getPosition() - ccp(100, 100));
+    selectCharacter->setPosition(garageBtn->getPosition() - ccp(70, 70));
 
     auto levelEditor = Sprite::createWithSpriteFrameName("GJ_lvlEdit_001.png");
     menu->addChild(levelEditor);
-    levelEditor->setPosition(creatorBtn->getPosition() + ccp(100, -100));
+    levelEditor->setPosition(creatorBtn->getPosition() + ccp(50, -50));
     
     auto achievementsBtn = MenuItemSpriteExtra::create("GJ_achBtn_001.png", [&](Node* btn) {
 	    // AlertLayer::create("coming soon", "this feature has not been added yet!", "OK", "", 600, 250)->show();
@@ -92,9 +97,9 @@ bool MenuLayer::init(){
 
     auto bottomMenu = Menu::create(achievementsBtn, optionsBtn, statsBtn, nullptr);    
     //bottomMenu->setPositionY(90);
-    bottomMenu->setPosition({(winSize.width / 2) + 83, 146});
     bottomMenu->alignItemsHorizontallyWithPadding(10);
-    bottomMenu->setScale(offsetScale);
+    bottomMenu->setScale(offsetScale - 0.13f);
+    bottomMenu->setPosition({(winSize.width / 2) - 30, 100});
 
     this->addChild(bottomMenu);
     
@@ -104,7 +109,8 @@ bool MenuLayer::init(){
 
     menu->addChild(robBtn);
     //robBtn->setPosition(menu->convertToNodeSpace({120, 60}));
-    robBtn->setPosition(menu->convertToNodeSpace({190, 100}));
+    robBtn->setPosition(menu->convertToNodeSpace({170, 90}));
+    robBtn->setScale(0.8f);
     
     auto moreGamesBtn = MenuItemSpriteExtra::create("GJ_moreGamesBtn_001.png", [&](Node* btn) {
         log_ << "more games!";
@@ -115,6 +121,7 @@ bool MenuLayer::init(){
     menu->addChild(moreGamesBtn);
     //moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 86, 90}));
     moreGamesBtn->setPosition(menu->convertToNodeSpace({winSize.width - 156, 130}));
+    moreGamesBtn->setScale(0.9f);
 
     // To make it close to GD
     menu->setScale(offsetScale);
